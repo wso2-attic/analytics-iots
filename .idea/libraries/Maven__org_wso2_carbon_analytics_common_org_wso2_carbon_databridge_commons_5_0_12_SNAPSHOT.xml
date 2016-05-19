@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.wso2.carbon.analytics-common:org.wso2.carbon.databridge.commons:5.0.12-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/wso2/carbon/analytics-common/org.wso2.carbon.databridge.commons/5.0.12-SNAPSHOT/org.wso2.carbon.databridge.commons-5.0.12-20160519.005734-166.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/wso2/carbon/analytics-common/org.wso2.carbon.databridge.commons/5.0.12-SNAPSHOT/org.wso2.carbon.databridge.commons-5.0.12-20160519.005734-166-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/wso2/carbon/analytics-common/org.wso2.carbon.databridge.commons/5.0.12-SNAPSHOT/org.wso2.carbon.databridge.commons-5.0.12-20160519.005734-166-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
