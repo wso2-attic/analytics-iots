@@ -3,6 +3,11 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="/a.dummy">
           <value>
             <set />
@@ -29,6 +34,11 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/iot/product-iots/modules/distribution/target/wso2iots-1.0.0-SNAPSHOT/samples/jk/component/plugin/src/main/java/hj/jk/plugin/internal/ServiceComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/iot/product-iots/modules/p2-profile-gen/pom.xml">
           <value>
             <set />
           </value>
@@ -84,6 +94,21 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../../IoT/m6/carbon-device-mgt-plugins/components/iot-plugins/virtual-fire-alarm-plugin/org.wso2.carbon.device.mgt.iot.virtualfirealarm.plugin/src/main/java/org/wso2/carbon/device/mgt/iot/virtualfirealarm/plugin/internal/VirtualFirealarmManagementServiceComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../IoT/m6/product-iots/modules/tools/cdmf-devicetype-archetype/src/main/resources/archetype-resources/component/api/src/main/java/__groupId__/__rootArtifactId__/api/ControllerService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../IoT/m6/product-iots/modules/tools/cdmf-devicetype-archetype/src/main/resources/archetype-resources/component/api/src/main/java/__groupId__/__rootArtifactId__/api/ControllerServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../IoT/m6/product-iots/modules/tools/cdmf-devicetype-archetype/src/main/resources/archetype-resources/component/api/src/main/java/__groupId__/__rootArtifactId__/api/transport/MQTTConnector.java">
           <value>
             <set />
           </value>
