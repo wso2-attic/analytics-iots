@@ -116,6 +116,9 @@
                                     org.wso2.carbon.analytics.iots:org.wso2.carbon.analytics.iots.feature:${iots.analytics.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.wso2.carbon.analytics.cdmf:org.wso2.carbon.analytics.cdmf.feature:${cdmf.analytics.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.analytics:org.wso2.carbon.analytics.dashboard.ui.feature:${carbon.analytics.version}
                                 </featureArtifactDef>
 
@@ -334,13 +337,14 @@
                                 </featureArtifactDef>
                                 <!-- END - UES Features -->
 
-                                <!-- IoTS Adapters-->
+                                <!-- Transport Adapters -->
                                 <featureArtifactDef>
                                     org.wso2.carbon.devicemgt-plugins:org.wso2.carbon.device.mgt.iot.adapter.feature:${carbon.device.mgt.plugin.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.iot:org.wso2.carbon.event.adapter.extensions.server.feature:${carbon.iot.device.mgt.version}
                                 </featureArtifactDef>
+                                <!--End Transport Adapters -->
                                 <!-- Carbon metrics -->
                                 <featureArtifactDef>
                                     org.wso2.carbon.metrics:org.wso2.carbon.metrics.feature:${carbon.metrics.version}
@@ -413,6 +417,10 @@
                                 <feature>
                                     <id>org.wso2.carbon.analytics.iots.feature.group</id>
                                     <version>${iots.analytics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.analytics.cdmf.feature.group</id>
+                                    <version>${cdmf.analytics.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.analytics.messageconsole.feature.group</id>
@@ -702,15 +710,12 @@
                                     <version>${cipher.tool.version}</version>
                                 </feature>
                                 <!--END - Tools-->
-                                <!-- IoTS Adapters -->
+                                <!-- Transport Adapters -->
                                 <feature>
                                     <id>org.wso2.carbon.event.adapter.extensions.server.feature.group</id>
                                     <version>${carbon.iot.device.mgt.version}</version>
                                 </feature>
-                                <!--<feature>
-                                    <id>org.wso2.carbon.device.mgt.iot.adapter.feature.group</id>
-                                    <version>${carbon.device.mgt.plugin.version}</version>
-                                </feature>-->
+                                <!-- End Transport Adapters -->
                             </features>
                         </configuration>
                     </execution>

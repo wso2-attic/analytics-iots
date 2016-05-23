@@ -469,7 +469,7 @@
 
     <properties>
         <iots.analytics.version>1.0.0-SNAPSHOT</iots.analytics.version>
-
+        <cdmf.analytics.version>1.0.0-SNAPSHOT</cdmf.analytics.version>
         <carbon.kernel.version>4.4.3</carbon.kernel.version>
         <carbon.analytics.version>1.0.6-SNAPSHOT</carbon.analytics.version>
         <carbon.analytics.common.version>5.0.12-SNAPSHOT</carbon.analytics.common.version>
@@ -527,7 +527,7 @@
         <kryo.orbit.version>2.24.0.wso2v1</kryo.orbit.version>
         <kryo.import.version>[2.24.0,3.0)</kryo.import.version>
         <project.scm.id>my-scm-server</project.scm.id>
-        <!--IoTS Adapters -->
+        <!--Transport Adapters -->
         <carbon.iot.device.mgt.version>1.0.0-SNAPSHOT</carbon.iot.device.mgt.version>
         <carbon.device.mgt.plugin.version>2.1.0-SNAPSHOT</carbon.device.mgt.plugin.version>
     </properties>
