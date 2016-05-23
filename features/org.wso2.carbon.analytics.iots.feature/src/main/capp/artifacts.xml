@@ -17,15 +17,7 @@
   ~ under the License.
   -->
 <artifacts>
-    <artifact name="org.wso2.carbon.analytics.esb" version="1.0.0" type="carbon/application">
+    <artifact name="org.wso2.carbon.analytics.iots" version="1.0.0" type="carbon/application">
         <!-- Gadgets -->
-        <dependency artifact="GadgetDeviceGrouping" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="GadgetDevicesTable" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="GadgetFilteredBy" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="GadgetNonCompiantFeatures" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="GadgetOverview" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="GadgetVulnerabilities" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <!-- Dashboard Definition -->
-        <dependency artifact="Dashboard" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
     </artifact>
 </artifacts>
