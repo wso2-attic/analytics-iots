@@ -194,10 +194,9 @@
                 <include>inputwebsocket.war</include>
                 <include>outputwebsocket.war</include>
                 <include>outputui.war</include>
+                <include>secured-outputui.war</include>
             </includes>
         </fileSet>
-
-
         <!-- END CEP -->
 
         <!-- Start UES related artifacts -->
@@ -467,7 +466,6 @@
             </outputDirectory>
             <filtered>true</filtered>
         </file>
-
         <!-- END - default input/output adaptor configurations -->
 
         <!-- Analytics datasources -->
@@ -640,7 +638,6 @@
 
 
         <!-- CEP -->
-
         <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/storm.yaml
@@ -738,15 +735,21 @@
             <outputDirectory>wso2analytics-iots-${pom.version}/repository/conf/identity</outputDirectory>
             <fileMode>644</fileMode>
         </file>
-
-	    <file>
+        <file>
             <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/analytics/spark/carbon-spark-classpath.conf
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/jwt.properties
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/analytics/spark/
-            </outputDirectory>
-            <fileMode>755</fileMode>
-       </file>
-
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/websocket-validation.properties
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
     </files>
 </assembly>
