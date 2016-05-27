@@ -230,23 +230,9 @@
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal</outputDirectory>
             <excludes>
-                <exclude>**/extensions/themes/basic/css/dashboard.css</exclude>
-                <exclude>**/extensions/themes/basic/css/portal.css</exclude>
-                <exclude>**/extensions/themes/basic/js/*</exclude>
+                <exclude>**/configs/designer.json</exclude>
             </excludes>
         </fileSet>
-
-        <!-- Adding customized analytics theme to themes directory -->
-        <fileSet>
-            <directory>
-                src/ues/themes/basic
-            </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/themes/basic/</outputDirectory>
-            <includes>
-                <include>**/*</include>
-            </includes>
-        </fileSet>
-       
         <!-- END UES related dashboard artifacts -->
 
 
@@ -748,6 +734,16 @@
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/websocket-validation.properties
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!-- portal-->
+        <file>
+            <source>
+                src/ues/designer.json
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/configs/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
