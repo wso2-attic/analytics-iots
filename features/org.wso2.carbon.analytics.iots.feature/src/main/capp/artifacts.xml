@@ -18,6 +18,9 @@
   -->
 <artifacts>
     <artifact name="org.wso2.carbon.analytics.iots" version="1.0.0" type="carbon/application">
-        <!-- Gadgets -->
+      <!-- Gadgets -->
+      <dependency artifact="GadgetOverview" version="1.0.0" include="true" serverRole="IoTServer"/>
+      <!-- Dashboard Definition -->
+      <dependency artifact="Dashboard" version="1.0.0" include="true" serverRole="IoTServer"/>
     </artifact>
 </artifacts>
