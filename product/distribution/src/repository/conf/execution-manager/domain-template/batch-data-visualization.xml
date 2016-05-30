@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<executionManagerTemplate domain="BatchDataVisualization">
+    <description>Batch Data Visualization Description</description>
+    <scenarios>
+        <scenario name="Line Chart">
+            <description>Plot two attributes in a line chart</description>
+            <templates>
+                <template type="gadget">
+                    <config>
+                    <properties>
+                        <property name="directoryName">$sensorName-line-chart</property>
+                        <property name="templateGadget">Line-chart</property>
+                        <property name="templateDirectory">linechart</property>
+                    </properties>
+                    <artifacts>
+                    <artifact file="gadget.json">
+                        <![CDATA[
+                        {
+                            "id": "$sensorName-line-chart",
+                            "title": "$sensorName Line Chart",
+                            "type": "gadget",
+                            "thumbnail": "gadget/$sensorName-line-chart/index.png",
+                            "data": {
+                                "url": "gadget/$sensorName-line-chart/index.xml"
+                            }
+                        }
+                        ]]>
+                    </artifact>
+                    <artifact file="conf.json">
+                        <![CDATA[
+                        {
+                            "provider-conf": {
+                                "control1": "default value",
+                                "tableName": "$tableName",
+                                "refreshInterval": "10",
+                                "provider-name": "batch"
+                            },
+                            "chart-conf": {
+                                "x": "$xAxis",
+                                "y": "$yAxis",
+                                "colour": "",
+                                "control1": "default value",
+                                "gadget-name": "$sensorName Line Chart",
+                                "chart-name": "line-chart"
+                            }
+                        }
+                        ]]>
+                    </artifact>
+                    <artifact file="index.xml">
+                        <![CDATA[
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <Module>
+                            <ModulePrefs title="$sensorName Line Chart" description="This is a template gadget">
+                                <Require feature="dynamic-height"/>
+                            </ModulePrefs>
+                            <Content type="html">
+                                <![CDATA[
+                                <head>
+                                    <!-- jQuery -->
+                                    <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+
+                                    <!-- chart libs -->
+                                    
+                                        <script src="js/chart-libs/d3.min.js"></script>
+                                    
+                                        <script src="js/chart-libs/vega.js"></script>
+                                    
+                                        <script src="js/chart-libs/VizGrammar.min.js"></script>
+                                    
+
+                                    <!--scripts copied by framework -->
+                                    
+                                    <script src="js/chart-api.js"></script>
+                                    <script src="js/gadget-core.js"></script>
+
+                                
+                                    <script src="/portal/libs/common-chart-libs/wso2gadgets.js"></script>
+                                
+                                    <script src="/portal/libs/common-chart-libs/chart-utils.js"></script>
+                                
+                                </head>
+                                <body>
+
+                                <div style="padding:10px">
+                                    <a id="update" href="#" class="btn btn-default">Manually Trigger Update</a>
+                                </div>
+
+                                <div id="canvas"></div>
+                                </body>
+                                ]]]]><![CDATA[>
+                            </Content>
+                        </Module>
+                        ]]>
+                    </artifact>
+                    <artifact file="js/gadget-core.js">
+                        <![CDATA[
+                        $(function () {
+                        var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorName-line-chart';
+                            var conf;
+                            var schema;
+                            
+                            var providerData;
+                            
+                            var CHART_CONF = 'chart-conf';
+                            var PROVIDER_CONF = 'provider-conf';
+                            
+                            var REFRESH_INTERVAL = 'refreshInterval';
+                            
+                        var init = function () {
+                            $.ajax({
+                                url: gadgetLocation + '/conf.json',
+                                method: "GET",
+                                contentType: "application/json",
+                                async: false,
+                                success: function (data) {
+                                    conf = JSON.parse(data);
+                                    $.ajax({
+                                        url: gadgetLocation + '/gadget-controller.jag?action=getSchema',
+                                        method: "POST",
+                                        data: JSON.stringify(conf),
+                                        contentType: "application/json",
+                                        async: false,
+                                        success: function (data) {
+                                            schema = data;
+                                        }
+                                    });
+                                    
+                                    getProviderData();
+                                    
+                                   }
+                               });
+                        }
+
+                        var getProviderData = function (){
+                            $.ajax({
+                                url: gadgetLocation + '/gadget-controller.jag?action=getData',
+                                method: "POST",
+                                data: JSON.stringify(conf),
+                                contentType: "application/json",
+                                async: false,
+                                success: function (data) {
+                                providerData = data;
+                                }
+                            });
+                        }
+
+                        var drawGadget = function (){
+                            
+                            var refreshInterval = conf[PROVIDER_CONF][REFRESH_INTERVAL];
+                            draw('#canvas', conf[CHART_CONF], schema, providerData);
+                            setInterval(function() {
+                                update(getProviderData);
+                            },refreshInterval);
+                            
+                        }
+                        init();
+                            drawGadget();
+                        });
+                        ]]>
+                    </artifact>
+                </artifacts>
+                </config>
+                </template>
+            </templates>
+            <parameters>
+                <parameter name="sensorName" type="string">
+                    <displayName>Sensor Name</displayName>
+                    <description>Name of the sensor</description>
+                    <defaultValue>""</defaultValue>
+                </parameter>
+                <parameter name="tableName" type="string">
+                    <displayName>Database table name</displayName>
+                    <description>Database table name which contains the data</description>
+                    <defaultValue>""</defaultValue>
+                </parameter>
+                <parameter name="xAxis" type="string">
+                    <displayName>X Axis</displayName>
+                    <description>Column for X axis</description>
+                    <defaultValue>""</defaultValue>
+                    <options><!-- Derive from database at the runtime --></options>
+                </parameter>
+                <!-- Derive from database at the runtime -->
+                <parameter name="yAxis" type="string">
+                    <displayName>Y Axis</displayName>
+                    <description>Column for Y axis</description>
+                    <defaultValue>""</defaultValue>
+                    <options><!-- Derive from database at the runtime --></options>
+                </parameter>
+            </parameters>
+        </scenario>
+    </scenarios>
+</executionManagerTemplate>

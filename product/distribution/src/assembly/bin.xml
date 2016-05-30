@@ -265,6 +265,60 @@
                 <include>**/*.sql</include>
             </includes>
         </fileSet>
+
+        <!--Creating an empty linechart directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!--Creating an empty linechart/js directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!--Creating an empty linechart/js/chart-libs directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- Copying gadget deployer template js files -->
+        <fileSet>
+            <directory>
+                src/repository/conf/execution-manager/gadget-templates/linechart/js/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js</outputDirectory>
+            <includes>
+                <include>**/*.js</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>
+                src/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs</outputDirectory>
+            <includes>
+                <include>**/*.js</include>
+            </includes>
+        </fileSet>
     </fileSets>
     <files>
 
@@ -663,9 +717,34 @@
         <!--Copying sample domain template file, sample for CEP Execution Manager -->
         <file>
             <source>
-                src/repository/conf/domain-template/temperature-analysis.xml
+                src/repository/conf/execution-manager/domain-template/temperature-analysis.xml
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/domain-template</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template</outputDirectory>
+            <filtered>true</filtered>
+        </file>
+
+        <!--Copying sample gadget template files, for Execution Manager -->
+        <file>
+            <source>
+                src/repository/conf/execution-manager/domain-template/batch-data-visualization.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template</outputDirectory>
+            <filtered>true</filtered>
+        </file>
+
+        <file>
+            <source>
+                src/repository/conf/execution-manager/gadget-templates/linechart/index.png
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart</outputDirectory>
+            <filtered>true</filtered>
+        </file>
+
+        <file>
+            <source>
+                src/repository/conf/execution-manager/gadget-templates/linechart/gadget-controller.jag
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart</outputDirectory>
             <filtered>true</filtered>
         </file>
 
