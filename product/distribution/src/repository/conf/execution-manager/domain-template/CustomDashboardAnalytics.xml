@@ -1,0 +1,487 @@
+<executionManagerTemplate domain="CustomDashboardAnalytics">
+    <description>Templates for creating custom analytic dashboards</description>
+    <scenarios>
+        <scenario name="SensorAnalyticsScenario">
+            <description>Configure a gadget to display stats, given a stream of your choice</description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+  			"name": "org.wso2.event.$sensorType.stream",
+  			"version": "1.0.0",
+  			"nickName": "",
+  			"description": "",
+  			"payloadData": [
+    			{
+      			"name": "sensor_id",
+      			"type": "STRING"
+    			},
+    			{
+      			"name": "sensor_value",
+      			"type": "DOUBLE"
+    			}
+  			]
+		    }
+                </template>
+                <template type="eventstream">
+                    {
+  			"name": "org.wso2.event.$sensorType.statistics.stream",
+  			"version": "1.0.0",
+  			"nickName": "",
+  			"description": "",
+  			"payloadData": [
+    			{
+      			"name": "sensor_type",
+      			"type": "STRING"
+    			},
+    			{
+      			"name": "sensor_id_distinct_count",
+      			"type": "LONG"
+    			},
+    			{
+      			"name": "count",
+      			"type": "LONG"
+    			},
+    			{
+      			"name": "sum",
+      			"type": "DOUBLE"
+    			},
+    			{
+      			"name": "average",
+      			"type": "DOUBLE"
+    			},
+    			{
+      			"name": "max",
+      			"type": "DOUBLE"
+    			},
+    			{
+      			"name": "min",
+      			"type": "DOUBLE"
+    			}
+  			]
+		   }
+                </template>
+                <template type="eventsink">
+                    <![CDATA[
+                <EventStoreConfiguration>
+		     <TableSchema>
+			<ColumnDefinition>
+				<Name>sensor_type</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>true</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>STRING</Type>
+			</ColumnDefinition>
+			<ColumnDefinition>
+				<Name>sensor_id_distinct_count</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>LONG</Type>
+			</ColumnDefinition>
+			<ColumnDefinition>
+				<Name>count</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>LONG</Type>
+			</ColumnDefinition>
+			<ColumnDefinition>
+				<Name>sum</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+			</ColumnDefinition>
+			<ColumnDefinition>
+				<Name>average</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+			</ColumnDefinition>
+			<ColumnDefinition>
+				<Name>max</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+				</ColumnDefinition>
+			<ColumnDefinition>
+				<Name>min</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+			</ColumnDefinition>
+		   </TableSchema>
+       		   <Source>
+			<StreamId>org.wso2.event.$sensorType.statistics.stream:1.0.0</StreamId>
+		   </Source>
+		   <MergeSchema>false</MergeSchema>
+		   <RecordStoreName>EVENT_STORE</RecordStoreName>
+	     </EventStoreConfiguration>
+                    ]]>
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+                /* Enter a unique ExecutionPlan */
+                @Plan:name('SensorAnalyticsPlan')
+
+                /* Enter a unique description for ExecutionPlan */
+                -- @Plan:description('ExecutionPlan')
+
+                /* define streams/tables and write queries here ... */
+
+                @Import('org.wso2.event.$sensorType.stream:1.0.0')
+                define stream InputStream (sensor_id string, sensor_value double);
+
+		@Export('org.wso2.event.$sensorType.statistics.stream:1.0.0')
+		define stream OutputStream (sensor_type string, sensor_id_distinct_count long, count long, sum double, average double, max double, min double);
+
+		from InputStream#window.time($timeInMins min)
+		select '$sensorType' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as 			max, min(sensor_value) as min
+		insert into OutputStream;
+                    ]]>
+                </template>
+                <!--<template type="realTime">     &lt;!&ndash;Can define multiple Templates of same type. E.g. of type realTime, as shown here.&ndash;&gt;-->
+
+                <!--</template>
+                <template type="batch">
+
+                </template>-->
+
+                <!-- Average -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-average-chart</property>
+                            <property name="templateGadget">Average</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {"id":"$sensorType-average-chart","title":"Average $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-average-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-average-chart/index.xml"}}
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                                var gadgetConfig ={"id":"$sensorType-average-chart","title":"Average $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"average","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Average of $sensorType"}]},"domain":"carbon.super"};
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+
+                <!-- Count -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-count-chart</property>
+                            <property name="templateGadget">Count</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {"id":"$sensorType-count-chart","title":"Count $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-average-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-count-chart/index.xml"}}
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                                var gadgetConfig ={"id":"$sensorType-count-chart","title":"Count $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"count","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Count of $sensorType"}]},"domain":"carbon.super"};
+
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+
+                <!-- DistinctCount -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-distinctcount-chart</property>
+                            <property name="templateGadget">Count</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {"id":"$sensorType-distinctcount-chart","title":"Distinct Count $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-distinctcount-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-distinctcount-chart/index.xml"}}
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                                var gadgetConfig ={"id":"$sensorType-distinctcount-chart","title":"Sensor ID Count $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id_distinct_count","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Sensor ID Distinct Count of $sensorType"}]},"domain":"carbon.super"};
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+
+                <!-- Max -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-max-chart</property>
+                            <property name="templateGadget">Count</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {"id":"$sensorType-max-chart","title":"Max $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-max-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-max-chart/index.xml"}}
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                                var gadgetConfig ={"id":"$sensorType-max-chart","title":"Max $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"max","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the maximum $sensorType"}]},"domain":"carbon.super"}
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+
+                <!-- Min -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-min-chart</property>
+                            <property name="templateGadget">Count</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                               <![CDATA[
+                                {"id":"$sensorType-min-chart","title":"Min $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-min-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-min-chart/index.xml"}}
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                                var gadgetConfig ={"id":"$sensorType-min-chart","title":"Min $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"min","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the minimum of $sensorType"}]},"domain":"carbon.super"};
+
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+
+                <!-- Sum -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-sum-chart</property>
+                            <property name="templateGadget">Count</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {"id":"$sensorType-sum-chart","title":"Sum $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-sum-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-sum-chart/index.xml"}}
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                                var gadgetConfig ={"id":"$sensorType-sum-chart","title":"Sum $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sum","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the sum of $sensorType"}]},"domain":"carbon.super"};
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.event.$sensorType.stream:1.0.0"/>
+            </streamMappings>
+            <parameters>
+                <parameter name="timeInMins" type="int">
+                    <displayName>The time period to hold events in minutes</displayName>
+                    <description> The sliding time period for which the window should hold events</description>
+                    <defaultValue>1</defaultValue>
+                </parameter>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+            </parameters>
+
+        </scenario>
+	<scenario name="GroupedSensorAnalyticsScenario">
+            <description>Configure a gadget to display grouped stats, given a stream of your choice</description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+  			"name": "org.wso2.event.group.$sensorType.stream",
+  			"version": "1.0.0",
+  			"nickName": "",
+  			"description": "",
+  			"payloadData": [
+    			{
+      			"name": "sensor_id",
+      			"type": "STRING"
+    			},
+    			{
+      			"name": "sensor_value",
+      			"type": "DOUBLE"
+    			}
+  			]
+		   }
+                </template>
+                <template type="eventstream">
+		  {
+  			"name": "org.wso2.event.grouped.$sensorType.statistics.stream",
+  			"version": "1.0.0",
+  			"nickName": "",
+  			"description": "",
+  			"payloadData": [
+    			{
+      			"name": "sensor_id",
+      			"type": "STRING"
+    			},
+    			{
+		      	"name": "count",
+		      	"type": "LONG"
+		    	},
+		    	{
+		      	"name": "sum",
+		      	"type": "DOUBLE"
+		    	},
+		    	{
+		      	"name": "average",
+		      	"type": "DOUBLE"
+		    	},
+		    	{
+		      	"name": "max",
+		      	"type": "DOUBLE"
+		    	},
+		    	{
+		      	"name": "min",
+		      	"type": "DOUBLE"
+		 	}
+		  	]
+		  }
+                </template>
+                <template type="eventsink">
+                    <![CDATA[
+                <EventStoreConfiguration>
+			<TableSchema>
+			    <ColumnDefinition>
+				<Name>sensor_id</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>true</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>STRING</Type>
+			    </ColumnDefinition>
+			    <ColumnDefinition>
+				<Name>count</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>LONG</Type>
+			    </ColumnDefinition>
+			    <ColumnDefinition>
+				<Name>sum</Name><IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+			    </ColumnDefinition>
+			    <ColumnDefinition>
+				<Name>average</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+			     </ColumnDefinition>
+			     <ColumnDefinition>
+				<Name>max</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+			     </ColumnDefinition>
+			     <ColumnDefinition>
+				<Name>min</Name>
+				<IsFacet>false</IsFacet>
+				<EnableIndexing>false</EnableIndexing>
+				<IsPrimaryKey>false</IsPrimaryKey>
+				<EnableScoreParam>false</EnableScoreParam>
+				<Type>DOUBLE</Type>
+			     </ColumnDefinition>
+			</TableSchema>
+			<Source><StreamId>org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0</StreamId>
+			</Source>
+			<MergeSchema>false</MergeSchema>
+			<RecordStoreName>EVENT_STORE</RecordStoreName>
+	    </EventStoreConfiguration>
+                    ]]>
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+                /* Enter a unique ExecutionPlan */
+		@Plan:name('GroupSensorAnalyticsPlan')
+
+		/* Enter a unique description for ExecutionPlan */
+		-- @Plan:description('ExecutionPlan')
+
+		/* define streams/tables and write queries here ... */
+
+		@Import('org.wso2.event.group.$sensorType.stream:1.0.0')
+		define stream InputStream (sensor_id string, sensor_value double);
+
+		@Export('org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0')
+		define stream OutputStream (sensor_id string, count long, sum double, average double, max double, min double);
+
+		from InputStream#window.time(1 min)
+		select sensor_id, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as max, min(sensor_value) as min
+		group by sensor_id
+		insert into OutputStream;
+                    ]]>
+                </template>
+                <!--<template type="realTime">     &lt;!&ndash;Can define multiple Templates of same type. E.g. of type realTime, as shown here.&ndash;&gt;-->
+
+                <!--</template>
+                <template type="batch">
+
+                </template>
+                <template type="gadget">
+
+                </template>-->
+
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.event.group.$sensorType.stream:1.0.0"/>
+            </streamMappings>
+            <parameters>
+               <parameter name="timeInMins" type="int">
+                    <displayName>The time period to hold events in minutes</displayName>
+                    <description> The sliding time period for which the window should hold events</description>
+                    <defaultValue>1</defaultValue>
+                </parameter>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+            </parameters>
+
+        </scenario>
+    </scenarios>
+</executionManagerTemplate>
+
+
