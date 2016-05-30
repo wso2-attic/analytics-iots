@@ -38,6 +38,7 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/INSTALL.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
+                <exclude>**/master-datasources.xml</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/axis2/axis2.xml</exclude>
                 <exclude>**/log4j.properties</exclude>
@@ -80,6 +81,14 @@
                 <include>**/multitenancy-packages.xml</include>
                 <include>**/stratos.xml</include>
                 <include>**/usage-throttling-agent-config.xml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/repository/conf/datasources</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources
+            </outputDirectory>
+            <includes>
+                <include>**/master-datasources.xml</include>
             </includes>
         </fileSet>
         <fileSet>
