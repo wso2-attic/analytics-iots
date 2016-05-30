@@ -77,6 +77,8 @@
     <ServerRoles>
         <Role>${default.server.role}</Role>
         <Role>${cep.server.role}</Role>
+        <Role>IoTServer</Role>
+        <Role>CDMFPlatform</Role>
     </ServerRoles>
 
     <!-- uncommnet this line to subscribe to a bam instance automatically -->
