@@ -7,59 +7,59 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-  			"name": "org.wso2.event.$sensorType.stream",
-  			"version": "1.0.0",
-  			"nickName": "",
-  			"description": "",
-  			"payloadData": [
-    			{
-      			"name": "sensor_id",
-      			"type": "STRING"
-    			},
-    			{
-      			"name": "sensor_value",
-      			"type": "DOUBLE"
-    			}
-  			]
-		    }
+                    "name": "org.wso2.event.$sensorType.stream",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensor_id",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensor_value",
+                    "type": "DOUBLE"
+                    }
+                    ]
+                    }
                 </template>
                 <template type="eventstream">
                     {
-  			"name": "org.wso2.event.$sensorType.statistics.stream",
-  			"version": "1.0.0",
-  			"nickName": "",
-  			"description": "",
-  			"payloadData": [
-    			{
-      			"name": "sensor_type",
-      			"type": "STRING"
-    			},
-    			{
-      			"name": "sensor_id_distinct_count",
-      			"type": "LONG"
-    			},
-    			{
-      			"name": "count",
-      			"type": "LONG"
-    			},
-    			{
-      			"name": "sum",
-      			"type": "DOUBLE"
-    			},
-    			{
-      			"name": "average",
-      			"type": "DOUBLE"
-    			},
-    			{
-      			"name": "max",
-      			"type": "DOUBLE"
-    			},
-    			{
-      			"name": "min",
-      			"type": "DOUBLE"
-    			}
-  			]
-		   }
+                    "name": "org.wso2.event.$sensorType.statistics.stream",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensor_type",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensor_id_distinct_count",
+                    "type": "LONG"
+                    },
+                    {
+                    "name": "count",
+                    "type": "LONG"
+                    },
+                    {
+                    "name": "sum",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "average",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "max",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "min",
+                    "type": "DOUBLE"
+                    }
+                    ]
+                    }
                 </template>
                 <template type="eventsink">
                     <![CDATA[
@@ -126,7 +126,7 @@
 			<StreamId>org.wso2.event.$sensorType.statistics.stream:1.0.0</StreamId>
 		   </Source>
 		   <MergeSchema>false</MergeSchema>
-		   <RecordStoreName>EVENT_STORE</RecordStoreName>
+		   <RecordStoreName>EVENT_STORE_RWO</RecordStoreName>
 	     </EventStoreConfiguration>
                     ]]>
                 </template>
@@ -261,7 +261,7 @@
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
-                               <![CDATA[
+                                <![CDATA[
                                 {"id":"$sensorType-min-chart","title":"Min $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-min-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-min-chart/index.xml"}}
                                 ]]>
                             </artifact>
@@ -316,61 +316,61 @@
             </parameters>
 
         </scenario>
-	<scenario name="GroupedSensorAnalyticsScenario">
+        <scenario name="GroupedSensorAnalyticsScenario">
             <description>Configure a gadget to display grouped stats, given a stream of your choice</description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-  			"name": "org.wso2.event.group.$sensorType.stream",
-  			"version": "1.0.0",
-  			"nickName": "",
-  			"description": "",
-  			"payloadData": [
-    			{
-      			"name": "sensor_id",
-      			"type": "STRING"
-    			},
-    			{
-      			"name": "sensor_value",
-      			"type": "DOUBLE"
-    			}
-  			]
-		   }
+                    "name": "org.wso2.event.group.$sensorType.stream",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensor_id",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensor_value",
+                    "type": "DOUBLE"
+                    }
+                    ]
+                    }
                 </template>
                 <template type="eventstream">
-		  {
-  			"name": "org.wso2.event.grouped.$sensorType.statistics.stream",
-  			"version": "1.0.0",
-  			"nickName": "",
-  			"description": "",
-  			"payloadData": [
-    			{
-      			"name": "sensor_id",
-      			"type": "STRING"
-    			},
-    			{
-		      	"name": "count",
-		      	"type": "LONG"
-		    	},
-		    	{
-		      	"name": "sum",
-		      	"type": "DOUBLE"
-		    	},
-		    	{
-		      	"name": "average",
-		      	"type": "DOUBLE"
-		    	},
-		    	{
-		      	"name": "max",
-		      	"type": "DOUBLE"
-		    	},
-		    	{
-		      	"name": "min",
-		      	"type": "DOUBLE"
-		 	}
-		  	]
-		  }
+                    {
+                    "name": "org.wso2.event.grouped.$sensorType.statistics.stream",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensor_id",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "count",
+                    "type": "LONG"
+                    },
+                    {
+                    "name": "sum",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "average",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "max",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "min",
+                    "type": "DOUBLE"
+                    }
+                    ]
+                    }
                 </template>
                 <template type="eventsink">
                     <![CDATA[
@@ -427,7 +427,7 @@
 			<Source><StreamId>org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0</StreamId>
 			</Source>
 			<MergeSchema>false</MergeSchema>
-			<RecordStoreName>EVENT_STORE</RecordStoreName>
+			<RecordStoreName>EVENT_STORE_RWO</RecordStoreName>
 	    </EventStoreConfiguration>
                     ]]>
                 </template>
@@ -468,7 +468,7 @@
                 <streamMapping to="org.wso2.event.group.$sensorType.stream:1.0.0"/>
             </streamMappings>
             <parameters>
-               <parameter name="timeInMins" type="int">
+                <parameter name="timeInMins" type="int">
                     <displayName>The time period to hold events in minutes</displayName>
                     <description> The sliding time period for which the window should hold events</description>
                     <defaultValue>1</defaultValue>

@@ -270,61 +270,14 @@
             </includes>
         </fileSet>
 
-        <!--Creating an empty linechart directory-->
+        <!--Copying execution-manager directory-->
         <fileSet>
-            <directory>.</directory>
+            <directory>src/repository/conf/execution-manager</directory>
             <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <!--Creating an empty linechart/js directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <!--Creating an empty linechart/js/chart-libs directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <!-- Copying gadget deployer template js files -->
-        <fileSet>
-            <directory>
-                src/repository/conf/execution-manager/gadget-templates/linechart/js/
-            </directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager
             </outputDirectory>
             <includes>
-                <include>**/*.js</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>
-                src/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs/
-            </directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs
-            </outputDirectory>
-            <includes>
-                <include>**/*.js</include>
+                <include>**/*</include>
             </includes>
         </fileSet>
     </fileSets>
@@ -736,46 +689,6 @@
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/rdbms-configuration.xml
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
-        <!--Copying sample domain template file, sample for CEP Execution Manager -->
-        <file>
-            <source>
-                src/repository/conf/execution-manager/domain-template/temperature-analysis.xml
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
-        <!--Copying sample gadget template files, for Execution Manager -->
-        <file>
-            <source>
-                src/repository/conf/execution-manager/domain-template/batch-data-visualization.xml
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
-        <file>
-            <source>
-                src/repository/conf/execution-manager/gadget-templates/linechart/index.png
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
-        <file>
-            <source>
-                src/repository/conf/execution-manager/gadget-templates/linechart/gadget-controller.jag
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
             </outputDirectory>
             <filtered>true</filtered>
         </file>
