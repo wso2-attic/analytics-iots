@@ -182,7 +182,7 @@
                 <include>org.wso2.cep.storm.dependencies.jar</include>
             </includes>
         </fileSet>
-        
+
         <!-- Some war files related to CEP websockets -->
         <fileSet>
             <directory>
@@ -200,7 +200,6 @@
         <!-- END CEP -->
 
         <!-- Start UES related artifacts -->
-
         <!-- Jaggery modules, carbon and process. Should be copied to <DAS_HOME> -->
         <fileSet>
             <directory>
@@ -228,13 +227,13 @@
             <directory>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/jaggeryapps/portal
             </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal
+            </outputDirectory>
             <excludes>
                 <exclude>**/configs/designer.json</exclude>
             </excludes>
         </fileSet>
         <!-- END UES related dashboard artifacts -->
-
 
         <!--creating an empty event sink directory-->
         <fileSet>
@@ -257,9 +256,9 @@
                 <include>**/*.sql</include>
             </includes>
         </fileSet>
-
     </fileSets>
     <files>
+
         <!-- *********** Default files copy that comes with Carbon ************* -->
         <file>
             <source>target/wso2carbon-core-${carbon.kernel.version}/bin/README.txt</source>
@@ -358,7 +357,9 @@
 
         <!-- ************* Data bridge related files ********** -->
         <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/data-bridge/data-bridge-config.xml</source>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/data-bridge/data-bridge-config.xml
+            </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/data-bridge</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -464,7 +465,7 @@
             <fileMode>644</fileMode>
         </file>
 
-		<!-- Analytics REST APIs WebApp -->
+        <!-- Analytics REST APIs WebApp -->
         <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/webapps/analytics.war
@@ -475,7 +476,7 @@
             <fileMode>644</fileMode>
         </file>
 
-	     <file>
+        <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_analytics_iots-1.0.0.car
             </source>
@@ -528,7 +529,6 @@
 
         <!-- custom wso2server.sh file for DAS-->
         <file>
-            <!--../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/bin/wso2server.sh-->
             <!-- this file is moved to product-das from carbon-analytics DAS-110 -->
             <source>
                 src/bin/wso2server.sh
@@ -574,6 +574,14 @@
         <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/analytics/spark/external-spark-classpath.conf
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/analytics/spark/
+            </outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/analytics/spark/carbon-spark-classpath.conf
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/analytics/spark/
             </outputDirectory>
@@ -743,27 +751,31 @@
             <source>
                 src/ues/designer.json
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/configs/</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/configs/
+            </outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <!-- Adding IoT Analytics Dashboard and gadget CApps -->
         <file>
             <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_analytics_cdmf-1.0.0.car</source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_analytics_cdmf-1.0.0.car
+            </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
             <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_analytics_iots-1.0.0.car</source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_analytics_iots-1.0.0.car
+            </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <!-- Adding Geo Dashboard Capp -->
         <file>
             <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car</source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
+            </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
