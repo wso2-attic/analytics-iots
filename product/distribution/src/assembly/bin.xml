@@ -265,6 +265,60 @@
                 <include>**/*.sql</include>
             </includes>
         </fileSet>
+
+        <!--Creating an empty linechart directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!--Creating an empty linechart/js directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!--Creating an empty linechart/js/chart-libs directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- Copying gadget deployer template js files -->
+        <fileSet>
+            <directory>
+                src/repository/conf/execution-manager/gadget-templates/linechart/js/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js</outputDirectory>
+            <includes>
+                <include>**/*.js</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>
+                src/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs</outputDirectory>
+            <includes>
+                <include>**/*.js</include>
+            </includes>
+        </fileSet>
     </fileSets>
     <files>
 
@@ -669,39 +723,6 @@
             <filtered>true</filtered>
         </file>
 
-        <!--Creating an empty linechart directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <!--Creating an empty linechart/js directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <!--Creating an empty linechart/js/chart-libs directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
         <!--Copying sample gadget template files, for Execution Manager -->
         <file>
             <source>
@@ -726,26 +747,6 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart</outputDirectory>
             <filtered>true</filtered>
         </file>
-
-        <fileSet>
-            <directory>
-                src/repository/conf/execution-manager/gadget-templates/linechart/js/
-            </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js</outputDirectory>
-            <includes>
-                <include>**/*.js</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>
-                src/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs/
-            </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs</outputDirectory>
-            <includes>
-                <include>**/*.js</include>
-            </includes>
-        </fileSet>
 
         <!-- Cipher Tool Files -->
         <file>

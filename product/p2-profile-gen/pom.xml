@@ -427,7 +427,7 @@
                                     <version>${carbon.analytics.common.version}</version>
                                 </feature>
 								<feature>
-                                    <id>org.wso2.carbon.gadget.template.deployer.feature.group</id>
+                                    <id>org.wso2.carbon.gadget.template.deployer.server.feature.group</id>
                                     <version>${carbon.analytics.common.version}</version>
                                 </feature>
                                 <!-- END - Analytics features -->
