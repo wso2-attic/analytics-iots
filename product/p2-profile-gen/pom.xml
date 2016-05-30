@@ -326,7 +326,10 @@
                                     org.jaggeryjs.modules:i18n.feature:${jaggery.modules.i18n.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.jaggeryjs.modules:sso.feature:${sso.feature.version}
+                                    org.jaggeryjs.modules:sso.feature:${jaggery.modules.sso.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:ws.feature:${jaggery.modules.ws.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.jaggeryjs:org.jaggeryjs.server.feature:${jaggery.version}
@@ -690,7 +693,11 @@
                                 </feature>
                                 <feature>
                                     <id>org.jaggeryjs.modules.sso.feature.group</id>
-                                    <version>${sso.feature.version}</version>
+                                    <version>${jaggery.modules.sso.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.ws.feature.group</id>
+                                    <version>${jaggery.modules.ws.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.dashboards.shindig.feature.group</id>
