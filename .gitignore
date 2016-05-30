@@ -20,4 +20,8 @@ target
 .idea
 .DS_Store
 *.pyc
-.sonar.idea
+.sonar
+.idea
+.car
+
+

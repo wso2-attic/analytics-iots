@@ -41,6 +41,10 @@
                 <exclude>**/master-datasources.xml</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/axis2/axis2.xml</exclude>
+                <exclude>**/repository/deployment/server/jaggeryapps/portal/controllers/apis/createGadget.jag</exclude>
+                <exclude>
+                    **/repository/deployment/server/jaggeryapps/portal/templates/gadget-generation-templates/index.xml.hbs
+                </exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/wso2server.sh</exclude>  <!--adding a custom DAS server.sh file-->
                 <exclude>**/registry.xml</exclude>
@@ -304,7 +308,9 @@
             <directory>
                 src/repository/conf/execution-manager/gadget-templates/linechart/js/
             </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js</outputDirectory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js
+            </outputDirectory>
             <includes>
                 <include>**/*.js</include>
             </includes>
@@ -314,7 +320,9 @@
             <directory>
                 src/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs/
             </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs</outputDirectory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart/js/chart-libs
+            </outputDirectory>
             <includes>
                 <include>**/*.js</include>
             </includes>
@@ -550,6 +558,24 @@
         </file>
         <file>
             <source>
+                src/ues/createGadget.jag
+            </source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/controllers/apis
+            </outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>
+                src/ues/index.xml.hbs
+            </source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/templates/gadgets/gadget-generation-templates
+            </outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_analytics_cdmf-1.0.0.car
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps</outputDirectory>
@@ -719,7 +745,8 @@
             <source>
                 src/repository/conf/execution-manager/domain-template/temperature-analysis.xml
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template
+            </outputDirectory>
             <filtered>true</filtered>
         </file>
 
@@ -728,7 +755,8 @@
             <source>
                 src/repository/conf/execution-manager/domain-template/batch-data-visualization.xml
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/domain-template
+            </outputDirectory>
             <filtered>true</filtered>
         </file>
 
@@ -736,7 +764,9 @@
             <source>
                 src/repository/conf/execution-manager/gadget-templates/linechart/index.png
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart</outputDirectory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
+            </outputDirectory>
             <filtered>true</filtered>
         </file>
 
@@ -744,7 +774,9 @@
             <source>
                 src/repository/conf/execution-manager/gadget-templates/linechart/gadget-controller.jag
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart</outputDirectory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager/gadget-templates/linechart
+            </outputDirectory>
             <filtered>true</filtered>
         </file>
 

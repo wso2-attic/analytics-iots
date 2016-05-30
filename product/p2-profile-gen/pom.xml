@@ -118,13 +118,14 @@
                                     org.wso2.carbon.analytics.cdmf:org.wso2.carbon.analytics.cdmf.feature:${cdmf.analytics.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.analytics.gadget.template.feature:${carbon.analytics.common.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.analytics:org.wso2.carbon.analytics.dashboard.ui.feature:${carbon.analytics.version}
                                 </featureArtifactDef>
-
                                 <featureArtifactDef>
                                     org.wso2.carbon.dashboards:org.wso2.carbon.dashboards.deployment.feature:${carbon.dashboard.version}
                                 </featureArtifactDef>
-
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics:org.wso2.carbon.analytics.messageconsole.feature:${carbon.analytics.version}
                                 </featureArtifactDef>
@@ -316,7 +317,7 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.event.stream.template.deployer.server.feature:${carbon.analytics.common.version}
                                 </featureArtifactDef>
-								<featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.gadget.template.deployer.server.feature:${carbon.analytics.common.version}
                                 </featureArtifactDef>
                                 <!-- ************** END - EVENT PROCESSING FEATURES ************ -->
@@ -426,7 +427,7 @@
                                     <id>org.wso2.carbon.event.stream.template.deployer.server.feature.group</id>
                                     <version>${carbon.analytics.common.version}</version>
                                 </feature>
-								<feature>
+                                <feature>
                                     <id>org.wso2.carbon.gadget.template.deployer.server.feature.group</id>
                                     <version>${carbon.analytics.common.version}</version>
                                 </feature>
@@ -766,6 +767,10 @@
                                 <feature>
                                     <id>org.wso2.carbon.analytics.iots.feature.group</id>
                                     <version>${iots.analytics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.analytics.gadget.template.feature.group</id>
+                                    <version>${carbon.analytics.common.version}</version>
                                 </feature>
                                 <!-- End of IoT Analytics Features -->
 
