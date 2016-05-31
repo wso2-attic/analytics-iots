@@ -453,15 +453,97 @@
 		insert into OutputStream;
                     ]]>
                 </template>
-                <!--<template type="realTime">     &lt;!&ndash;Can define multiple Templates of same type. E.g. of type realTime, as shown here.&ndash;&gt;-->
 
-                <!--</template>
-                <template type="batch">
-
-                </template>
+                <!-- Count Bar Chart -->
                 <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-grouped-count</property>
+                            <property name="templateGadget">barChart</property>
+                            <property name="templateDirectory">CountPerSensorId_BarChart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+				{"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count/index.xml"}}
+				                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                       			var gadgetConfig ={"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"bar","y":"count"}]},"domain":"carbon.super"};
+                       			 ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
 
-                </template>-->
+                <!-- Count Bar Chart -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-compare-grouped-count</property>
+                            <property name="templateGadget">donutChart</property>
+                            <property name="templateDirectory">CountPerSensorId_DonutChart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+				{"id":"$sensorType-compare-grouped-count","title":"$sensorType Compare Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count/index.xml"}}
+				                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                       			var gadgetConfig ={"id":"$sensorType-compare-grouped-count","title":"$sensorType Compared Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "donut"}]},"domain":"carbon.super"};
+			 ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+
+                <!-- Count Pie Chart -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-grouped-count-pie</property>
+                            <property name="templateGadget">pieChart</property>
+                            <property name="templateDirectory">CountPerSensorId_PieChart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+				{"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count-pie/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count-pie/index.xml"}}
+				                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                       			var gadgetConfig ={"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "pie"}]},"domain":"carbon.super"};
+								 ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Count Table Chart -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-reading-table</property>
+                            <property name="templateGadget">pieChart</property>
+                            <property name="templateDirectory">TableViewPerSensorID</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+				{"id":"$sensorType-reading-table","title":"$sensorType Reading Table","type":"gadget","thumbnail":"gadget/$sensorType-reading-table/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-reading-table/index.xml"}}
+				                ]]>
+                            </artifact>
+                            <artifact file="js/gadgetconf.js">
+                                <![CDATA[
+                       			var gadgetConfig ={"id":"$sensorType-reading-table","title":"$sensorType Reading Table","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"chartType":"tabular","charts":[{"type":"table","key":"sensor_id","padding":{"top":30,"left":45,"bottom":38,"right":55},"color":"-1","columns":["sensor_id","count","sum","average","max","min"],"columnTitles":["sensor_id","count","sum","average","max","min"]}]},"domain":"carbon.super"};
+								 ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
 
             </templates>
             <streamMappings>
