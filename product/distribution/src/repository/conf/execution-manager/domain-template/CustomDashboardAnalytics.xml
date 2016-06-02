@@ -64,70 +64,70 @@
                 <template type="eventsink">
                     <![CDATA[
                 <EventStoreConfiguration>
-		     <TableSchema>
-			<ColumnDefinition>
-				<Name>sensor_type</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>true</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>STRING</Type>
-			</ColumnDefinition>
-			<ColumnDefinition>
-				<Name>sensor_id_distinct_count</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>LONG</Type>
-			</ColumnDefinition>
-			<ColumnDefinition>
-				<Name>count</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>LONG</Type>
-			</ColumnDefinition>
-			<ColumnDefinition>
-				<Name>sum</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-			</ColumnDefinition>
-			<ColumnDefinition>
-				<Name>average</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-			</ColumnDefinition>
-			<ColumnDefinition>
-				<Name>max</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-				</ColumnDefinition>
-			<ColumnDefinition>
-				<Name>min</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-			</ColumnDefinition>
-		   </TableSchema>
-       		   <Source>
-			<StreamId>org.wso2.event.$sensorType.statistics.stream:1.0.0</StreamId>
-		   </Source>
-		   <MergeSchema>false</MergeSchema>
-		   <RecordStoreName>EVENT_STORE_RWO</RecordStoreName>
-	     </EventStoreConfiguration>
+             <TableSchema>
+            <ColumnDefinition>
+                <Name>sensor_type</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>true</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>STRING</Type>
+            </ColumnDefinition>
+            <ColumnDefinition>
+                <Name>sensor_id_distinct_count</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>LONG</Type>
+            </ColumnDefinition>
+            <ColumnDefinition>
+                <Name>count</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>LONG</Type>
+            </ColumnDefinition>
+            <ColumnDefinition>
+                <Name>sum</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+            </ColumnDefinition>
+            <ColumnDefinition>
+                <Name>average</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+            </ColumnDefinition>
+            <ColumnDefinition>
+                <Name>max</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+                </ColumnDefinition>
+            <ColumnDefinition>
+                <Name>min</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+            </ColumnDefinition>
+           </TableSchema>
+               <Source>
+            <StreamId>org.wso2.event.$sensorType.statistics.stream:1.0.0</StreamId>
+           </Source>
+           <MergeSchema>false</MergeSchema>
+           <RecordStoreName>EVENT_STORE</RecordStoreName>
+         </EventStoreConfiguration>
                     ]]>
                 </template>
                 <template type="realtime">
@@ -143,12 +143,12 @@
                 @Import('org.wso2.event.$sensorType.stream:1.0.0')
                 define stream InputStream (sensor_id string, sensor_value double);
 
-		@Export('org.wso2.event.$sensorType.statistics.stream:1.0.0')
-		define stream OutputStream (sensor_type string, sensor_id_distinct_count long, count long, sum double, average double, max double, min double);
+        @Export('org.wso2.event.$sensorType.statistics.stream:1.0.0')
+        define stream OutputStream (sensor_type string, sensor_id_distinct_count long, count long, sum double, average double, max double, min double);
 
-		from InputStream#window.time($timeInMins min)
-		select '$sensorType' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as 			max, min(sensor_value) as min
-		insert into OutputStream;
+        from InputStream#window.time($timeInMins min)
+        select '$sensorType' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as           max, min(sensor_value) as min
+        insert into OutputStream;
                     ]]>
                 </template>
                 <!--<template type="realTime">     &lt;!&ndash;Can define multiple Templates of same type. E.g. of type realTime, as shown here.&ndash;&gt;-->
@@ -163,7 +163,6 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-average-chart</property>
-                            <property name="templateGadget">Average</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
@@ -186,7 +185,6 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-count-chart</property>
-                            <property name="templateGadget">Count</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
@@ -210,7 +208,6 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-distinctcount-chart</property>
-                            <property name="templateGadget">Count</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
@@ -233,7 +230,6 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-max-chart</property>
-                            <property name="templateGadget">Count</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
@@ -256,7 +252,6 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-min-chart</property>
-                            <property name="templateGadget">Count</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
@@ -280,7 +275,6 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-sum-chart</property>
-                            <property name="templateGadget">Count</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
@@ -295,6 +289,329 @@
                                 ]]>
                             </artifact>
                         </artifacts>
+                    </config>
+                </template>
+
+                <!-- Dashboard -->
+                <template type="dashboard">
+                    <config>
+                        <properties>
+                            <property name="dashboardId">analytics-$sensorType-dashboard</property>
+                        </properties>
+                        <content>
+                            <![CDATA[
+                    {
+                        "accessTokenUrl": "",
+                        "apiKey": "",
+                        "apiSecret": "",
+                        "banner": {
+                            "customBannerExists": false,
+                            "globalBannerExists": false
+                        },
+                        "defaultPriority": "5",
+                        "description": "",
+                        "hideAllMenuItems": false,
+                        "id": "analytics-$sensorType-dashboard",
+                        "identityServerUrl": "",
+                        "isEditorEnable": true,
+                        "isUserCustom": false,
+                        "isanon": false,
+                        "landing": "landing",
+                        "menu": [
+                            {
+                                "id": "landing",
+                                "isanon": false,
+                                "ishidden": false,
+                                "subordinates": [],
+                                "title": "Home"
+                            }
+                        ],
+                        "pages": [
+                            {
+                                "content": {
+                                    "anon": {},
+                                    "default": {
+                                        "a": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-max-chart/index.xml"
+                                                    },
+                                                    "id": "$sensorType-max-chart",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "Max $sensorType"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-max-chart/gadgetIcon.png",
+                                                    "title": "Max $sensorType",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-max-chart-0"
+                                            }
+                                        ],
+                                        "b": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-sum-chart/index.xml"
+                                                    },
+                                                    "id": "$sensorType-sum-chart",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "Sum $sensorType"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-sum-chart/gadgetIcon.png",
+                                                    "title": "Sum $sensorType",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-sum-chart-0"
+                                            }
+                                        ],
+                                        "c": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-min-chart/index.xml"
+                                                    },
+                                                    "id": "$sensorType-min-chart",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "Min $sensorType"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-min-chart/gadgetIcon.png",
+                                                    "title": "Min $sensorType",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-min-chart-0"
+                                            }
+                                        ],
+                                        "d": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-average-chart/index.xml"
+                                                    },
+                                                    "id": "$sensorType-average-chart",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "Average $sensorType"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-average-chart/gadgetIcon.png",
+                                                    "title": "Average $sensorType",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-average-chart-0"
+                                            }
+                                        ],
+                                        "e": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-count-chart/index.xml"
+                                                    },
+                                                    "id": "$sensorType-count-chart",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "Count $sensorType"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-average-chart/gadgetIcon.png",
+                                                    "title": "Count $sensorType",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-count-chart-0"
+                                            }
+                                        ],
+                                        "f": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-distinctcount-chart/index.xml"
+                                                    },
+                                                    "id": "$sensorType-distinctcount-chart",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "Distinct Count $sensorType"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-distinctcount-chart/gadgetIcon.png",
+                                                    "title": "Distinct Count $sensorType",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-distinctcount-chart-0"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "id": "landing",
+                                "isanon": false,
+                                "layout": {
+                                    "content": {
+                                        "loggedIn": {
+                                            "blocks": [
+                                                {
+                                                    "height": 3,
+                                                    "id": "a",
+                                                    "width": 4,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                {
+                                                    "height": 3,
+                                                    "id": "b",
+                                                    "width": 4,
+                                                    "x": 4,
+                                                    "y": 0
+                                                },
+                                                {
+                                                    "height": 3,
+                                                    "id": "c",
+                                                    "width": 4,
+                                                    "x": 8,
+                                                    "y": 0
+                                                },
+                                                {
+                                                    "height": 3,
+                                                    "id": "d",
+                                                    "width": 4,
+                                                    "x": 0,
+                                                    "y": 3
+                                                },
+                                                {
+                                                    "height": 3,
+                                                    "id": "e",
+                                                    "width": 4,
+                                                    "x": 4,
+                                                    "y": 3
+                                                },
+                                                {
+                                                    "height": 3,
+                                                    "id": "f",
+                                                    "width": 4,
+                                                    "x": 8,
+                                                    "y": 3
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "fluidLayout": false
+                                },
+                                "title": "Home"
+                            }
+                        ],
+                        "permissions": {
+                            "editors": [
+                                "Internal/everyone"
+                            ],
+                            "viewers": [
+                                "Internal/everyone"
+                            ]
+                        },
+                        "theme": "Default Theme",
+                        "title": "Analytics $sensorType Dashboard"
+                    }
+                    ]]>
+                        </content>
                     </config>
                 </template>
 
@@ -375,82 +692,82 @@
                 <template type="eventsink">
                     <![CDATA[
                 <EventStoreConfiguration>
-			<TableSchema>
-			    <ColumnDefinition>
-				<Name>sensor_id</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>true</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>STRING</Type>
-			    </ColumnDefinition>
-			    <ColumnDefinition>
-				<Name>count</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>LONG</Type>
-			    </ColumnDefinition>
-			    <ColumnDefinition>
-				<Name>sum</Name><IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-			    </ColumnDefinition>
-			    <ColumnDefinition>
-				<Name>average</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-			     </ColumnDefinition>
-			     <ColumnDefinition>
-				<Name>max</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-			     </ColumnDefinition>
-			     <ColumnDefinition>
-				<Name>min</Name>
-				<IsFacet>false</IsFacet>
-				<EnableIndexing>false</EnableIndexing>
-				<IsPrimaryKey>false</IsPrimaryKey>
-				<EnableScoreParam>false</EnableScoreParam>
-				<Type>DOUBLE</Type>
-			     </ColumnDefinition>
-			</TableSchema>
-			<Source><StreamId>org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0</StreamId>
-			</Source>
-			<MergeSchema>false</MergeSchema>
-			<RecordStoreName>EVENT_STORE_RWO</RecordStoreName>
-	    </EventStoreConfiguration>
+            <TableSchema>
+                <ColumnDefinition>
+                <Name>sensor_id</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>true</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>STRING</Type>
+                </ColumnDefinition>
+                <ColumnDefinition>
+                <Name>count</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>LONG</Type>
+                </ColumnDefinition>
+                <ColumnDefinition>
+                <Name>sum</Name><IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+                </ColumnDefinition>
+                <ColumnDefinition>
+                <Name>average</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+                 </ColumnDefinition>
+                 <ColumnDefinition>
+                <Name>max</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+                 </ColumnDefinition>
+                 <ColumnDefinition>
+                <Name>min</Name>
+                <IsFacet>false</IsFacet>
+                <EnableIndexing>false</EnableIndexing>
+                <IsPrimaryKey>false</IsPrimaryKey>
+                <EnableScoreParam>false</EnableScoreParam>
+                <Type>DOUBLE</Type>
+                 </ColumnDefinition>
+            </TableSchema>
+            <Source><StreamId>org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0</StreamId>
+            </Source>
+            <MergeSchema>false</MergeSchema>
+            <RecordStoreName>EVENT_STORE</RecordStoreName>
+        </EventStoreConfiguration>
                     ]]>
                 </template>
                 <template type="realtime">
                     <![CDATA[
                 /* Enter a unique ExecutionPlan */
-		@Plan:name('GroupSensorAnalyticsPlan')
+        @Plan:name('GroupSensorAnalyticsPlan')
 
-		/* Enter a unique description for ExecutionPlan */
-		-- @Plan:description('ExecutionPlan')
+        /* Enter a unique description for ExecutionPlan */
+        -- @Plan:description('ExecutionPlan')
 
-		/* define streams/tables and write queries here ... */
+        /* define streams/tables and write queries here ... */
 
-		@Import('org.wso2.event.group.$sensorType.stream:1.0.0')
-		define stream InputStream (sensor_id string, sensor_value double);
+        @Import('org.wso2.event.group.$sensorType.stream:1.0.0')
+        define stream InputStream (sensor_id string, sensor_value double);
 
-		@Export('org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0')
-		define stream OutputStream (sensor_id string, count long, sum double, average double, max double, min double);
+        @Export('org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0')
+        define stream OutputStream (sensor_id string, count long, sum double, average double, max double, min double);
 
-		from InputStream#window.time(1 min)
-		select sensor_id, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as max, min(sensor_value) as min
-		group by sensor_id
-		insert into OutputStream;
+        from InputStream#window.time(1 min)
+        select sensor_id, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as max, min(sensor_value) as min
+        group by sensor_id
+        insert into OutputStream;
                     ]]>
                 </template>
 
@@ -459,42 +776,40 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-grouped-count</property>
-                            <property name="templateGadget">barChart</property>
                             <property name="templateDirectory">CountPerSensorId_BarChart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-				{"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count/index.xml"}}
-				                ]]>
+                {"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count/index.xml"}}
+                                ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                       			var gadgetConfig ={"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"bar","y":"count"}]},"domain":"carbon.super"};
-                       			 ]]>
+                                var gadgetConfig ={"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"bar","y":"count"}]},"domain":"carbon.super"};
+                                 ]]>
                             </artifact>
                         </artifacts>
                     </config>
                 </template>
 
-                <!-- Count Bar Chart -->
+                <!-- Count Donut Chart -->
                 <template type="gadget">
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-compare-grouped-count</property>
-                            <property name="templateGadget">donutChart</property>
                             <property name="templateDirectory">CountPerSensorId_DonutChart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-				{"id":"$sensorType-compare-grouped-count","title":"$sensorType Compare Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count/index.xml"}}
-				                ]]>
+                {"id":"$sensorType-compare-grouped-count","title":"$sensorType Compare Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/gadgetIcon.png","data":{"url":"gadget/$sensorType-compare-grouped-count/index.xml"}}
+                                ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                       			var gadgetConfig ={"id":"$sensorType-compare-grouped-count","title":"$sensorType Compared Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "donut"}]},"domain":"carbon.super"};
-			 ]]>
+                                var gadgetConfig ={"id":"$sensorType-compare-grouped-count","title":"$sensorType Compared Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "donut"}]},"domain":"carbon.super"};
+             ]]>
                             </artifact>
                         </artifacts>
                     </config>
@@ -505,19 +820,18 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-grouped-count-pie</property>
-                            <property name="templateGadget">pieChart</property>
                             <property name="templateDirectory">CountPerSensorId_PieChart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-				{"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count-pie/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count-pie/index.xml"}}
-				                ]]>
+                {"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count-pie/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count-pie/index.xml"}}
+                                ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                       			var gadgetConfig ={"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "pie"}]},"domain":"carbon.super"};
-								 ]]>
+                                var gadgetConfig ={"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "pie"}]},"domain":"carbon.super"};
+                                 ]]>
                             </artifact>
                         </artifacts>
                     </config>
@@ -527,21 +841,263 @@
                     <config>
                         <properties>
                             <property name="directoryName">$sensorType-reading-table</property>
-                            <property name="templateGadget">pieChart</property>
                             <property name="templateDirectory">TableViewPerSensorID</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-				{"id":"$sensorType-reading-table","title":"$sensorType Reading Table","type":"gadget","thumbnail":"gadget/$sensorType-reading-table/images/gadgetIcon.png","data":{"url":"gadget/$sensorType-reading-table/index.xml"}}
-				                ]]>
+                {"id":"$sensorType-reading-table","title":"$sensorType Reading Table","type":"gadget","thumbnail":"gadget/$sensorType-reading-table/gadgetIcon.png","data":{"url":"gadget/$sensorType-reading-table/index.xml"}}
+                                ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                       			var gadgetConfig ={"id":"$sensorType-reading-table","title":"$sensorType Reading Table","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"chartType":"tabular","charts":[{"type":"table","key":"sensor_id","padding":{"top":30,"left":45,"bottom":38,"right":55},"color":"-1","columns":["sensor_id","count","sum","average","max","min"],"columnTitles":["sensor_id","count","sum","average","max","min"]}]},"domain":"carbon.super"};
-								 ]]>
+                                var gadgetConfig ={"id":"$sensorType-reading-table","title":"$sensorType Reading Table","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"chartType":"tabular","charts":[{"type":"table","key":"sensor_id","padding":{"top":30,"left":45,"bottom":38,"right":55},"color":"-1","columns":["sensor_id","count","sum","average","max","min"],"columnTitles":["sensor_id","count","sum","average","max","min"]}]},"domain":"carbon.super"};
+                                 ]]>
                             </artifact>
                         </artifacts>
+                    </config>
+                </template>
+
+                <!-- Dashboard -->
+                <template type="dashboard">
+                    <config>
+                        <properties>
+                            <property name="dashboardId">grouped-$sensorType-dashboard</property>
+                        </properties>
+                        <content>
+                            <![CDATA[
+                    {
+                        "accessTokenUrl": "",
+                        "apiKey": "",
+                        "apiSecret": "",
+                        "banner": {
+                            "customBannerExists": false,
+                            "globalBannerExists": false
+                        },
+                        "defaultPriority": "5",
+                        "description": "",
+                        "hideAllMenuItems": false,
+                        "id": "grouped-$sensorType-dashboard",
+                        "identityServerUrl": "",
+                        "isEditorEnable": true,
+                        "isUserCustom": false,
+                        "isanon": false,
+                        "landing": "landing",
+                        "menu": [
+                            {
+                                "id": "landing",
+                                "isanon": false,
+                                "ishidden": false,
+                                "subordinates": [],
+                                "title": "Home"
+                            }
+                        ],
+                        "pages": [
+                            {
+                                "content": {
+                                    "anon": {},
+                                    "default": {
+                                        "a": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-compare-grouped-count/index.xml"
+                                                    },
+                                                    "id": "$sensorType-compare-grouped-count",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "$sensorType Compare Grouped Count"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-compare-grouped-count/gadgetIcon.png",
+                                                    "title": "$sensorType Compare Grouped Count",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-compare-grouped-count-0"
+                                            }
+                                        ],
+                                        "b": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-grouped-count/index.xml"
+                                                    },
+                                                    "id": "$sensorType-grouped-count",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "$sensorType Grouped Count"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-grouped-count/gadgetIcon.png",
+                                                    "title": "$sensorType Grouped Count",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-grouped-count-0"
+                                            }
+                                        ],
+                                        "c": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-grouped-count-pie/index.xml"
+                                                    },
+                                                    "id": "$sensorType-grouped-count-pie",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "$sensorType Count in Pie"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-grouped-count-pie/gadgetIcon.png",
+                                                    "title": "$sensorType Count in Pie",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-grouped-count-pie-0"
+                                            }
+                                        ],
+                                        "d": [
+                                            {
+                                                "content": {
+                                                    "data": {
+                                                        "url": "fs://gadget/$sensorType-reading-table/index.xml"
+                                                    },
+                                                    "id": "$sensorType-reading-table",
+                                                    "locale_titles": {},
+                                                    "options": {
+                                                        "dataSource": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Data Source",
+                                                            "type": "STRING",
+                                                            "value": "/portal/gadgets/bar-chart/datasource/dataFile4.jag"
+                                                        },
+                                                        "updateGraph": {
+                                                            "options": [],
+                                                            "required": false,
+                                                            "title": "Update Interval (s)",
+                                                            "type": "STRING",
+                                                            "value": "No"
+                                                        }
+                                                    },
+                                                    "styles": {
+                                                        "borders": true,
+                                                        "title": "$sensorType Reading Table"
+                                                    },
+                                                    "thumbnail": "fs://gadget/$sensorType-reading-table/gadgetIcon.png",
+                                                    "title": "$sensorType Reading Table",
+                                                    "type": "gadget"
+                                                },
+                                                "id": "$sensorType-reading-table-0"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "id": "landing",
+                                "isanon": false,
+                                "layout": {
+                                    "content": {
+                                        "loggedIn": {
+                                            "blocks": [
+                                                {
+                                                    "banner": false,
+                                                    "height": 3,
+                                                    "id": "a",
+                                                    "width": 4,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                {
+                                                    "banner": false,
+                                                    "height": 3,
+                                                    "id": "b",
+                                                    "width": 4,
+                                                    "x": 4,
+                                                    "y": 0
+                                                },
+                                                {
+                                                    "banner": false,
+                                                    "height": 3,
+                                                    "id": "c",
+                                                    "width": 4,
+                                                    "x": 8,
+                                                    "y": 0
+                                                },
+                                                {
+                                                    "banner": false,
+                                                    "height": 5,
+                                                    "id": "d",
+                                                    "width": 12,
+                                                    "x": 0,
+                                                    "y": 3
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "fluidLayout": false
+                                },
+                                "title": "Home"
+                            }
+                        ],
+                        "permissions": {
+                            "editors": [
+                                "Internal/everyone"
+                            ],
+                            "viewers": [
+                                "Internal/everyone"
+                            ]
+                        },
+                        "theme": "Default Theme",
+                        "title": "Grouped $sensorType Dashboard"
+                    }
+                    ]]>
+                        </content>
                     </config>
                 </template>
 
@@ -565,5 +1121,3 @@
         </scenario>
     </scenarios>
 </executionManagerTemplate>
-
-
