@@ -1,7 +1,7 @@
-<executionManagerTemplate domain="CustomDashboardAnalytics">
+<domain name="CustomDashboardAnalytics">
     <description>Templates for creating custom analytic dashboards</description>
     <scenarios>
-        <scenario name="SensorAnalyticsScenario">
+        <scenario type="SensorAnalyticsScenario">
             <description>Configure a gadget to display stats, given a stream of your choice</description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
@@ -633,7 +633,7 @@
             </parameters>
 
         </scenario>
-        <scenario name="GroupedSensorAnalyticsScenario">
+        <scenario type="GroupedSensorAnalyticsScenario">
             <description>Configure a gadget to display grouped stats, given a stream of your choice</description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
@@ -1120,4 +1120,4 @@
 
         </scenario>
     </scenarios>
-</executionManagerTemplate>
+</domain>
