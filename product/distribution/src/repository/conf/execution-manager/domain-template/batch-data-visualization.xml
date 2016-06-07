@@ -15,10 +15,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<executionManagerTemplate domain="BatchDataVisualization">
+<domain name="BatchDataVisualization">
     <description>Batch Data Visualization Description</description>
     <scenarios>
-        <scenario name="Line Chart">
+        <scenario type="Line Chart">
             <description>Plot two attributes in a line chart</description>
             <templates>
                 <template type="gadget">
@@ -205,4 +205,4 @@
             </parameters>
         </scenario>
     </scenarios>
-</executionManagerTemplate>
+</domain>
