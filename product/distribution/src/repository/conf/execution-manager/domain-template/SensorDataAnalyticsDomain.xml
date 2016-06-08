@@ -1,8 +1,8 @@
-<domain name="CustomDashboardAnalytics">
-    <description>Templates for creating custom analytic dashboards</description>
+<domain name="SensorDataAnalyticsDomain">
+    <description>Domain for sensor data analysis</description>
     <scenarios>
-        <scenario type="SensorAnalyticsScenario">
-            <description>Configure a gadget to display stats, given a stream of your choice</description>
+        <scenario type="SensorAnalytics">
+            <description>Configure a sensor analytics scenario to display statistics for a given stream of your choice</description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
@@ -621,7 +621,7 @@
             </streamMappings>
             <parameters>
                 <parameter name="timeInMins" type="int">
-                    <displayName>The time period to hold events in minutes</displayName>
+                    <displayName>Time(Mins)</displayName>
                     <description> The sliding time period for which the window should hold events</description>
                     <defaultValue>1</defaultValue>
                 </parameter>
@@ -633,8 +633,8 @@
             </parameters>
 
         </scenario>
-        <scenario type="GroupedSensorAnalyticsScenario">
-            <description>Configure a gadget to display grouped stats, given a stream of your choice</description>
+        <scenario type="GroupedSensorAnalytics">
+            <description>Configure a sensor analytics scenario with grouped by sensor_id to display statistics for a given stream of your choice</description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
@@ -1107,7 +1107,7 @@
             </streamMappings>
             <parameters>
                 <parameter name="timeInMins" type="int">
-                    <displayName>The time period to hold events in minutes</displayName>
+                    <displayName>Time (Mins)</displayName>
                     <description> The sliding time period for which the window should hold events</description>
                     <defaultValue>1</defaultValue>
                 </parameter>
