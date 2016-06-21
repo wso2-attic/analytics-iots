@@ -41,10 +41,6 @@
                 <exclude>**/master-datasources.xml</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/axis2/axis2.xml</exclude>
-                <exclude>**/repository/deployment/server/jaggeryapps/portal/controllers/apis/createGadget.jag</exclude>
-                <exclude>
-                    **/repository/deployment/server/jaggeryapps/portal/templates/gadget-generation-templates/index.xml.hbs
-                </exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/wso2server.sh</exclude>  <!--adding a custom DAS server.sh file-->
                 <exclude>**/registry.xml</exclude>
@@ -508,24 +504,6 @@
             <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
             <!--filtered>true</filtered-->
             <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>
-                src/ues/createGadget.jag
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/controllers/apis
-            </outputDirectory>
-            <fileMode>755</fileMode>
-        </file>
-        <file>
-            <source>
-                src/ues/index.xml.hbs
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/templates/gadgets/gadget-generation-templates
-            </outputDirectory>
-            <fileMode>755</fileMode>
         </file>
         <file>
             <source>
