@@ -1,0 +1,9 @@
+{
+    "id": "HistoricalValueChart",
+    "title": "HistoricalValueChart",
+    "type": "gadget",
+    "thumbnail": "gadget/usa-business-revenue/index.png",
+    "data": {
+        "url": "gadget/HistoricalValueChart/index.xml"
+    }
+}
