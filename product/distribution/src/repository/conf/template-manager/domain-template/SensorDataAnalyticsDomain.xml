@@ -7,7 +7,7 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.event.$sensorType.stream",
+                    "name": "org.wso2.event.${toId('$sensorType')}.stream",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -25,7 +25,7 @@
                 </template>
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.event.$sensorType.statistics.stream",
+                    "name": "org.wso2.event.${toId('$sensorType')}.statistics.stream",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -123,7 +123,7 @@
             </ColumnDefinition>
            </TableSchema>
                <Source>
-            <StreamId>org.wso2.event.$sensorType.statistics.stream:1.0.0</StreamId>
+            <StreamId>org.wso2.event.${toId('$sensorType')}.statistics.stream:1.0.0</StreamId>
            </Source>
            <MergeSchema>false</MergeSchema>
            <RecordStoreName>EVENT_STORE</RecordStoreName>
@@ -140,14 +140,14 @@
 
                 /* define streams/tables and write queries here ... */
 
-                @Import('org.wso2.event.$sensorType.stream:1.0.0')
+                @Import('org.wso2.event.${toId('$sensorType')}.stream:1.0.0')
                 define stream InputStream (sensor_id string, sensor_value double);
 
-        @Export('org.wso2.event.$sensorType.statistics.stream:1.0.0')
+        @Export('org.wso2.event.${toId('$sensorType')}.statistics.stream:1.0.0')
         define stream OutputStream (sensor_type string, sensor_id_distinct_count long, count long, sum double, average double, max double, min double);
 
         from InputStream#window.time($timeInMins min)
-        select '$sensorType' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as           max, min(sensor_value) as min
+        select '${toId('$sensorType')}' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as           max, min(sensor_value) as min
         insert into OutputStream;
                     ]]>
                 </template>
@@ -162,18 +162,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-average-chart</property>
+                            <property name="directoryName">${toId('$sensorType')}-average-chart</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                                {"id":"$sensorType-average-chart","title":"Average $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-average-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-average-chart/index.xml"}}
+                                {"id":"${toId('$sensorType')}-average-chart","title":"Average $sensorType","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-average-chart/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-average-chart/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-average-chart","title":"Average $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"average","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Average of $sensorType"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-average-chart","title":"Average $sensorType","datasource":"ORG_WSO2_EVENT_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"average","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Average of $sensorType"}]},"domain":"carbon.super"};
                                 ]]>
                             </artifact>
                         </artifacts>
@@ -184,18 +184,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-count-chart</property>
+                            <property name="directoryName">${toId('$sensorType')}-count-chart</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                                {"id":"$sensorType-count-chart","title":"Count $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-average-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-count-chart/index.xml"}}
+                                {"id":"${toId('$sensorType')}-count-chart","title":"Count $sensorType","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-average-chart/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-count-chart/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-count-chart","title":"Count $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"count","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Count of $sensorType"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-count-chart","title":"Count $sensorType","datasource":"ORG_WSO2_EVENT_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"count","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Count of $sensorType"}]},"domain":"carbon.super"};
 
                                 ]]>
                             </artifact>
@@ -207,18 +207,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-distinctcount-chart</property>
+                            <property name="directoryName">${toId('$sensorType')}-distinctcount-chart</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                                {"id":"$sensorType-distinctcount-chart","title":"Distinct Count $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-distinctcount-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-distinctcount-chart/index.xml"}}
+                                {"id":"${toId('$sensorType')}-distinctcount-chart","title":"Distinct Count $sensorType","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-distinctcount-chart/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-distinctcount-chart/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-distinctcount-chart","title":"Sensor ID Count $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id_distinct_count","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Sensor ID Distinct Count of $sensorType"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-distinctcount-chart","title":"Sensor ID Count $sensorType","datasource":"ORG_WSO2_EVENT_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id_distinct_count","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays Sensor ID Distinct Count of $sensorType"}]},"domain":"carbon.super"};
                                 ]]>
                             </artifact>
                         </artifacts>
@@ -229,18 +229,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-max-chart</property>
+                            <property name="directoryName">${toId('$sensorType')}-max-chart</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                                {"id":"$sensorType-max-chart","title":"Max $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-max-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-max-chart/index.xml"}}
+                                {"id":"${toId('$sensorType')}-max-chart","title":"Max $sensorType","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-max-chart/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-max-chart/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-max-chart","title":"Max $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"max","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the maximum $sensorType"}]},"domain":"carbon.super"}
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-max-chart","title":"Max $sensorType","datasource":"ORG_WSO2_EVENT_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"max","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the maximum $sensorType"}]},"domain":"carbon.super"}
                                 ]]>
                             </artifact>
                         </artifacts>
@@ -251,18 +251,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-min-chart</property>
+                            <property name="directoryName">${toId('$sensorType')}-min-chart</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                                {"id":"$sensorType-min-chart","title":"Min $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-min-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-min-chart/index.xml"}}
+                                {"id":"${toId('$sensorType')}-min-chart","title":"Min $sensorType","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-min-chart/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-min-chart/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-min-chart","title":"Min $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"min","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the minimum of $sensorType"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-min-chart","title":"Min $sensorType","datasource":"ORG_WSO2_EVENT_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"min","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the minimum of $sensorType"}]},"domain":"carbon.super"};
 
                                 ]]>
                             </artifact>
@@ -274,18 +274,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-sum-chart</property>
+                            <property name="directoryName">${toId('$sensorType')}-sum-chart</property>
                             <property name="templateDirectory">numberchart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                                {"id":"$sensorType-sum-chart","title":"Sum $sensorType","type":"gadget","thumbnail":"gadget/$sensorType-sum-chart/gadgetIcon.png","data":{"url":"gadget/$sensorType-sum-chart/index.xml"}}
+                                {"id":"${toId('$sensorType')}-sum-chart","title":"Sum $sensorType","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-sum-chart/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-sum-chart/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-sum-chart","title":"Sum $sensorType","datasource":"ORG_WSO2_EVENT_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sum","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the sum of $sensorType"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-sum-chart","title":"Sum $sensorType","datasource":"ORG_WSO2_EVENT_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_type","type":"string"},{"name":"sensor_id_distinct_count","type":"long"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sum","maxLength":"","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"number","title":"Displays the sum of $sensorType"}]},"domain":"carbon.super"};
                                 ]]>
                             </artifact>
                         </artifacts>
@@ -296,7 +296,7 @@
                 <template type="dashboard">
                     <config>
                         <properties>
-                            <property name="dashboardId">analytics-$sensorType-dashboard</property>
+                            <property name="dashboardId">analytics-${toId('$sensorType')}-dashboard</property>
                         </properties>
                         <content>
                             <![CDATA[
@@ -311,7 +311,7 @@
                         "defaultPriority": "5",
                         "description": "",
                         "hideAllMenuItems": false,
-                        "id": "analytics-$sensorType-dashboard",
+                        "id": "analytics-${toId('$sensorType')}-dashboard",
                         "identityServerUrl": "",
                         "isEditorEnable": true,
                         "isUserCustom": false,
@@ -335,9 +335,9 @@
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-max-chart/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-max-chart/index.xml"
                                                     },
-                                                    "id": "$sensorType-max-chart",
+                                                    "id": "${toId('$sensorType')}-max-chart",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -359,20 +359,20 @@
                                                         "borders": true,
                                                         "title": "Max $sensorType"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-max-chart/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-max-chart/gadgetIcon.png",
                                                     "title": "Max $sensorType",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-max-chart-0"
+                                                "id": "${toId('$sensorType')}-max-chart-0"
                                             }
                                         ],
                                         "b": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-sum-chart/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-sum-chart/index.xml"
                                                     },
-                                                    "id": "$sensorType-sum-chart",
+                                                    "id": "${toId('$sensorType')}-sum-chart",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -394,20 +394,20 @@
                                                         "borders": true,
                                                         "title": "Sum $sensorType"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-sum-chart/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-sum-chart/gadgetIcon.png",
                                                     "title": "Sum $sensorType",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-sum-chart-0"
+                                                "id": "${toId('$sensorType')}-sum-chart-0"
                                             }
                                         ],
                                         "c": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-min-chart/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-min-chart/index.xml"
                                                     },
-                                                    "id": "$sensorType-min-chart",
+                                                    "id": "${toId('$sensorType')}-min-chart",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -429,20 +429,20 @@
                                                         "borders": true,
                                                         "title": "Min $sensorType"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-min-chart/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-min-chart/gadgetIcon.png",
                                                     "title": "Min $sensorType",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-min-chart-0"
+                                                "id": "${toId('$sensorType')}-min-chart-0"
                                             }
                                         ],
                                         "d": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-average-chart/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-average-chart/index.xml"
                                                     },
-                                                    "id": "$sensorType-average-chart",
+                                                    "id": "${toId('$sensorType')}-average-chart",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -464,20 +464,20 @@
                                                         "borders": true,
                                                         "title": "Average $sensorType"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-average-chart/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-average-chart/gadgetIcon.png",
                                                     "title": "Average $sensorType",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-average-chart-0"
+                                                "id": "${toId('$sensorType')}-average-chart-0"
                                             }
                                         ],
                                         "e": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-count-chart/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-count-chart/index.xml"
                                                     },
-                                                    "id": "$sensorType-count-chart",
+                                                    "id": "${toId('$sensorType')}-count-chart",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -499,20 +499,20 @@
                                                         "borders": true,
                                                         "title": "Count $sensorType"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-average-chart/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-average-chart/gadgetIcon.png",
                                                     "title": "Count $sensorType",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-count-chart-0"
+                                                "id": "${toId('$sensorType')}-count-chart-0"
                                             }
                                         ],
                                         "f": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-distinctcount-chart/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-distinctcount-chart/index.xml"
                                                     },
-                                                    "id": "$sensorType-distinctcount-chart",
+                                                    "id": "${toId('$sensorType')}-distinctcount-chart",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -534,11 +534,11 @@
                                                         "borders": true,
                                                         "title": "Distinct Count $sensorType"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-distinctcount-chart/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-distinctcount-chart/gadgetIcon.png",
                                                     "title": "Distinct Count $sensorType",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-distinctcount-chart-0"
+                                                "id": "${toId('$sensorType')}-distinctcount-chart-0"
                                             }
                                         ]
                                     }
@@ -617,7 +617,7 @@
 
             </templates>
             <streamMappings>
-                <streamMapping to="org.wso2.event.$sensorType.stream:1.0.0"/>
+                <streamMapping to="org.wso2.event.${toId('$sensorType')}.stream:1.0.0"/>
             </streamMappings>
             <parameters>
                 <parameter name="timeInMins" type="int">
@@ -639,7 +639,7 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.event.group.$sensorType.stream",
+                    "name": "org.wso2.event.group.${toId('$sensorType')}.stream",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -657,7 +657,7 @@
                 </template>
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.event.grouped.$sensorType.statistics.stream",
+                    "name": "org.wso2.event.grouped.${toId('$sensorType')}.statistics.stream",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -741,7 +741,7 @@
                 <Type>DOUBLE</Type>
                  </ColumnDefinition>
             </TableSchema>
-            <Source><StreamId>org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0</StreamId>
+            <Source><StreamId>org.wso2.event.grouped.${toId('$sensorType')}.statistics.stream:1.0.0</StreamId>
             </Source>
             <MergeSchema>false</MergeSchema>
             <RecordStoreName>EVENT_STORE</RecordStoreName>
@@ -758,10 +758,10 @@
 
         /* define streams/tables and write queries here ... */
 
-        @Import('org.wso2.event.group.$sensorType.stream:1.0.0')
+        @Import('org.wso2.event.group.${toId('$sensorType')}.stream:1.0.0')
         define stream InputStream (sensor_id string, sensor_value double);
 
-        @Export('org.wso2.event.grouped.$sensorType.statistics.stream:1.0.0')
+        @Export('org.wso2.event.grouped.${toId('$sensorType')}.statistics.stream:1.0.0')
         define stream OutputStream (sensor_id string, count long, sum double, average double, max double, min double);
 
         from InputStream#window.time(1 min)
@@ -775,18 +775,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-grouped-count</property>
+                            <property name="directoryName">${toId('$sensorType')}-grouped-count</property>
                             <property name="templateDirectory">CountPerSensorId_BarChart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                {"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count/index.xml"}}
+                {"id":"${toId('$sensorType')}-grouped-count","title":"$sensorType Grouped Count","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-grouped-count/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-grouped-count/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-grouped-count","title":"$sensorType Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"bar","y":"count"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-grouped-count","title":"$sensorType Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","padding":{"top":30,"left":45,"bottom":38,"right":55},"charts":[{"type":"bar","y":"count"}]},"domain":"carbon.super"};
                                  ]]>
                             </artifact>
                         </artifacts>
@@ -797,18 +797,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-compare-grouped-count</property>
+                            <property name="directoryName">${toId('$sensorType')}-compare-grouped-count</property>
                             <property name="templateDirectory">CountPerSensorId_DonutChart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                {"id":"$sensorType-compare-grouped-count","title":"$sensorType Compare Grouped Count","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count/gadgetIcon.png","data":{"url":"gadget/$sensorType-compare-grouped-count/index.xml"}}
+                {"id":"${toId('$sensorType')}-compare-grouped-count","title":"$sensorType Compare Grouped Count","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-grouped-count/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-compare-grouped-count/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-compare-grouped-count","title":"$sensorType Compared Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "donut"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-compare-grouped-count","title":"$sensorType Compared Grouped Count","datasource":"ORG_WSO2_EVENT_GROUPED_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "donut"}]},"domain":"carbon.super"};
              ]]>
                             </artifact>
                         </artifacts>
@@ -819,18 +819,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-grouped-count-pie</property>
+                            <property name="directoryName">${toId('$sensorType')}-grouped-count-pie</property>
                             <property name="templateDirectory">CountPerSensorId_PieChart</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                {"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","type":"gadget","thumbnail":"gadget/$sensorType-grouped-count-pie/gadgetIcon.png","data":{"url":"gadget/$sensorType-grouped-count-pie/index.xml"}}
+                {"id":"${toId('$sensorType')}-grouped-count-pie","title":"$sensorType Count in Pie","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-grouped-count-pie/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-grouped-count-pie/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-grouped-count-pie","title":"$sensorType Count in Pie","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "pie"}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-grouped-count-pie","title":"$sensorType Count in Pie","datasource":"ORG_WSO2_EVENT_GROUPED_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"x":"sensor_id","maxLength":"100","charts":[{type: "arc",  x : "count", color : "sensor_id", mode: "pie"}]},"domain":"carbon.super"};
                                  ]]>
                             </artifact>
                         </artifacts>
@@ -840,18 +840,18 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-reading-table</property>
+                            <property name="directoryName">${toId('$sensorType')}-reading-table</property>
                             <property name="templateDirectory">TableViewPerSensorID</property>
                         </properties>
                         <artifacts>
                             <artifact file="gadget.json">
                                 <![CDATA[
-                {"id":"$sensorType-reading-table","title":"$sensorType Reading Table","type":"gadget","thumbnail":"gadget/$sensorType-reading-table/gadgetIcon.png","data":{"url":"gadget/$sensorType-reading-table/index.xml"}}
+                {"id":"${toId('$sensorType')}-reading-table","title":"$sensorType Reading Table","type":"gadget","thumbnail":"gadget/${toId('$sensorType')}-reading-table/gadgetIcon.png","data":{"url":"gadget/${toId('$sensorType')}-reading-table/index.xml"}}
                                 ]]>
                             </artifact>
                             <artifact file="js/gadgetconf.js">
                                 <![CDATA[
-                                var gadgetConfig ={"id":"$sensorType-reading-table","title":"$sensorType Reading Table","datasource":"ORG_WSO2_EVENT_GROUPED_$sensorType_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"chartType":"tabular","charts":[{"type":"table","key":"sensor_id","padding":{"top":30,"left":45,"bottom":38,"right":55},"color":"-1","columns":["sensor_id","count","sum","average","max","min"],"columnTitles":["sensor_id","count","sum","average","max","min"]}]},"domain":"carbon.super"};
+                                var gadgetConfig ={"id":"${toId('$sensorType')}-reading-table","title":"$sensorType Reading Table","datasource":"ORG_WSO2_EVENT_GROUPED_${toId('$sensorType')}_STATISTICS_STREAM","type":"batch","columns":[{"name":"sensor_id","type":"string"},{"name":"count","type":"long"},{"name":"sum","type":"double"},{"name":"average","type":"double"},{"name":"max","type":"double"},{"name":"min","type":"double"}],"chartConfig":{"chartType":"tabular","charts":[{"type":"table","key":"sensor_id","padding":{"top":30,"left":45,"bottom":38,"right":55},"color":"-1","columns":["sensor_id","count","sum","average","max","min"],"columnTitles":["sensor_id","count","sum","average","max","min"]}]},"domain":"carbon.super"};
                                  ]]>
                             </artifact>
                         </artifacts>
@@ -862,7 +862,7 @@
                 <template type="dashboard">
                     <config>
                         <properties>
-                            <property name="dashboardId">grouped-$sensorType-dashboard</property>
+                            <property name="dashboardId">grouped-${toId('$sensorType')}-dashboard</property>
                         </properties>
                         <content>
                             <![CDATA[
@@ -877,7 +877,7 @@
                         "defaultPriority": "5",
                         "description": "",
                         "hideAllMenuItems": false,
-                        "id": "grouped-$sensorType-dashboard",
+                        "id": "grouped-${toId('$sensorType')}-dashboard",
                         "identityServerUrl": "",
                         "isEditorEnable": true,
                         "isUserCustom": false,
@@ -901,9 +901,9 @@
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-compare-grouped-count/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-compare-grouped-count/index.xml"
                                                     },
-                                                    "id": "$sensorType-compare-grouped-count",
+                                                    "id": "${toId('$sensorType')}-compare-grouped-count",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -925,20 +925,20 @@
                                                         "borders": true,
                                                         "title": "$sensorType Compare Grouped Count"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-compare-grouped-count/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-compare-grouped-count/gadgetIcon.png",
                                                     "title": "$sensorType Compare Grouped Count",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-compare-grouped-count-0"
+                                                "id": "${toId('$sensorType')}-compare-grouped-count-0"
                                             }
                                         ],
                                         "b": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-grouped-count/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-grouped-count/index.xml"
                                                     },
-                                                    "id": "$sensorType-grouped-count",
+                                                    "id": "${toId('$sensorType')}-grouped-count",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -960,20 +960,20 @@
                                                         "borders": true,
                                                         "title": "$sensorType Grouped Count"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-grouped-count/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-grouped-count/gadgetIcon.png",
                                                     "title": "$sensorType Grouped Count",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-grouped-count-0"
+                                                "id": "${toId('$sensorType')}-grouped-count-0"
                                             }
                                         ],
                                         "c": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-grouped-count-pie/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-grouped-count-pie/index.xml"
                                                     },
-                                                    "id": "$sensorType-grouped-count-pie",
+                                                    "id": "${toId('$sensorType')}-grouped-count-pie",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -995,20 +995,20 @@
                                                         "borders": true,
                                                         "title": "$sensorType Count in Pie"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-grouped-count-pie/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-grouped-count-pie/gadgetIcon.png",
                                                     "title": "$sensorType Count in Pie",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-grouped-count-pie-0"
+                                                "id": "${toId('$sensorType')}-grouped-count-pie-0"
                                             }
                                         ],
                                         "d": [
                                             {
                                                 "content": {
                                                     "data": {
-                                                        "url": "fs://gadget/$sensorType-reading-table/index.xml"
+                                                        "url": "fs://gadget/${toId('$sensorType')}-reading-table/index.xml"
                                                     },
-                                                    "id": "$sensorType-reading-table",
+                                                    "id": "${toId('$sensorType')}-reading-table",
                                                     "locale_titles": {},
                                                     "options": {
                                                         "dataSource": {
@@ -1030,11 +1030,11 @@
                                                         "borders": true,
                                                         "title": "$sensorType Reading Table"
                                                     },
-                                                    "thumbnail": "fs://gadget/$sensorType-reading-table/gadgetIcon.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-reading-table/gadgetIcon.png",
                                                     "title": "$sensorType Reading Table",
                                                     "type": "gadget"
                                                 },
-                                                "id": "$sensorType-reading-table-0"
+                                                "id": "${toId('$sensorType')}-reading-table-0"
                                             }
                                         ]
                                     }
@@ -1103,7 +1103,7 @@
 
             </templates>
             <streamMappings>
-                <streamMapping to="org.wso2.event.group.$sensorType.stream:1.0.0"/>
+                <streamMapping to="org.wso2.event.group.${toId('$sensorType')}.stream:1.0.0"/>
             </streamMappings>
             <parameters>
                 <parameter name="timeInMins" type="int">
@@ -1120,4 +1120,8 @@
 
         </scenario>
     </scenarios>
+
+    <scripts>
+        <script src="wso2-commons.js"/>
+    </scripts>
 </domain>
