@@ -255,11 +255,11 @@
             </includes>
         </fileSet>
 
-        <!--Copying execution-manager directory-->
+        <!--Copying template-manager directory-->
         <fileSet>
-            <directory>src/repository/conf/execution-manager</directory>
+            <directory>src/repository/conf/template-manager</directory>
             <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/execution-manager
+                ${pom.artifactId}-${pom.version}/repository/conf/template-manager
             </outputDirectory>
             <includes>
                 <include>**/*</include>
