@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.carbon.analytics.iots.feature</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Analytics IoT Server Features</name>
+    <name>WSO2 Analytics IoT Server - Features</name>
     <build>
         <plugins>
             <plugin>
