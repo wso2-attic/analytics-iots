@@ -1,0 +1,997 @@
+<domain name="HistoricAnalyticsDomain">
+    <description>Domain for historic sensor data analysis</description>
+    <scenarios>
+        <scenario type="HistoricalAnalytics">
+            <description>Configure a historic sensor analytics scenario to display statistics for a given stream of your
+                choice
+            </description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+                        "name": "org.wso2.iot.devices.sensors.$sensorType",
+                        "version": "1.0.0",
+                        "nickName": "",
+                        "description": "",
+                        "metaData": [
+                            {"name":"owner","type":"STRING"},
+                            {"name":"deviceType","type":"STRING"},
+                            {"name":"deviceId","type":"STRING"},
+                            {"name":"time","type":"LONG"}
+                        ],
+                        "payloadData": [
+                            {
+                            "name": "sensor_value",
+                            "type": "DOUBLE"
+                            }
+                        ]
+                    }
+                </template>
+                <template type="eventstream">
+                    {
+                        "name": "org.wso2.iot.devices.sensors.$sensorType.statistics",
+                        "version": "1.0.0",
+                        "nickName": "",
+                        "description": "",
+                        "metaData": [
+                        {
+                            "name": "owner",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "deviceType",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "deviceId",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "time",
+                            "type": "LONG"
+                        }
+                        ],
+                        "payloadData": [
+                            {
+                                "name": "noOfInvocation",
+                                "type": "LONG"
+                            },
+                            {
+                                "name": "total",
+                                "type": "DOUBLE"
+                            },
+                            {
+                                "name": "average",
+                                "type": "DOUBLE"
+                            },
+                            {
+                                "name": "maxValue",
+                                "type": "DOUBLE"
+                            },
+                            {
+                                "name": "minValue",
+                                "type": "DOUBLE"
+                            }
+                        ]
+                    }
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+                    /* Enter a unique ExecutionPlan */
+                    @Plan:name('org.wso2.iot.devices.sensors.$sensorType.streamMapping')
+
+                    /* Enter a unique description for ExecutionPlan */
+                    -- @Plan:description('Execution plain which used for mapping sensor input stream into sensor data summarization stream')
+
+                    /* define streams/tables and write queries here ... */
+
+                    @Import('org.wso2.iot.devices.sensors.$sensorType:1.0.0')
+                    define stream sensorInputStream (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, sensor_value double);
+
+                    @Export('org.wso2.iot.devices.sensors.$sensorType.statistics:1.0.0')
+                    define stream sensorStatisticsStream (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double);
+
+                    from sensorInputStream#window.time(1 min)
+                    select meta_owner, meta_deviceType, meta_deviceId, meta_time , count() as noOfInvocation, sum(sensor_value) as total, avg(sensor_value) as average, max(sensor_value) as maxValue, min(sensor_value) as minValue
+                    insert into sensorStatisticsStream;
+                    ]]>
+                </template>
+                <template type="eventsink">
+                    <![CDATA[
+                <EventStoreConfiguration>
+                     <TableSchema>
+                        <ColumnDefinition>
+                            <Name>meta_owner</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>STRING</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>meta_deviceType</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>STRING</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>meta_deviceId</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>STRING</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>meta_time</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>LONG</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>noOfInvocation</Name>
+                            <IsFacet>false</IsFacet>
+                            <EnableIndexing>false</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>LONG</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>total</Name>
+                            <IsFacet>false</IsFacet>
+                            <EnableIndexing>false</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>DOUBLE</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>average</Name>
+                            <IsFacet>false</IsFacet>
+                            <EnableIndexing>false</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>DOUBLE</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>maxValue</Name>
+                            <IsFacet>false</IsFacet>
+                            <EnableIndexing>false</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>DOUBLE</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>minValue</Name>
+                            <IsFacet>false</IsFacet>
+                            <EnableIndexing>false</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>DOUBLE</Type>
+                        </ColumnDefinition>
+                     </TableSchema>
+                     <Source>
+                        <StreamId>org.wso2.iot.devices.sensors.$sensorType.statistics:1.0.0</StreamId>
+                     </Source>
+                     <MergeSchema>false</MergeSchema>
+                     <RecordStoreName>EVENT_STORE</RecordStoreName>
+                </EventStoreConfiguration>
+                ]]>
+                </template>
+                <template type="batch">
+                    <executionParameters>
+                        <sparkScript>
+                            <![CDATA[
+
+                                CREATE TEMPORARY TABLE Device$sensorTypeData USING CarbonAnalytics OPTIONS(tableName "ORG_WSO2_IOT_DEVICES_SENSORS_$sensorType_STATISTICS");
+
+                                CREATE TEMPORARY TABLE Device$sensorTypeSummaryData USING CarbonAnalytics OPTIONS (tableName "Device_$sensorType_Summary",
+                                schema "meta_owner string -i, meta_deviceType string -i, meta_deviceId string -i, time long -i, noOfInvocation long -i, total double -i, maxValue double -i, minValue double -i");
+
+                                insert INTO table Device$sensorTypeSummaryData select meta_owner, meta_deviceType, meta_deviceId as deviceId, meta_time*1000 as time , noOfInvocation, total, maxValue, minValue
+                                from Device$sensorTypeData group by meta_deviceType, meta_deviceId, meta_owner, meta_time, noOfInvocation, total, maxValue, minValue;
+
+                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerHour USING CarbonAnalytics
+                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Hour",
+                                schema "year INT -i, month INT -i, day INT -i, hour INT -I, total DOUBLE -i, minValue DOUBLE -i,
+                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i",
+                                primaryKeys "year, month, day, hour, deviceId", mergeSchema "false");
+
+                                INSERT INTO TABLE $sensorTypeServiceStatPerHour
+                                SELECT year, month, day, hour,total, minValue, maxValue, noOfInvocation, time, meta_deviceId
+                                FROM
+                                (SELECT temp.year, temp.month, temp.day, temp.hour, sum(temp.total) as total,
+                                min(temp.minValue) as minValue, max(temp.maxValue) as maxValue, count(*) as noOfInvocation, getHourStartingTime(year, month, day,
+                                hour) as time, temp.meta_deviceId
+                                FROM
+                                 (SELECT getYear(time) as year, getMonth(time) as month, getDay(time) as day, getHour(time)
+                                as hour, meta_deviceId, meta_owner, total, maxValue, minValue FROM Device$sensorTypeSummaryData) temp
+                                GROUP BY temp.year, temp.month, temp.day, temp.hour, temp.meta_deviceId) result;
+
+                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerHour USING CarbonAnalytics
+                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Hour",
+                                incrementalProcessing "$sensorTypeServiceStatPerHour, 86400");
+
+                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerDay USING CarbonAnalytics
+                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Day",
+                                schema "year INT -i, month INT -i, day INT -i, total DOUBLE -i, minValue DOUBLE -i,
+                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i",
+                                primaryKeys "year, month, day, deviceId",
+                                mergeSchema "false");
+
+                                INSERT INTO TABLE $sensorTypeServiceStatPerDay
+                                SELECT year, month, day, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, count(*) as noOfInvocation,
+                                getDateStartingTime(year, month, day) as time, deviceId FROM $sensorTypeServiceStatPerHour
+                                GROUP BY year, month, day, deviceId ORDER BY year, month, day ASC;
+
+                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerDay USING CarbonAnalytics
+                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Day",
+                                incrementalProcessing "$sensorTypeServiceStatPerDay, 604800");
+
+                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerMonth USING CarbonAnalytics
+                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Month",
+                                schema "year INT -i, month INT -i, total DOUBLE -i, minValue DOUBLE -i,
+                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i",
+                                primaryKeys "year, month, deviceId",
+                                mergeSchema "false");
+
+                                INSERT INTO TABLE $sensorTypeServiceStatPerMonth
+                                SELECT year, month, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, count(*) as noOfInvocation,
+                                getMonthStartingTime(year, month) as time, deviceId FROM $sensorTypeServiceStatPerDay
+                                GROUP BY year, month, deviceId ORDER BY year, month ASC;
+                             ]]>
+                        </sparkScript>
+                        <cron>0 0/5 * * * ?</cron>
+                    </executionParameters>
+                </template>
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-historical-value-chart-min</property>
+                            <property name="templateDirectory">HistoricalValueChart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                    {
+                                      "provider-conf": {
+                                        "control1": "default value",
+                                        "tableName": "Device_$sensorType_Summary",
+                                        "provider-name": "batch",
+                                        "time-from":"0",
+                                        "time-to":"9007199254740992",
+                                        "tablePrefix":"Service-$sensorType-Stat-Per-"
+                                      },
+                                      "chart-conf": {
+                                        "x": "time",
+                                        "y": "minValue",
+                                        "color": "None",
+                                        "mode": "stack",
+                                        "gadget-name": "$sensorType-historical-value-chart-min",
+                                        "chart-name": "bar-chart"
+                                      }
+                                    }
+                                ]]>
+                            </artifact>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {
+                                    "id": "$sensorType-historical-value-chart-min",
+                                    "title": "$sensorType-historical-value-chart-min",
+                                    "type": "gadget",
+                                    "thumbnail": "gadget/$sensorType-historical-value-chart-min/index.png",
+                                    "data": {
+                                        "url": "gadget/$sensorType-historical-value-chart-min/index.xml"
+                                    },
+                                    "listen": {
+                                      "subscriber": {
+                                        "type": "time-range",
+                                        "description": "Used for listen to get time range from time-range picker"
+                                      }
+                                    }
+                                }
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadget-core.js">
+                                <![CDATA[
+                                   /*
+                                    * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+                                    *
+                                    * Licensed under the Apache License, Version 2.0 (the "License");
+                                    * you may not use this file except in compliance with the License.
+                                    * You may obtain a copy of the License at
+                                    *
+                                    * http://www.apache.org/licenses/LICENSE-2.0
+                                    *
+                                    * Unless required by applicable law or agreed to in writing, software
+                                    * distributed under the License is distributed on an "AS IS" BASIS,
+                                    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                    * See the License for the specific language governing permissions and
+                                    * limitations under the License.
+                                    */
+                                    var conf;
+                                    var drawGadget;
+                                    var refreshIntervalId;
+
+                                    $(function () {
+                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorType-historical-value-chart-min';
+                                        var schema;
+                                        var pref = new gadgets.Prefs();
+
+                                        var refreshInterval;
+                                        var providerData;
+
+                                        var CHART_CONF = 'chart-conf';
+                                        var PROVIDER_CONF = 'provider-conf';
+
+                                        var REFRESH_INTERVAL = 'refreshInterval';
+
+                                    var init = function () {
+                                        $.ajax({
+                                            url: gadgetLocation + '/conf.json',
+                                            method: "GET",
+                                            contentType: "application/json",
+                                            async: false,
+                                            success: function (data) {
+                                                conf = JSON.parse(data);
+                                                $.ajax({
+                                                    url: gadgetLocation + '/gadget-controller.jag?action=getSchema',
+                                                    method: "POST",
+                                                    data: JSON.stringify(conf),
+                                                    contentType: "application/json",
+                                                    async: false,
+                                                    success: function (data) {
+                                                        schema = data;
+                                                    }
+                                                });
+
+                                                getProviderData();
+
+                                               }
+                                           });
+                                    }
+
+                                    var getProviderData = function (){
+                                        $.ajax({
+                                            url: gadgetLocation + '/gadget-controller.jag?action=getData',
+                                            method: "POST",
+                                            data: JSON.stringify(conf),
+                                            contentType: "application/json",
+                                            async: false,
+                                            success: function (data) {
+                                            providerData = data;
+                                            }
+                                        });
+                                    }
+
+
+                                        drawGadget = function (){
+
+                                        draw('#canvas', conf[CHART_CONF], schema, providerData);
+                                        refreshIntervalId = setInterval(function() {
+                                            update(getProviderData);
+                                        },pref.getInt(REFRESH_INTERVAL));
+
+                                    }
+                                        init();
+                                        drawGadget();
+                                    });
+
+                                    gadgets.HubSettings.onConnect = function () {
+                                        gadgets.Hub.subscribe("subscriber", function (topic, data, subscriber) {
+                                            console.log("-conf--"+ conf["provider-conf"]["time-from"]);
+                                            conf["provider-conf"]["time-from"] = data.timeFrom;
+                                            conf["provider-conf"]["time-to"] =  data.timeTo;
+                                            if(refreshIntervalId) {
+                                                clearInterval(refreshIntervalId);
+                                            }
+                                            if(drawGadget){
+                                                drawGadget();
+                                            }
+                                        });
+                                    };
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-historical-value-chart-max</property>
+                            <property name="templateDirectory">HistoricalValueChart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                    {
+                                      "provider-conf": {
+                                        "control1": "default value",
+                                        "tableName": "Device_$sensorType_Summary",
+                                        "provider-name": "batch",
+                                        "time-from":"0",
+                                        "time-to":"9007199254740992",
+                                        "tablePrefix":"Service-$sensorType-Stat-Per-"
+                                      },
+                                      "chart-conf": {
+                                        "x": "time",
+                                        "y": "maxValue",
+                                        "color": "None",
+                                        "mode": "stack",
+                                        "gadget-name": "$sensorType-historical-value-chart-max",
+                                        "chart-name": "bar-chart"
+                                      }
+                                    }
+                                ]]>
+                            </artifact>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {
+                                    "id": "$sensorType-historical-value-chart-max",
+                                    "title": "$sensorType-historical-value-chart-max",
+                                    "type": "gadget",
+                                    "thumbnail": "gadget/$sensorType-historical-value-chart-max/index.png",
+                                    "data": {
+                                        "url": "gadget/$sensorType-historical-value-chart-max/index.xml"
+                                    },
+                                    "listen": {
+                                      "subscriber": {
+                                        "type": "time-range",
+                                        "description": "Used for listen to get time range from time-range picker"
+                                      }
+                                    }
+                                }
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadget-core.js">
+                                <![CDATA[
+                                   /*
+                                    * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+                                    *
+                                    * Licensed under the Apache License, Version 2.0 (the "License");
+                                    * you may not use this file except in compliance with the License.
+                                    * You may obtain a copy of the License at
+                                    *
+                                    * http://www.apache.org/licenses/LICENSE-2.0
+                                    *
+                                    * Unless required by applicable law or agreed to in writing, software
+                                    * distributed under the License is distributed on an "AS IS" BASIS,
+                                    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                    * See the License for the specific language governing permissions and
+                                    * limitations under the License.
+                                    */
+                                    var conf;
+                                    var drawGadget;
+                                    var refreshIntervalId;
+
+                                    $(function () {
+                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorType-historical-value-chart-max';
+                                        var schema;
+                                        var pref = new gadgets.Prefs();
+
+                                        var refreshInterval;
+                                        var providerData;
+
+                                        var CHART_CONF = 'chart-conf';
+                                        var PROVIDER_CONF = 'provider-conf';
+
+                                        var REFRESH_INTERVAL = 'refreshInterval';
+
+                                    var init = function () {
+                                        $.ajax({
+                                            url: gadgetLocation + '/conf.json',
+                                            method: "GET",
+                                            contentType: "application/json",
+                                            async: false,
+                                            success: function (data) {
+                                                conf = JSON.parse(data);
+                                                $.ajax({
+                                                    url: gadgetLocation + '/gadget-controller.jag?action=getSchema',
+                                                    method: "POST",
+                                                    data: JSON.stringify(conf),
+                                                    contentType: "application/json",
+                                                    async: false,
+                                                    success: function (data) {
+                                                        schema = data;
+                                                    }
+                                                });
+
+                                                getProviderData();
+
+                                               }
+                                           });
+                                    }
+
+                                    var getProviderData = function (){
+                                        $.ajax({
+                                            url: gadgetLocation + '/gadget-controller.jag?action=getData',
+                                            method: "POST",
+                                            data: JSON.stringify(conf),
+                                            contentType: "application/json",
+                                            async: false,
+                                            success: function (data) {
+                                            providerData = data;
+                                            }
+                                        });
+                                    }
+
+
+                                        drawGadget = function (){
+
+                                        draw('#canvas', conf[CHART_CONF], schema, providerData);
+                                        refreshIntervalId = setInterval(function() {
+                                            update(getProviderData);
+                                        },pref.getInt(REFRESH_INTERVAL));
+
+                                    }
+                                        init();
+                                        drawGadget();
+                                    });
+
+                                    gadgets.HubSettings.onConnect = function () {
+                                        gadgets.Hub.subscribe("subscriber", function (topic, data, subscriber) {
+                                            console.log("-conf--"+ conf["provider-conf"]["time-from"]);
+                                            conf["provider-conf"]["time-from"] = data.timeFrom;
+                                            conf["provider-conf"]["time-to"] =  data.timeTo;
+                                            if(refreshIntervalId) {
+                                                clearInterval(refreshIntervalId);
+                                            }
+                                            if(drawGadget){
+                                                drawGadget();
+                                            }
+                                        });
+                                    };
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-historical-value-chart-total</property>
+                            <property name="templateDirectory">HistoricalValueChart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                    {
+                                      "provider-conf": {
+                                        "control1": "default value",
+                                        "tableName": "Device_$sensorType_Summary",
+                                        "provider-name": "batch",
+                                        "time-from":"0",
+                                        "time-to":"9007199254740992",
+                                        "tablePrefix":"Service-$sensorType-Stat-Per-"
+                                      },
+                                      "chart-conf": {
+                                        "x": "time",
+                                        "y": "total",
+                                        "color": "None",
+                                        "mode": "stack",
+                                        "gadget-name": "$sensorType-historical-value-chart-total",
+                                        "chart-name": "bar-chart"
+                                      }
+                                    }
+                                ]]>
+                            </artifact>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                {
+                                    "id": "$sensorType-historical-value-chart-total",
+                                    "title": "$sensorType-historical-value-chart-total",
+                                    "type": "gadget",
+                                    "thumbnail": "gadget/$sensorType-historical-value-chart-total/index.png",
+                                    "data": {
+                                        "url": "gadget/$sensorType-historical-value-chart-total/index.xml"
+                                    },
+                                    "listen": {
+                                      "subscriber": {
+                                        "type": "time-range",
+                                        "description": "Used for listen to get time range from time-range picker"
+                                      }
+                                    }
+                                }
+                                ]]>
+                            </artifact>
+                            <artifact file="js/gadget-core.js">
+                                <![CDATA[
+                                   /*
+                                    * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+                                    *
+                                    * Licensed under the Apache License, Version 2.0 (the "License");
+                                    * you may not use this file except in compliance with the License.
+                                    * You may obtain a copy of the License at
+                                    *
+                                    * http://www.apache.org/licenses/LICENSE-2.0
+                                    *
+                                    * Unless required by applicable law or agreed to in writing, software
+                                    * distributed under the License is distributed on an "AS IS" BASIS,
+                                    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                    * See the License for the specific language governing permissions and
+                                    * limitations under the License.
+                                    */
+                                    var conf;
+                                    var drawGadget;
+                                    var refreshIntervalId;
+
+                                    $(function () {
+                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorType-historical-value-chart-total';
+                                        var schema;
+                                        var pref = new gadgets.Prefs();
+
+                                        var refreshInterval;
+                                        var providerData;
+
+                                        var CHART_CONF = 'chart-conf';
+                                        var PROVIDER_CONF = 'provider-conf';
+
+                                        var REFRESH_INTERVAL = 'refreshInterval';
+
+                                    var init = function () {
+                                        $.ajax({
+                                            url: gadgetLocation + '/conf.json',
+                                            method: "GET",
+                                            contentType: "application/json",
+                                            async: false,
+                                            success: function (data) {
+                                                conf = JSON.parse(data);
+                                                $.ajax({
+                                                    url: gadgetLocation + '/gadget-controller.jag?action=getSchema',
+                                                    method: "POST",
+                                                    data: JSON.stringify(conf),
+                                                    contentType: "application/json",
+                                                    async: false,
+                                                    success: function (data) {
+                                                        schema = data;
+                                                    }
+                                                });
+
+                                                getProviderData();
+
+                                               }
+                                           });
+                                    }
+
+                                    var getProviderData = function (){
+                                        $.ajax({
+                                            url: gadgetLocation + '/gadget-controller.jag?action=getData',
+                                            method: "POST",
+                                            data: JSON.stringify(conf),
+                                            contentType: "application/json",
+                                            async: false,
+                                            success: function (data) {
+                                            providerData = data;
+                                            }
+                                        });
+                                    }
+
+
+                                        drawGadget = function (){
+
+                                        draw('#canvas', conf[CHART_CONF], schema, providerData);
+                                        refreshIntervalId = setInterval(function() {
+                                            update(getProviderData);
+                                        },pref.getInt(REFRESH_INTERVAL));
+
+                                    }
+                                        init();
+                                        drawGadget();
+                                    });
+
+                                    gadgets.HubSettings.onConnect = function () {
+                                        gadgets.Hub.subscribe("subscriber", function (topic, data, subscriber) {
+                                            console.log("-conf--"+ conf["provider-conf"]["time-from"]);
+                                            conf["provider-conf"]["time-from"] = data.timeFrom;
+                                            conf["provider-conf"]["time-to"] =  data.timeTo;
+                                            if(refreshIntervalId) {
+                                                clearInterval(refreshIntervalId);
+                                            }
+                                            if(drawGadget){
+                                                drawGadget();
+                                            }
+                                        });
+                                    };
+                                ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">Time_Range_Picker</property>
+                            <property name="templateDirectory">Time_Range_Picker</property>
+                        </properties>
+                    </config>
+                </template>
+                <template type="dashboard">
+                        <config>
+                            <properties>
+                                <property name="dashboardId">$sensorType-historical-analytics-dashboard</property>
+                            </properties>
+                            <content>
+                               <![CDATA[
+                                   {
+                                      "id": "$sensorType-historical-analytics-dashboard",
+                                      "title": "Historical Analytics: $sensorType",
+                                      "description": "",
+                                      "permissions": {
+                                        "viewers": [
+                                          "Internal/everyone"
+                                        ],
+                                        "editors": [
+                                          "Internal/everyone"
+                                        ]
+                                      },
+                                      "pages": [
+                                        {
+                                          "id": "landing",
+                                          "title": "Home",
+                                          "layout": {
+                                            "content": {
+                                              "loggedIn": {
+                                                "blocks": [
+                                                  {
+                                                    "id": "a",
+                                                    "x": 0,
+                                                    "y": 2,
+                                                    "width": 4,
+                                                    "height": 5,
+                                                    "banner": false
+                                                  },
+                                                  {
+                                                    "id": "b",
+                                                    "x": 4,
+                                                    "y": 2,
+                                                    "width": 4,
+                                                    "height": 5,
+                                                    "banner": false
+                                                  },
+                                                  {
+                                                    "id": "c",
+                                                    "x": 8,
+                                                    "y": 2,
+                                                    "width": 4,
+                                                    "height": 5,
+                                                    "banner": false
+                                                  },
+                                                  {
+                                                    "id": "f",
+                                                    "x": 1,
+                                                    "y": 0,
+                                                    "width": 9,
+                                                    "height": 2,
+                                                    "banner": false
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "fluidLayout": false
+                                          },
+                                          "isanon": false,
+                                          "content": {
+                                            "default": {
+                                              "a": [
+                                                {
+                                                  "id": "$sensorType-historical-value-chart-min",
+                                                  "content": {
+                                                    "id": "$sensorType-historical-value-chart-min",
+                                                    "title": "$sensorType-historical-value-chart-min",
+                                                    "type": "gadget",
+                                                    "thumbnail": "fs://gadget/$sensorType-historical-value-chart-min/index.png",
+                                                    "data": {
+                                                      "url": "fs://gadget/$sensorType-historical-value-chart-min/index.xml"
+                                                    },
+                                                    "listen": {
+                                                      "subscriber": {
+                                                        "type": "time-range",
+                                                        "description": "Used for listen to get time range from time-range picker",
+                                                        "on": [
+                                                          {
+                                                            "from": "Time_Range_Picker-0",
+                                                            "event": "range-selected"
+                                                          }
+                                                        ]
+                                                      }
+                                                    },
+                                                    "styles": {
+                                                      "no_heading": false,
+                                                      "hide_gadget": false,
+                                                      "titlePosition": "left",
+                                                      "title": "$sensorType-historical-value-chart-min"
+                                                    },
+                                                    "options": {
+                                                      "refreshInterval": {
+                                                        "type": "STRING",
+                                                        "title": "Refresh Interval",
+                                                        "value": "10",
+                                                        "options": [],
+                                                        "required": false
+                                                      }
+                                                    },
+                                                    "locale_titles": {
+                                                      "en-US": "$sensorType-historical-value-chart-min"
+                                                    },
+                                                    "settings": {
+                                                      "priority": "0"
+                                                    }
+                                                  }
+                                                }
+                                              ],
+                                              "b": [
+                                                {
+                                                  "id": "$sensorType-historical-value-chart-max",
+                                                  "content": {
+                                                    "id": "$sensorType-historical-value-chart-max",
+                                                    "title": "$sensorType-historical-value-chart-max",
+                                                    "type": "gadget",
+                                                    "thumbnail": "fs://gadget/$sensorType-historical-value-chart-max/index.png",
+                                                    "data": {
+                                                      "url": "fs://gadget/$sensorType-historical-value-chart-max/index.xml"
+                                                    },
+                                                    "listen": {
+                                                      "subscriber": {
+                                                        "type": "time-range",
+                                                        "description": "Used for listen to get time range from time-range picker",
+                                                        "on": [
+                                                          {
+                                                            "from": "Time_Range_Picker-0",
+                                                            "event": "range-selected"
+                                                          }
+                                                        ]
+                                                      }
+                                                    },
+                                                    "styles": {
+                                                      "no_heading": false,
+                                                      "hide_gadget": false,
+                                                      "titlePosition": "left",
+                                                      "title": "$sensorType-historical-value-chart-max"
+                                                    },
+                                                    "options": {
+                                                      "refreshInterval": {
+                                                        "type": "STRING",
+                                                        "title": "Refresh Interval",
+                                                        "value": "10",
+                                                        "options": [],
+                                                        "required": false
+                                                      }
+                                                    },
+                                                    "locale_titles": {
+                                                      "en-US": "$sensorType-historical-value-chart-max"
+                                                    },
+                                                    "settings": {
+                                                      "priority": "5"
+                                                    }
+                                                  }
+                                                }
+                                              ],
+                                              "c": [
+                                                {
+                                                  "id": "$sensorType-historical-value-chart-total",
+                                                  "content": {
+                                                    "id": "$sensorType-historical-value-chart-total",
+                                                    "title": "$sensorType-historical-value-chart-total",
+                                                    "type": "gadget",
+                                                    "thumbnail": "fs://gadget/$sensorType-historical-value-chart-total/index.png",
+                                                    "data": {
+                                                      "url": "fs://gadget/$sensorType-historical-value-chart-total/index.xml"
+                                                    },
+                                                    "listen": {
+                                                      "subscriber": {
+                                                        "type": "time-range",
+                                                        "description": "Used for listen to get time range from time-range picker",
+                                                        "on": [
+                                                          {
+                                                            "from": "Time_Range_Picker-0",
+                                                            "event": "range-selected"
+                                                          }
+                                                        ]
+                                                      }
+                                                    },
+                                                    "styles": {
+                                                      "no_heading": false,
+                                                      "hide_gadget": false,
+                                                      "titlePosition": "left",
+                                                      "title": "$sensorType-historical-value-chart-total"
+                                                    },
+                                                    "options": {
+                                                      "refreshInterval": {
+                                                        "type": "STRING",
+                                                        "title": "Refresh Interval",
+                                                        "value": "10",
+                                                        "options": [],
+                                                        "required": false
+                                                      }
+                                                    },
+                                                    "locale_titles": {
+                                                      "en-US": "$sensorType-historical-value-chart-total"
+                                                    },
+                                                    "settings": {
+                                                      "priority": "5"
+                                                    }
+                                                  }
+                                                }
+                                              ],
+                                              "f": [
+                                                {
+                                                  "id": "Time_Range_Picker-0",
+                                                  "content": {
+                                                    "id": "Time_Range_Picker",
+                                                    "title": "Time Range Picker",
+                                                    "type": "gadget",
+                                                    "category": "Widgets",
+                                                    "thumbnail": "fs://gadget/Time_Range_Picker/index.png",
+                                                    "data": {
+                                                      "url": "fs://gadget/Time_Range_Picker/index.xml"
+                                                    },
+                                                    "styles": {
+                                                      "no_heading": false,
+                                                      "hide_gadget": false,
+                                                      "titlePosition": "left",
+                                                      "title": "Time Range Picker"
+                                                    },
+                                                    "notify": {
+                                                      "range-selected": {
+                                                        "type": "time-range",
+                                                        "description": "This notifies when time range is selected"
+                                                      }
+                                                    },
+                                                    "options": {},
+                                                    "locale_titles": {
+                                                      "en-US": "Time Range Picker"
+                                                    },
+                                                    "settings": {
+                                                      "priority": "0"
+                                                    }
+                                                  }
+                                                }
+                                              ]
+                                            },
+                                            "anon": {}
+                                          }
+                                        }
+                                      ],
+                                      "menu": [
+                                        {
+                                          "id": "landing",
+                                          "isanon": false,
+                                          "ishidden": false,
+                                          "title": "Home",
+                                          "subordinates": []
+                                        }
+                                      ],
+                                      "hideAllMenuItems": false,
+                                      "identityServerUrl": "",
+                                      "accessTokenUrl": "",
+                                      "apiKey": "",
+                                      "apiSecret": "",
+                                      "theme": "Default Theme",
+                                      "isUserCustom": false,
+                                      "isEditorEnable": true,
+                                      "banner": {
+                                        "globalBannerExists": false,
+                                        "customBannerExists": false
+                                      },
+                                      "landing": "landing",
+                                      "isanon": false,
+                                      "defaultPriority": "5"
+                                    }
+
+                               ]]>
+                            </content>
+                        </config>
+                </template>
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.iot.devices.sensors.$sensorType:1.0.0"/>
+            </streamMappings>
+            <parameters>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+            </parameters>
+        </scenario>
+    </scenarios>
+</domain>

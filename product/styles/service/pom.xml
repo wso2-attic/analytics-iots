@@ -28,7 +28,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.das4iots.multitenancy.styles</artifactId>
     <packaging>bundle</packaging>
-    <name>WSO2 Data Analytics Server - Multi-tenant UI Styles</name>
+    <name>WSO2 Analytics IoT Server - Multi-tenant UI Styles</name>
 
     <build>
         <plugins>

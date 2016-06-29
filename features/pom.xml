@@ -27,6 +27,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>analytics-iots-features</artifactId>
+    <name>WSO2 Analytics IoT Server - Features Parent</name>
     <packaging>pom</packaging>
     <modules>
         <module>org.wso2.carbon.analytics.iots.feature</module>
