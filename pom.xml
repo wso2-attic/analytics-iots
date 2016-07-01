@@ -485,8 +485,8 @@
         <carbon.event-processing.version>2.0.13-SNAPSHOT</carbon.event-processing.version>
         <carbon.metrics.version>1.2.0</carbon.metrics.version>
         <siddhi.version>3.0.6-SNAPSHOT</siddhi.version>
-        <shindig.version>1.0.18</shindig.version>
-        <carbon.dashboard.version>1.0.18</carbon.dashboard.version>
+        <shindig.version>1.0.19</shindig.version>
+        <carbon.dashboard.version>1.0.19</carbon.dashboard.version>
 
         <jaggery.version>0.12.1</jaggery.version>
         <jaggery.modules.carbon.version>1.5.2</jaggery.modules.carbon.version>
