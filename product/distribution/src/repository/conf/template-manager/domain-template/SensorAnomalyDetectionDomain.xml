@@ -1,8 +1,10 @@
 <domain name="SensorAnomalyDetectionDomain">
     <description>Domain for sensor anomaly detection</description>
     <scenarios>
-        <scenario type="AnomalyDetectionUsingLinearRegression">
-            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your choice</description>
+        <scenario type="AnomalyDetectionWithLinearRegressionLengthWindow">
+            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
+                choice
+            </description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
@@ -43,15 +45,15 @@
         @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
         define stream OutputStream (type string, message string, time long, severity string);
 
-        partition with ( sensor_id of InputStream )
+        partition with ( sensorID of InputStream )
         begin
-            from InputStream#timeseries:outlier($calculationInterval, $batchSize, $confidenceInterval, $range, sensor_value, time_stamp)
-            select sensor_id, sensor_value, time_stamp, outlier as notify
+            from InputStream#timeseries:outlier($calculationInterval, $batchSize, $confidenceInterval, $range, sensorValue, timeStamp)
+            select sensorID, sensorValue, timeStamp, outlier as notify
             insert into tempStream;
         end;
 
         from tempStream[notify == true]
-        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensor_id, " had a value of ", sensor_value) as message, time_stamp as time, 'high' as severity
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
         insert into OutputStream;
                     ]]>
                 </template>
@@ -75,7 +77,7 @@
                     <description>The frequency of regression calculation</description>
                     <defaultValue>1</defaultValue>
                 </parameter>
-                <parameter name="batchSize" type="long">
+                <parameter name="batchSize" type="int">
                     <displayName>Batch Size</displayName>
                     <description>The maximum number of events used for a regression calculation</description>
                     <defaultValue>1000</defaultValue>
@@ -93,8 +95,10 @@
             </parameters>
 
         </scenario>
-        <scenario type="AnomalyDetectionUsingPercentileValuesWithALengthWindow">
-            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your choice</description>
+        <scenario type="AnomalyDetectionWithLinearRegressionTimeWindow">
+            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
+                choice
+            </description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
@@ -135,15 +139,114 @@
         @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
         define stream OutputStream (type string, message string, time long, severity string);
 
-        partition with ( sensor_id of InputStream )
+        partition with ( sensorID of InputStream )
         begin
-            from InputStream#window.length($windowSize)
-            select sensor_id, sensor_value, time_stamp, ifThenElse(sensor_value > math:percentile(sensor_value, $upperBound), true, ifThenElse(sensor_value < math:percentile(sensor_value, $lowerBound), true, false)) as notify
+            from InputStream#timeseries:lengthTimeOutlier($timeWindowSize min, $lengthWindowSize, $range, $calculationInterval, $confidenceInterval, sensorValue, timeStamp)
+            select sensorID, sensorValue, timeStamp, outlier as notify
             insert into tempStream;
         end;
 
         from tempStream[notify == true]
-        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensor_id, " had a value of ", sensor_value) as message, time_stamp as time, 'high' as severity
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
+        insert into OutputStream;
+                    ]]>
+                </template>
+
+                <!-- gadgets -->
+
+                <!-- Dashboard -->
+
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+            </streamMappings>
+            <parameters>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+                <parameter name="calculationInterval" type="int">
+                    <displayName>Calculation Interval</displayName>
+                    <description>The frequency of regression calculation</description>
+                    <defaultValue>1</defaultValue>
+                </parameter>
+                <parameter name="timeWindowSize" type="long">
+                    <displayName>Time Window Size (Mins)</displayName>
+                    <description>The maximum time period used for a regression calculation</description>
+                    <defaultValue>60</defaultValue>
+                </parameter>
+                <parameter name="lengthWindowSize" type="int">
+                    <displayName>Length Window Size</displayName>
+                    <description>The maximum number of events used for a regression calculation</description>
+                    <defaultValue>1000</defaultValue>
+                </parameter>
+                <parameter name="confidenceInterval" type="double">
+                    <displayName>Confidence Interval</displayName>
+                    <description>Confidence Interval to be used for regression calculation</description>
+                    <defaultValue>0.95</defaultValue>
+                </parameter>
+                <parameter name="range" type="int">
+                    <displayName>Range</displayName>
+                    <description>Number of standard deviations from the regression equation</description>
+                    <defaultValue>2</defaultValue>
+                </parameter>
+            </parameters>
+
+        </scenario>
+        <scenario type="AnomalyDetectionUsingPercentileValuesWithALengthWindow">
+            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
+                choice
+            </description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensorID",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensorValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "timeStamp",
+                    "type": "LONG"
+                    }
+                    ]
+                    }
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+        /* Enter a unique ExecutionPlan */
+        @Plan:name('IotAnalytics-ExecutionPlan-AnomalousEventsDetection')
+
+        /* Enter a unique description for ExecutionPlan */
+        -- @Plan:description('ExecutionPlan')
+
+        /* define streams/tables and write queries here ... */
+
+        @Import('org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        define stream InputStream (sensorID string, sensorValue double, timeStamp long);
+
+        @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
+        define stream OutputStream (type string, message string, time long, severity string);
+
+        partition with ( sensorID of InputStream )
+        begin
+            from InputStream#window.length($windowSize)
+            select sensorID, sensorValue, timeStamp, ifThenElse(sensorValue > math:percentile(sensorValue, $upperBound), true, ifThenElse(sensorValue < math:percentile(sensorValue, $lowerBound), true, false)) as notify
+            insert into tempStream;
+        end;
+
+        from tempStream[notify == true]
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
         insert into OutputStream;
                     ]]>
                 </template>
@@ -181,7 +284,9 @@
 
         </scenario>
         <scenario type="AnomalyDetectionUsingPercentileValuesWithATimeWindow">
-            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your choice</description>
+            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
+                choice
+            </description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
@@ -222,15 +327,15 @@
         @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
         define stream OutputStream (type string, message string, time long, severity string);
 
-        partition with ( sensor_id of InputStream )
+        partition with ( sensorID of InputStream )
         begin
             from InputStream#window.time($windowSize min)
-            select sensor_id, sensor_value, time_stamp, ifThenElse(sensor_value > math:percentile(sensor_value, $upperBound), true, ifThenElse(sensor_value < math:percentile(sensor_value, $lowerBound), true, false)) as notify
+            select sensorID, sensorValue, timeStamp, ifThenElse(sensorValue > math:percentile(sensorValue, $upperBound), true, ifThenElse(sensorValue < math:percentile(sensorValue, $lowerBound), true, false)) as notify
             insert into tempStream;
         end;
 
         from tempStream[notify == true]
-        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensor_id, " had a value of ", sensor_value) as message, time_stamp as time, 'high' as severity
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
         insert into OutputStream;
                     ]]>
                 </template>
