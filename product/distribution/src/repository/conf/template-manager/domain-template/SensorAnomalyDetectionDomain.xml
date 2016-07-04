@@ -1,7 +1,7 @@
 <domain name="SensorAnomalyDetectionDomain">
     <description>Domain for sensor anomaly detection</description>
     <scenarios>
-        <scenario type="AnomalyDetectionWithLinearRegressionLengthWindow">
+        <scenario type="LinearRegressionWithLengthWindow">
             <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
                 choice
             </description>
@@ -95,7 +95,7 @@
             </parameters>
 
         </scenario>
-        <scenario type="AnomalyDetectionWithLinearRegressionTimeWindow">
+        <scenario type="LinearRegressionWithTimeAndLengthWindow">
             <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
                 choice
             </description>
@@ -194,7 +194,7 @@
             </parameters>
 
         </scenario>
-        <scenario type="AnomalyDetectionUsingPercentileValuesWithALengthWindow">
+        <scenario type="PercentileValuesWithLengthWindow">
             <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
                 choice
             </description>
@@ -283,7 +283,7 @@
             </parameters>
 
         </scenario>
-        <scenario type="AnomalyDetectionUsingPercentileValuesWithATimeWindow">
+        <scenario type="PercentileValuesWithTimeWindow">
             <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
                 choice
             </description>
