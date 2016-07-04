@@ -1,0 +1,24 @@
+{
+  "name": "org.wso2.iot.analytics.stream.AlertStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "type",
+      "type": "STRING"
+    },
+    {
+      "name": "message",
+      "type": "STRING"
+    },
+    {
+      "name": "time",
+      "type": "LONG"
+    },
+    {
+      "name": "severity",
+      "type": "STRING"
+    }
+  ]
+}

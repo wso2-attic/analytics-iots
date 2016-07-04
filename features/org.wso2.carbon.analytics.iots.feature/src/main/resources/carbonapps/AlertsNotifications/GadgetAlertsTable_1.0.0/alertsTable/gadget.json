@@ -1,0 +1,23 @@
+{
+  "id": "alertsTable",
+  "title": "Alerts Table",
+  "type": "gadget",
+  "thumbnail": "gadget/alertsTable/images/gadgetIcon.png",
+  "data": {
+    "url": "gadget/alertsTable/index.xml"
+  },
+  "notify": {
+    "publisher": {
+      "type": "filter-range",
+      "description": "This notifies selected filter"
+    }
+  },
+  "listen": {
+    "subscriber": {
+      "type": "filter",
+      "description": "Used to listen to any filters"
+    }
+  }
+}
+                                
+                            

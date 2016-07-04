@@ -8,6 +8,8 @@
 
     <property name="ANALYTICS_IoTS_dir" value="src/main/capp"/>
     <property name="ANALYTICS_IoTS_capp" value="org_wso2_carbon_analytics_iots-1.0.0"/>
+    <property name="ANALYTICS_IoTS_ALERTS_NOTIFICATIONS_dir" value="src/main/resources/carbonapps/AlertsNotifications"/>
+    <property name="ANALYTICS_IoTS_ALERTS_NOTIFICATIONS_capp" value="org_wso2_carbon_analytics_iots_alerts_notifications-1.0.0"/>
 
     <target name="clean">
         <delete dir="${target-dir}"/>
@@ -20,6 +22,9 @@
     <target name="zip" depends="clean,pre-configure">
         <zip destfile="${res-dir}/${ANALYTICS_IoTS_capp}.car">
           <zipfileset dir="${ANALYTICS_IoTS_dir}"/>
+        </zip>
+        <zip destfile="${res-dir}/${ANALYTICS_IoTS_ALERTS_NOTIFICATIONS_capp}.car">
+            <zipfileset dir="${ANALYTICS_IoTS_ALERTS_NOTIFICATIONS_dir}"/>
         </zip>
     </target>
 
