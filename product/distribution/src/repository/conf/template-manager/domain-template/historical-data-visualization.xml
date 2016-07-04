@@ -9,91 +9,210 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                        "name": "org.wso2.iot.devices.sensors.$sensorType",
-                        "version": "1.0.0",
-                        "nickName": "",
-                        "description": "",
-                        "metaData": [
-                            {"name":"owner","type":"STRING"},
-                            {"name":"deviceType","type":"STRING"},
-                            {"name":"deviceId","type":"STRING"},
-                            {"name":"time","type":"LONG"}
-                        ],
-                        "payloadData": [
-                            {
-                            "name": "sensor_value",
-                            "type": "DOUBLE"
-                            }
-                        ]
+                    "name": "org.wso2.iot.devices.sensors.$sensorType",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "metaData": [
+                    {"name":"owner","type":"STRING"},
+                    {"name":"deviceType","type":"STRING"},
+                    {"name":"deviceId","type":"STRING"},
+                    {"name":"time","type":"LONG"}
+                    ],
+                    "payloadData": [
+                    {
+                    "name": "sensor_value",
+                    "type": "DOUBLE"
+                    }
+                    ]
                     }
                 </template>
                 <template type="eventstream">
                     {
-                        "name": "org.wso2.iot.devices.sensors.$sensorType.statistics",
-                        "version": "1.0.0",
-                        "nickName": "",
-                        "description": "",
-                        "metaData": [
-                        {
-                            "name": "owner",
-                            "type": "STRING"
-                        },
-                        {
-                            "name": "deviceType",
-                            "type": "STRING"
-                        },
-                        {
-                            "name": "deviceId",
-                            "type": "STRING"
-                        },
-                        {
-                            "name": "time",
-                            "type": "LONG"
-                        }
-                        ],
-                        "payloadData": [
-                            {
-                                "name": "noOfInvocation",
-                                "type": "LONG"
-                            },
-                            {
-                                "name": "total",
-                                "type": "DOUBLE"
-                            },
-                            {
-                                "name": "average",
-                                "type": "DOUBLE"
-                            },
-                            {
-                                "name": "maxValue",
-                                "type": "DOUBLE"
-                            },
-                            {
-                                "name": "minValue",
-                                "type": "DOUBLE"
-                            }
-                        ]
+                    "name": "org.wso2.iot.devices.sensors.$sensorType.presecond.statistics",
+                    "version": "1.0.0",
+                    "nickName": "$sensorType.presecond.statistics",
+                    "description": "$sensorType pre-second statistics",
+                    "metaData": [
+                    {
+                    "name": "owner",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "deviceType",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "deviceId",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "time",
+                    "type": "LONG"
+                    }
+                    ],
+                    "payloadData": [
+                    {
+                    "name": "noOfInvocation",
+                    "type": "LONG"
+                    },
+                    {
+                    "name": "total",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "average",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "maxValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "minValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "year",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "month",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "day",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "hour",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "minute",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "second",
+                    "type": "INT"
+                    }
+                    ]
+                    }
+                </template>
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.iot.devices.sensors.$sensorType.preminute.statistics",
+                    "version": "1.0.0",
+                    "nickName": "$sensorType.preminute.statistics",
+                    "description": "$sensorType pre-minute statistics",
+                    "metaData": [
+                    {
+                    "name": "owner",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "deviceType",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "deviceId",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "time",
+                    "type": "LONG"
+                    }
+                    ],
+                    "payloadData": [
+                    {
+                    "name": "noOfInvocation",
+                    "type": "LONG"
+                    },
+                    {
+                    "name": "total",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "average",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "maxValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "minValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "year",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "month",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "day",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "hour",
+                    "type": "INT"
+                    },
+                    {
+                    "name": "minute",
+                    "type": "INT"
+                    }
+                    ]
                     }
                 </template>
                 <template type="realtime">
                     <![CDATA[
                     /* Enter a unique ExecutionPlan */
-                    @Plan:name('org.wso2.iot.devices.sensors.$sensorType.streamMapping')
+                    @Plan:name('org.wso2.iot.devices.sensors.$sensorType.statuspersecond')
 
                     /* Enter a unique description for ExecutionPlan */
-                    -- @Plan:description('Execution plain which used for mapping sensor input stream into sensor data summarization stream')
+                    -- @Plan:description('Execution plain which used for mapping sensor input stream into per-second summarization stream')
 
                     /* define streams/tables and write queries here ... */
 
                     @Import('org.wso2.iot.devices.sensors.$sensorType:1.0.0')
-                    define stream sensorInputStream (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, sensor_value double);
+                    define stream $sensorTypePerSecondStreamMapper (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, sensor_value double);
 
-                    @Export('org.wso2.iot.devices.sensors.$sensorType.statistics:1.0.0')
-                    define stream sensorStatisticsStream (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double);
+                    @Export('org.wso2.iot.devices.sensors.$sensorType.presecond.statistics:1.0.0')
+                    define stream $sensorTypePerSecondStats (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int, second int);
 
-                    from sensorInputStream#window.time(1 min)
-                    select meta_owner, meta_deviceType, meta_deviceId, meta_time , count() as noOfInvocation, sum(sensor_value) as total, avg(sensor_value) as average, max(sensor_value) as maxValue, min(sensor_value) as minValue
-                    insert into sensorStatisticsStream;
+                    from $sensorTypePerSecondStreamMapper#window.timeBatch(1 sec)
+                    select meta_owner, meta_deviceType, meta_deviceId, meta_time, count(*) as noOfInvocation, sum(sensor_value) as total,
+                    avg(sensor_value) as average, max(sensor_value) as maxValue, min(sensor_value) as minValue, time:extract(meta_time, 'year') as year, time:extract(meta_time, 'month') as month, time:extract(meta_time, 'day') as day,
+                    time:extract(meta_time, 'hour') as hour, time:extract(meta_time, 'minute') as minute, time:extract(meta_time, 'second') as second
+                    GROUP BY meta_owner, meta_deviceType, meta_deviceId, meta_time
+                    insert into $sensorTypePerSecondStats;
+                    ]]>
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+                    /* Enter a unique ExecutionPlan */
+                    @Plan:name('org.wso2.iot.devices.sensors.$sensorType.statusperminute')
+
+                    /* Enter a unique description for ExecutionPlan */
+                    -- @Plan:description('Execution plain which used for mapping per-second summarized input stream into per-minute summarization stream')
+
+                    /* define streams/tables and write queries here ... */
+
+                    @Import('org.wso2.iot.devices.sensors.$sensorType.presecond.statistics:1.0.0')
+                    define stream $sensorTypePerMinuteStreamMapper (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int, second int);
+
+                    @Export('org.wso2.iot.devices.sensors.$sensorType.preminute.statistics:1.0.0')
+                    define stream $sensorTypePerMinuteStats (meta_owner string, meta_deviceType string, meta_deviceId string,meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int);
+
+                    from $sensorTypePerMinuteStreamMapper#window.timeBatch(1 min)
+                    select meta_owner, meta_deviceType, meta_deviceId, meta_time, sum(noOfInvocation) as noOfInvocation, sum(total) as total,
+                    avg(average) as average, max(maxValue) as maxValue, min(minValue) as minValue, time:extract(meta_time, 'year') as year, time:extract(meta_time, 'month') as month, time:extract(meta_time, 'day') as day,
+                    time:extract(meta_time, 'hour') as hour, time:extract(meta_time, 'minute') as minute
+                    GROUP BY meta_owner, meta_deviceType, meta_deviceId, year, month, day, hour, minute
+                    insert into $sensorTypePerMinuteStats;
                     ]]>
                 </template>
                 <template type="eventsink">
@@ -127,6 +246,41 @@
                             <IsPrimaryKey>true</IsPrimaryKey>
                             <EnableScoreParam>false</EnableScoreParam>
                             <Type>LONG</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>year</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>INTEGER</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>month</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>INTEGER</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>day</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>INTEGER</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>hour</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>INTEGER</Type>
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                            <Name>minute</Name>
+                            <EnableIndexing>true</EnableIndexing>
+                            <IsPrimaryKey>true</IsPrimaryKey>
+                            <EnableScoreParam>false</EnableScoreParam>
+                            <Type>INTEGER</Type>
                         </ColumnDefinition>
                         <ColumnDefinition>
                             <Name>noOfInvocation</Name>
@@ -170,7 +324,7 @@
                         </ColumnDefinition>
                      </TableSchema>
                      <Source>
-                        <StreamId>org.wso2.iot.devices.sensors.$sensorType.statistics:1.0.0</StreamId>
+                        <StreamId>org.wso2.iot.devices.sensors.$sensorType.preminute.statistics:1.0.0</StreamId>
                      </Source>
                      <MergeSchema>false</MergeSchema>
                      <RecordStoreName>EVENT_STORE</RecordStoreName>
@@ -182,30 +336,36 @@
                         <sparkScript>
                             <![CDATA[
 
-                                CREATE TEMPORARY TABLE Device$sensorTypeData USING CarbonAnalytics OPTIONS(tableName "ORG_WSO2_IOT_DEVICES_SENSORS_$sensorType_STATISTICS");
+                                CREATE TEMPORARY TABLE Device$sensorTypeData USING CarbonAnalytics OPTIONS(tableName "ORG_WSO2_IOT_DEVICES_SENSORS_$sensorType_PREMINUTE_STATISTICS");
 
                                 CREATE TEMPORARY TABLE Device$sensorTypeSummaryData USING CarbonAnalytics OPTIONS (tableName "Device_$sensorType_Summary",
-                                schema "meta_owner string -i, meta_deviceType string -i, meta_deviceId string -i, time long -i, noOfInvocation long -i, total double -i, maxValue double -i, minValue double -i");
+                                schema "meta_owner string -i, meta_deviceType string -i, meta_deviceId string -i, time long -i,year INT -i, month INT -i, day INT -i, hour INT -I,minute INT -I
+                                ,  noOfInvocation long -i, total double -i, maxValue double -i, minValue double -i");
 
-                                insert INTO table Device$sensorTypeSummaryData select meta_owner, meta_deviceType, meta_deviceId as deviceId, meta_time*1000 as time , noOfInvocation, total, maxValue, minValue
-                                from Device$sensorTypeData group by meta_deviceType, meta_deviceId, meta_owner, meta_time, noOfInvocation, total, maxValue, minValue;
+                                INSERT INTO table Device$sensorTypeSummaryData select meta_owner, meta_deviceType
+                                , meta_deviceId as deviceId, meta_time as time ,year, month, day, hour,minute
+                                , noOfInvocation, total, maxValue, minValue
+                                from Device$sensorTypeData
+                                GROUP BY meta_deviceType, meta_deviceId, meta_owner, meta_time,year, month, day, hour
+                                ,minute, noOfInvocation, total, maxValue, minValue
+                                ORDER BY year, month, day, hour, minute ASC;
 
                                 CREATE TEMPORARY TABLE $sensorTypeServiceStatPerHour USING CarbonAnalytics
                                 OPTIONS (tableName "Service-$sensorType-Stat-Per-Hour",
                                 schema "year INT -i, month INT -i, day INT -i, hour INT -I, total DOUBLE -i, minValue DOUBLE -i,
-                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i",
-                                primaryKeys "year, month, day, hour, deviceId", mergeSchema "false");
+                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i,owner string -i, deviceType string -i",
+                                primaryKeys "year, month, day, hour, deviceId, deviceType", mergeSchema "false");
 
                                 INSERT INTO TABLE $sensorTypeServiceStatPerHour
-                                SELECT year, month, day, hour,total, minValue, maxValue, noOfInvocation, time, meta_deviceId
+                                SELECT year, month, day, hour,total, minValue, maxValue, noOfInvocation, time, meta_deviceId, meta_owner, meta_deviceType
                                 FROM
                                 (SELECT temp.year, temp.month, temp.day, temp.hour, sum(temp.total) as total,
-                                min(temp.minValue) as minValue, max(temp.maxValue) as maxValue, count(*) as noOfInvocation, getHourStartingTime(year, month, day,
-                                hour) as time, temp.meta_deviceId
+                                min(temp.minValue) as minValue, max(temp.maxValue) as maxValue, sum(temp.noOfInvocation) as noOfInvocation, getHourStartingTime(year, month, day,
+                                hour) as time, temp.meta_deviceId, temp.meta_owner, temp.meta_deviceType
                                 FROM
                                  (SELECT getYear(time) as year, getMonth(time) as month, getDay(time) as day, getHour(time)
-                                as hour, meta_deviceId, meta_owner, total, maxValue, minValue FROM Device$sensorTypeSummaryData) temp
-                                GROUP BY temp.year, temp.month, temp.day, temp.hour, temp.meta_deviceId) result;
+                                as hour, meta_deviceId, meta_owner,meta_deviceType, total, maxValue, minValue, noOfInvocation FROM Device$sensorTypeSummaryData) temp
+                                GROUP BY temp.year, temp.month, temp.day, temp.hour, temp.meta_deviceId, temp.meta_deviceType, temp.meta_owner) result;
 
                                 CREATE TEMPORARY TABLE $sensorTypeServiceStatPerHour USING CarbonAnalytics
                                 OPTIONS (tableName "Service-$sensorType-Stat-Per-Hour",
@@ -214,14 +374,14 @@
                                 CREATE TEMPORARY TABLE $sensorTypeServiceStatPerDay USING CarbonAnalytics
                                 OPTIONS (tableName "Service-$sensorType-Stat-Per-Day",
                                 schema "year INT -i, month INT -i, day INT -i, total DOUBLE -i, minValue DOUBLE -i,
-                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i",
-                                primaryKeys "year, month, day, deviceId",
+                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i,owner string -i, deviceType string -i",
+                                primaryKeys "year, month, day, deviceId, deviceType",
                                 mergeSchema "false");
 
                                 INSERT INTO TABLE $sensorTypeServiceStatPerDay
-                                SELECT year, month, day, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, count(*) as noOfInvocation,
-                                getDateStartingTime(year, month, day) as time, deviceId FROM $sensorTypeServiceStatPerHour
-                                GROUP BY year, month, day, deviceId ORDER BY year, month, day ASC;
+                                SELECT year, month, day, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, sum(noOfInvocation) as noOfInvocation,
+                                getDateStartingTime(year, month, day) as time, deviceId, owner, deviceType FROM $sensorTypeServiceStatPerHour
+                                GROUP BY year, month, day, deviceId, owner, deviceType ORDER BY year, month, day ASC;
 
                                 CREATE TEMPORARY TABLE $sensorTypeServiceStatPerDay USING CarbonAnalytics
                                 OPTIONS (tableName "Service-$sensorType-Stat-Per-Day",
@@ -230,14 +390,14 @@
                                 CREATE TEMPORARY TABLE $sensorTypeServiceStatPerMonth USING CarbonAnalytics
                                 OPTIONS (tableName "Service-$sensorType-Stat-Per-Month",
                                 schema "year INT -i, month INT -i, total DOUBLE -i, minValue DOUBLE -i,
-                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i",
+                                maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i,owner string -i, deviceType string -i",
                                 primaryKeys "year, month, deviceId",
                                 mergeSchema "false");
 
                                 INSERT INTO TABLE $sensorTypeServiceStatPerMonth
-                                SELECT year, month, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, count(*) as noOfInvocation,
-                                getMonthStartingTime(year, month) as time, deviceId FROM $sensorTypeServiceStatPerDay
-                                GROUP BY year, month, deviceId ORDER BY year, month ASC;
+                                SELECT year, month, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, sum(noOfInvocation) as noOfInvocation,
+                                getMonthStartingTime(year, month) as time, deviceId, owner, deviceType FROM $sensorTypeServiceStatPerDay
+                                GROUP BY year, month, deviceId, owner, deviceType ORDER BY year, month ASC;
                              ]]>
                         </sparkScript>
                         <cron>0 0/5 * * * ?</cron>
@@ -705,12 +865,12 @@
                     </config>
                 </template>
                 <template type="dashboard">
-                        <config>
-                            <properties>
-                                <property name="dashboardId">$sensorType-historical-analytics-dashboard</property>
-                            </properties>
-                            <content>
-                               <![CDATA[
+                    <config>
+                        <properties>
+                            <property name="dashboardId">$sensorType-historical-analytics-dashboard</property>
+                        </properties>
+                        <content>
+                            <![CDATA[
                                    {
                                       "id": "$sensorType-historical-analytics-dashboard",
                                       "title": "Historical Analytics: $sensorType",
@@ -978,8 +1138,8 @@
                                     }
 
                                ]]>
-                            </content>
-                        </config>
+                        </content>
+                    </config>
                 </template>
             </templates>
             <streamMappings>
