@@ -17,11 +17,11 @@
   -->
 
 <domain name="SensorAnomalyDetectionDomain">
-    <description>Domain for sensor anomaly detection</description>
+    <description>Detecting anomalies in sensor reading</description>
     <scenarios>
         <scenario type="LinearRegressionWithLengthWindow">
-            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
-                choice
+            <description>Anomalies in sensor reading will be detected using linear regression over a defined number of
+                events and those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
@@ -114,8 +114,8 @@
 
         </scenario>
         <scenario type="LinearRegressionWithTimeAndLengthWindow">
-            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
-                choice
+            <description>Anomalies in sensor reading will be detected using linear regression over a defined number of
+                events or a time period and those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
@@ -213,8 +213,8 @@
 
         </scenario>
         <scenario type="PercentileValuesWithLengthWindow">
-            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
-                choice
+            <description>Anomalies in sensor reading will be detected using percentiles over a defined number of events
+                and those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
@@ -302,8 +302,8 @@
 
         </scenario>
         <scenario type="PercentileValuesWithTimeWindow">
-            <description>Configure a sensor anomaly detection scenario to receive alerts for a given stream of your
-                choice
+            <description>Anomalies in sensor reading will be detected using percentiles over a defined time period and
+                those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
                 <!--Note: These will be deployed in the order they appear here-->
