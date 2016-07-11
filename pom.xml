@@ -480,6 +480,7 @@
         <carbon.multitenancy.version>4.5.3-SNAPSHOT</carbon.multitenancy.version>
         <carbon.deployment.version>4.7.0</carbon.deployment.version>
         <carbon.identity.version>5.1.1-SNAPSHOT</carbon.identity.version>
+        <carbon.identity.authenticator.saml2.version>5.1.1</carbon.identity.authenticator.saml2.version>
         <carbon.commons.version>4.5.4</carbon.commons.version>
         <carbon.data.version>4.3.5-SNAPSHOT</carbon.data.version>
         <carbon.event-processing.version>2.1.0-SNAPSHOT</carbon.event-processing.version>
@@ -519,7 +520,7 @@
         <commons.lang3.version>3.3.2</commons.lang3.version>
         <commons.io.version>2.4</commons.io.version>
         <axis2.version>1.6.1.wso2v11</axis2.version>
-        <carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
+        <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
         <gson.version>2.3.1</gson.version>
         <slf4j.log4j12.version>1.6.1</slf4j.log4j12.version>
         <slf4j.api.version>1.6.1</slf4j.api.version>
