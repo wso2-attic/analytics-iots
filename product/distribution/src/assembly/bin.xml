@@ -776,13 +776,13 @@
             <fileMode>644</fileMode>
         </file>
         <!-- Adding Geo Dashboard  configuration files and Capp -->
-        <file>
+       <!-- <file>
             <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-2.1.0.car
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps/</outputDirectory>
             <fileMode>644</fileMode>
-        </file>
+        </file>-->
         <file>
             <source>repository/resources/geodashboard/events.csv</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/eventsimulatorfiles/
@@ -797,13 +797,13 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-        <file>
+       <!-- <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/datasources/geodashboard-datasources.xml
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
-        </file>
+        </file>-->
     </files>
 </assembly>
