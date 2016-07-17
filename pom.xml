@@ -472,29 +472,28 @@
         <cdmf.analytics.version>1.0.0-SNAPSHOT</cdmf.analytics.version>
 
         <carbon.kernel.version>4.4.7</carbon.kernel.version>
-        <carbon.analytics.version>1.0.6-SNAPSHOT</carbon.analytics.version>
-        <carbon.analytics.common.version>5.1.0-SNAPSHOT</carbon.analytics.common.version>
+        <carbon.analytics.version>1.1.0</carbon.analytics.version>
+        <carbon.analytics.common.version>5.1.0</carbon.analytics.common.version>
         <carbon.automationutils.version>4.4.1</carbon.automationutils.version>
         <carbon.automation.version>4.4.2</carbon.automation.version>
         <carbon.registry.version>4.5.5</carbon.registry.version>
         <carbon.multitenancy.version>4.5.3-SNAPSHOT</carbon.multitenancy.version>
         <carbon.deployment.version>4.7.0</carbon.deployment.version>
-        <carbon.identity.version>5.1.1-SNAPSHOT</carbon.identity.version>
+        <carbon.identity.version>5.2.0</carbon.identity.version>
         <carbon.identity.authenticator.saml2.version>5.1.1</carbon.identity.authenticator.saml2.version>
         <carbon.commons.version>4.5.4</carbon.commons.version>
-        <carbon.data.version>4.3.5-SNAPSHOT</carbon.data.version>
-        <carbon.event-processing.version>2.1.0-SNAPSHOT</carbon.event-processing.version>
+        <carbon.data.version>4.3.5</carbon.data.version>
+        <carbon.event-processing.version>2.1.0</carbon.event-processing.version>
         <carbon.metrics.version>1.2.2</carbon.metrics.version>
-        <siddhi.version>3.1.0-SNAPSHOT</siddhi.version>
-        <shindig.version>1.0.19</shindig.version>
-        <carbon.dashboard.version>2.0.0-SNAPSHOT</carbon.dashboard.version>
+        <siddhi.version>3.1.0</siddhi.version>
+        <carbon.dashboard.version>2.0.0</carbon.dashboard.version>
 
         <jaggery.version>0.12.6</jaggery.version>
-        <jaggery.modules.carbon.version>1.5.3-SNAPSHOT</jaggery.modules.carbon.version>
-        <jaggery.modules.process.version>1.5.3-SNAPSHOT</jaggery.modules.process.version>
-        <jaggery.modules.i18n.version>1.5.3-SNAPSHOT</jaggery.modules.i18n.version>
-        <jaggery.modules.ws.version>1.5.3-SNAPSHOT</jaggery.modules.ws.version>
-        <jaggery.modules.sso.version>1.5.3-SNAPSHOT</jaggery.modules.sso.version>
+        <jaggery.modules.carbon.version>1.5.3</jaggery.modules.carbon.version>
+        <jaggery.modules.process.version>1.5.3</jaggery.modules.process.version>
+        <jaggery.modules.i18n.version>1.5.3</jaggery.modules.i18n.version>
+        <jaggery.modules.ws.version>1.5.3</jaggery.modules.ws.version>
+        <jaggery.modules.sso.version>1.5.3</jaggery.modules.sso.version>
 
         <orbit.version.commons.pool>1.5.6.wso2v1</orbit.version.commons.pool>
         <orbit.version.axiom>1.2.11.wso2v5</orbit.version.axiom>
@@ -530,9 +529,9 @@
         <kryo.import.version>[2.24.0,3.0)</kryo.import.version>
         <project.scm.id>my-scm-server</project.scm.id>
         <!-- Carbon Device Management -->
-        <carbon.device.mgt.version>1.1.1-SNAPSHOT</carbon.device.mgt.version>
+        <carbon.device.mgt.version>1.1.1</carbon.device.mgt.version>
         <carbon.iot.device.mgt.version>1.0.0-SNAPSHOT</carbon.iot.device.mgt.version>
-        <carbon.device.mgt.plugin.version>2.1.1-SNAPSHOT</carbon.device.mgt.plugin.version>
+        <carbon.device.mgt.plugin.version>2.1.1</carbon.device.mgt.plugin.version>
         <!--JWT grant type extension feature-->
         <identity.jwt.extension.version>1.0.0</identity.jwt.extension.version>
     </properties>
