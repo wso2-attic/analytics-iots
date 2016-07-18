@@ -790,10 +790,10 @@
                                 <!-- End of IoT Analytics Features -->
 
                                 <!-- Geo Dashboard Feature -->
-                                <!--<feature>
+                                <feature>
                                     <id>org.wso2.carbon.geo.dashboard.feature.group</id>
                                     <version>${carbon.event-processing.version}</version>
-                                </feature>-->
+                                </feature>
                                 <!-- End of Geo Dashboard Feature -->
                             </features>
                         </configuration>
