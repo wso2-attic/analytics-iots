@@ -1,3 +1,21 @@
+<!--
+  ~ Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
 <domain name="HistoricAnalyticsDomain">
     <description>Domain for historic sensor data analysis</description>
     <scenarios>
@@ -9,7 +27,7 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.iot.devices.sensors.$sensorType",
+                    "name": "org.wso2.iot.devices.sensors.${toId('$sensorType')}",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -29,9 +47,9 @@
                 </template>
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.iot.devices.sensors.$sensorType.presecond.statistics",
+                    "name": "org.wso2.iot.devices.sensors.${toId('$sensorType')}.presecond.statistics",
                     "version": "1.0.0",
-                    "nickName": "$sensorType.presecond.statistics",
+                    "nickName": "${toId('$sensorType')}.presecond.statistics",
                     "description": "$sensorType pre-second statistics",
                     "metaData": [
                     {
@@ -101,9 +119,9 @@
                 </template>
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.iot.devices.sensors.$sensorType.preminute.statistics",
+                    "name": "org.wso2.iot.devices.sensors.${toId('$sensorType')}.preminute.statistics",
                     "version": "1.0.0",
-                    "nickName": "$sensorType.preminute.statistics",
+                    "nickName": "${toId('$sensorType')}.preminute.statistics",
                     "description": "$sensorType pre-minute statistics",
                     "metaData": [
                     {
@@ -170,49 +188,49 @@
                 <template type="realtime">
                     <![CDATA[
                     /* Enter a unique ExecutionPlan */
-                    @Plan:name('org.wso2.iot.devices.sensors.$sensorType.statuspersecond')
+                    @Plan:name('org.wso2.iot.devices.sensors.${toId('$sensorType')}.statuspersecond')
 
                     /* Enter a unique description for ExecutionPlan */
                     -- @Plan:description('Execution plain which used for mapping sensor input stream into per-second summarization stream')
 
                     /* define streams/tables and write queries here ... */
 
-                    @Import('org.wso2.iot.devices.sensors.$sensorType:1.0.0')
-                    define stream $sensorTypePerSecondStreamMapper (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, sensor_value double);
+                    @Import('org.wso2.iot.devices.sensors.${toId('$sensorType')}:1.0.0')
+                    define stream ${toId('$sensorType')}PerSecondStreamMapper (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, sensor_value double);
 
-                    @Export('org.wso2.iot.devices.sensors.$sensorType.presecond.statistics:1.0.0')
-                    define stream $sensorTypePerSecondStats (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int, second int);
+                    @Export('org.wso2.iot.devices.sensors.${toId('$sensorType')}.presecond.statistics:1.0.0')
+                    define stream ${toId('$sensorType')}PerSecondStats (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int, second int);
 
-                    from $sensorTypePerSecondStreamMapper#window.timeBatch(1 sec)
+                    from ${toId('$sensorType')}PerSecondStreamMapper#window.timeBatch(1 sec)
                     select meta_owner, meta_deviceType, meta_deviceId, meta_time, count(*) as noOfInvocation, sum(sensor_value) as total,
                     avg(sensor_value) as average, max(sensor_value) as maxValue, min(sensor_value) as minValue, time:extract(meta_time, 'year') as year, time:extract(meta_time, 'month') as month, time:extract(meta_time, 'day') as day,
                     time:extract(meta_time, 'hour') as hour, time:extract(meta_time, 'minute') as minute, time:extract(meta_time, 'second') as second
                     GROUP BY meta_owner, meta_deviceType, meta_deviceId, meta_time
-                    insert into $sensorTypePerSecondStats;
+                    insert into ${toId('$sensorType')}PerSecondStats;
                     ]]>
                 </template>
                 <template type="realtime">
                     <![CDATA[
                     /* Enter a unique ExecutionPlan */
-                    @Plan:name('org.wso2.iot.devices.sensors.$sensorType.statusperminute')
+                    @Plan:name('org.wso2.iot.devices.sensors.${toId('$sensorType')}.statusperminute')
 
                     /* Enter a unique description for ExecutionPlan */
                     -- @Plan:description('Execution plain which used for mapping per-second summarized input stream into per-minute summarization stream')
 
                     /* define streams/tables and write queries here ... */
 
-                    @Import('org.wso2.iot.devices.sensors.$sensorType.presecond.statistics:1.0.0')
-                    define stream $sensorTypePerMinuteStreamMapper (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int, second int);
+                    @Import('org.wso2.iot.devices.sensors.${toId('$sensorType')}.presecond.statistics:1.0.0')
+                    define stream ${toId('$sensorType')}PerMinuteStreamMapper (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int, second int);
 
-                    @Export('org.wso2.iot.devices.sensors.$sensorType.preminute.statistics:1.0.0')
-                    define stream $sensorTypePerMinuteStats (meta_owner string, meta_deviceType string, meta_deviceId string,meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int);
+                    @Export('org.wso2.iot.devices.sensors.${toId('$sensorType')}.preminute.statistics:1.0.0')
+                    define stream ${toId('$sensorType')}PerMinuteStats (meta_owner string, meta_deviceType string, meta_deviceId string,meta_time long, noOfInvocation long, total double, average double, maxValue double, minValue double, year int, month int, day int, hour int, minute int);
 
-                    from $sensorTypePerMinuteStreamMapper#window.timeBatch(1 min)
+                    from ${toId('$sensorType')}PerMinuteStreamMapper#window.timeBatch(1 min)
                     select meta_owner, meta_deviceType, meta_deviceId, meta_time, sum(noOfInvocation) as noOfInvocation, sum(total) as total,
                     avg(average) as average, max(maxValue) as maxValue, min(minValue) as minValue, time:extract(meta_time, 'year') as year, time:extract(meta_time, 'month') as month, time:extract(meta_time, 'day') as day,
                     time:extract(meta_time, 'hour') as hour, time:extract(meta_time, 'minute') as minute
                     GROUP BY meta_owner, meta_deviceType, meta_deviceId, year, month, day, hour, minute
-                    insert into $sensorTypePerMinuteStats;
+                    insert into ${toId('$sensorType')}PerMinuteStats;
                     ]]>
                 </template>
                 <template type="eventsink">
@@ -324,7 +342,7 @@
                         </ColumnDefinition>
                      </TableSchema>
                      <Source>
-                        <StreamId>org.wso2.iot.devices.sensors.$sensorType.preminute.statistics:1.0.0</StreamId>
+                        <StreamId>org.wso2.iot.devices.sensors.${toId('$sensorType')}.preminute.statistics:1.0.0</StreamId>
                      </Source>
                      <MergeSchema>false</MergeSchema>
                      <RecordStoreName>EVENT_STORE</RecordStoreName>
@@ -336,27 +354,27 @@
                         <sparkScript>
                             <![CDATA[
 
-                                CREATE TEMPORARY TABLE Device$sensorTypeData USING CarbonAnalytics OPTIONS(tableName "ORG_WSO2_IOT_DEVICES_SENSORS_$sensorType_PREMINUTE_STATISTICS");
+                                CREATE TEMPORARY TABLE Device${toId('$sensorType')}Data USING CarbonAnalytics OPTIONS(tableName "ORG_WSO2_IOT_DEVICES_SENSORS_${toId('$sensorType')}_PREMINUTE_STATISTICS");
 
-                                CREATE TEMPORARY TABLE Device$sensorTypeSummaryData USING CarbonAnalytics OPTIONS (tableName "Device_$sensorType_Summary",
+                                CREATE TEMPORARY TABLE Device${toId('$sensorType')}SummaryData USING CarbonAnalytics OPTIONS (tableName "Device_${toId('$sensorType')}_Summary",
                                 schema "meta_owner string -i, meta_deviceType string -i, meta_deviceId string -i, time long -i,year INT -i, month INT -i, day INT -i, hour INT -I,minute INT -I
                                 ,  noOfInvocation long -i, total double -i, maxValue double -i, minValue double -i");
 
-                                INSERT INTO table Device$sensorTypeSummaryData select meta_owner, meta_deviceType
+                                INSERT INTO table Device${toId('$sensorType')}SummaryData select meta_owner, meta_deviceType
                                 , meta_deviceId as deviceId, meta_time as time ,year, month, day, hour,minute
                                 , noOfInvocation, total, maxValue, minValue
-                                from Device$sensorTypeData
+                                from Device${toId('$sensorType')}Data
                                 GROUP BY meta_deviceType, meta_deviceId, meta_owner, meta_time,year, month, day, hour
                                 ,minute, noOfInvocation, total, maxValue, minValue
                                 ORDER BY year, month, day, hour, minute ASC;
 
-                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerHour USING CarbonAnalytics
-                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Hour",
+                                CREATE TEMPORARY TABLE ${toId('$sensorType')}ServiceStatPerHour USING CarbonAnalytics
+                                OPTIONS (tableName "Service-${toId('$sensorType')}-Stat-Per-Hour",
                                 schema "year INT -i, month INT -i, day INT -i, hour INT -I, total DOUBLE -i, minValue DOUBLE -i,
                                 maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i,owner string -i, deviceType string -i",
                                 primaryKeys "year, month, day, hour, deviceId, deviceType", mergeSchema "false");
 
-                                INSERT INTO TABLE $sensorTypeServiceStatPerHour
+                                INSERT INTO TABLE ${toId('$sensorType')}ServiceStatPerHour
                                 SELECT year, month, day, hour,total, minValue, maxValue, noOfInvocation, time, meta_deviceId, meta_owner, meta_deviceType
                                 FROM
                                 (SELECT temp.year, temp.month, temp.day, temp.hour, sum(temp.total) as total,
@@ -364,39 +382,39 @@
                                 hour) as time, temp.meta_deviceId, temp.meta_owner, temp.meta_deviceType
                                 FROM
                                  (SELECT getYear(time) as year, getMonth(time) as month, getDay(time) as day, getHour(time)
-                                as hour, meta_deviceId, meta_owner,meta_deviceType, total, maxValue, minValue, noOfInvocation FROM Device$sensorTypeSummaryData) temp
+                                as hour, meta_deviceId, meta_owner,meta_deviceType, total, maxValue, minValue, noOfInvocation FROM Device${toId('$sensorType')}SummaryData) temp
                                 GROUP BY temp.year, temp.month, temp.day, temp.hour, temp.meta_deviceId, temp.meta_deviceType, temp.meta_owner) result;
 
-                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerHour USING CarbonAnalytics
-                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Hour",
-                                incrementalProcessing "$sensorTypeServiceStatPerHour, 86400");
+                                CREATE TEMPORARY TABLE ${toId('$sensorType')}ServiceStatPerHour USING CarbonAnalytics
+                                OPTIONS (tableName "Service-${toId('$sensorType')}-Stat-Per-Hour",
+                                incrementalProcessing "${toId('$sensorType')}ServiceStatPerHour, 86400");
 
-                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerDay USING CarbonAnalytics
-                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Day",
+                                CREATE TEMPORARY TABLE ${toId('$sensorType')}ServiceStatPerDay USING CarbonAnalytics
+                                OPTIONS (tableName "Service-${toId('$sensorType')}-Stat-Per-Day",
                                 schema "year INT -i, month INT -i, day INT -i, total DOUBLE -i, minValue DOUBLE -i,
                                 maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i,owner string -i, deviceType string -i",
                                 primaryKeys "year, month, day, deviceId, deviceType",
                                 mergeSchema "false");
 
-                                INSERT INTO TABLE $sensorTypeServiceStatPerDay
+                                INSERT INTO TABLE ${toId('$sensorType')}ServiceStatPerDay
                                 SELECT year, month, day, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, sum(noOfInvocation) as noOfInvocation,
-                                getDateStartingTime(year, month, day) as time, deviceId, owner, deviceType FROM $sensorTypeServiceStatPerHour
+                                getDateStartingTime(year, month, day) as time, deviceId, owner, deviceType FROM ${toId('$sensorType')}ServiceStatPerHour
                                 GROUP BY year, month, day, deviceId, owner, deviceType ORDER BY year, month, day ASC;
 
-                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerDay USING CarbonAnalytics
-                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Day",
-                                incrementalProcessing "$sensorTypeServiceStatPerDay, 604800");
+                                CREATE TEMPORARY TABLE ${toId('$sensorType')}ServiceStatPerDay USING CarbonAnalytics
+                                OPTIONS (tableName "Service-${toId('$sensorType')}-Stat-Per-Day",
+                                incrementalProcessing "${toId('$sensorType')}ServiceStatPerDay, 604800");
 
-                                CREATE TEMPORARY TABLE $sensorTypeServiceStatPerMonth USING CarbonAnalytics
-                                OPTIONS (tableName "Service-$sensorType-Stat-Per-Month",
+                                CREATE TEMPORARY TABLE ${toId('$sensorType')}ServiceStatPerMonth USING CarbonAnalytics
+                                OPTIONS (tableName "Service-${toId('$sensorType')}-Stat-Per-Month",
                                 schema "year INT -i, month INT -i, total DOUBLE -i, minValue DOUBLE -i,
                                 maxValue DOUBLE -i, noOfInvocation INT -I, time LONG -i, deviceId STRING -i,owner string -i, deviceType string -i",
                                 primaryKeys "year, month, deviceId",
                                 mergeSchema "false");
 
-                                INSERT INTO TABLE $sensorTypeServiceStatPerMonth
+                                INSERT INTO TABLE ${toId('$sensorType')}ServiceStatPerMonth
                                 SELECT year, month, sum(total) as total, min(minValue) as minValue, max(maxValue) as maxValue, sum(noOfInvocation) as noOfInvocation,
-                                getMonthStartingTime(year, month) as time, deviceId, owner, deviceType FROM $sensorTypeServiceStatPerDay
+                                getMonthStartingTime(year, month) as time, deviceId, owner, deviceType FROM ${toId('$sensorType')}ServiceStatPerDay
                                 GROUP BY year, month, deviceId, owner, deviceType ORDER BY year, month ASC;
                              ]]>
                         </sparkScript>
@@ -406,7 +424,7 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-historical-value-chart-min</property>
+                            <property name="directoryName">${toId('$sensorType')}-historical-value-chart-min</property>
                             <property name="templateDirectory">HistoricalValueChart</property>
                         </properties>
                         <artifacts>
@@ -415,18 +433,18 @@
                                     {
                                       "provider-conf": {
                                         "control1": "default value",
-                                        "tableName": "Device_$sensorType_Summary",
+                                        "tableName": "Device_${toId('$sensorType')}_Summary",
                                         "provider-name": "batch",
                                         "time-from":"0",
                                         "time-to":"9007199254740992",
-                                        "tablePrefix":"Service-$sensorType-Stat-Per-"
+                                        "tablePrefix":"Service-${toId('$sensorType')}-Stat-Per-"
                                       },
                                       "chart-conf": {
                                         "x": "time",
                                         "y": "minValue",
                                         "color": "None",
                                         "mode": "stack",
-                                        "gadget-name": "$sensorType-historical-value-chart-min",
+                                        "gadget-name": "${toId('$sensorType')}-historical-value-chart-min",
                                         "chart-name": "bar-chart"
                                       }
                                     }
@@ -435,12 +453,12 @@
                             <artifact file="gadget.json">
                                 <![CDATA[
                                 {
-                                    "id": "$sensorType-historical-value-chart-min",
-                                    "title": "$sensorType-historical-value-chart-min",
+                                    "id": "${toId('$sensorType')}-historical-value-chart-min",
+                                    "title": "${toId('$sensorType')}-historical-value-chart-min",
                                     "type": "gadget",
-                                    "thumbnail": "gadget/$sensorType-historical-value-chart-min/index.png",
+                                    "thumbnail": "gadget/${toId('$sensorType')}-historical-value-chart-min/index.png",
                                     "data": {
-                                        "url": "gadget/$sensorType-historical-value-chart-min/index.xml"
+                                        "url": "gadget/${toId('$sensorType')}-historical-value-chart-min/index.xml"
                                     },
                                     "listen": {
                                       "subscriber": {
@@ -473,7 +491,7 @@
                                     var refreshIntervalId;
 
                                     $(function () {
-                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorType-historical-value-chart-min';
+                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/${toId('$sensorType')}-historical-value-chart-min';
                                         var schema;
                                         var pref = new gadgets.Prefs();
 
@@ -557,7 +575,7 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-historical-value-chart-max</property>
+                            <property name="directoryName">${toId('$sensorType')}-historical-value-chart-max</property>
                             <property name="templateDirectory">HistoricalValueChart</property>
                         </properties>
                         <artifacts>
@@ -566,18 +584,18 @@
                                     {
                                       "provider-conf": {
                                         "control1": "default value",
-                                        "tableName": "Device_$sensorType_Summary",
+                                        "tableName": "Device_${toId('$sensorType')}_Summary",
                                         "provider-name": "batch",
                                         "time-from":"0",
                                         "time-to":"9007199254740992",
-                                        "tablePrefix":"Service-$sensorType-Stat-Per-"
+                                        "tablePrefix":"Service-${toId('$sensorType')}-Stat-Per-"
                                       },
                                       "chart-conf": {
                                         "x": "time",
                                         "y": "maxValue",
                                         "color": "None",
                                         "mode": "stack",
-                                        "gadget-name": "$sensorType-historical-value-chart-max",
+                                        "gadget-name": "${toId('$sensorType')}-historical-value-chart-max",
                                         "chart-name": "bar-chart"
                                       }
                                     }
@@ -586,12 +604,12 @@
                             <artifact file="gadget.json">
                                 <![CDATA[
                                 {
-                                    "id": "$sensorType-historical-value-chart-max",
-                                    "title": "$sensorType-historical-value-chart-max",
+                                    "id": "${toId('$sensorType')}-historical-value-chart-max",
+                                    "title": "${toId('$sensorType')}-historical-value-chart-max",
                                     "type": "gadget",
-                                    "thumbnail": "gadget/$sensorType-historical-value-chart-max/index.png",
+                                    "thumbnail": "gadget/${toId('$sensorType')}-historical-value-chart-max/index.png",
                                     "data": {
-                                        "url": "gadget/$sensorType-historical-value-chart-max/index.xml"
+                                        "url": "gadget/${toId('$sensorType')}-historical-value-chart-max/index.xml"
                                     },
                                     "listen": {
                                       "subscriber": {
@@ -624,7 +642,7 @@
                                     var refreshIntervalId;
 
                                     $(function () {
-                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorType-historical-value-chart-max';
+                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/${toId('$sensorType')}-historical-value-chart-max';
                                         var schema;
                                         var pref = new gadgets.Prefs();
 
@@ -708,7 +726,7 @@
                 <template type="gadget">
                     <config>
                         <properties>
-                            <property name="directoryName">$sensorType-historical-value-chart-total</property>
+                            <property name="directoryName">${toId('$sensorType')}-historical-value-chart-total</property>
                             <property name="templateDirectory">HistoricalValueChart</property>
                         </properties>
                         <artifacts>
@@ -717,18 +735,18 @@
                                     {
                                       "provider-conf": {
                                         "control1": "default value",
-                                        "tableName": "Device_$sensorType_Summary",
+                                        "tableName": "Device_${toId('$sensorType')}_Summary",
                                         "provider-name": "batch",
                                         "time-from":"0",
                                         "time-to":"9007199254740992",
-                                        "tablePrefix":"Service-$sensorType-Stat-Per-"
+                                        "tablePrefix":"Service-${toId('$sensorType')}-Stat-Per-"
                                       },
                                       "chart-conf": {
                                         "x": "time",
                                         "y": "total",
                                         "color": "None",
                                         "mode": "stack",
-                                        "gadget-name": "$sensorType-historical-value-chart-total",
+                                        "gadget-name": "${toId('$sensorType')}-historical-value-chart-total",
                                         "chart-name": "bar-chart"
                                       }
                                     }
@@ -737,12 +755,12 @@
                             <artifact file="gadget.json">
                                 <![CDATA[
                                 {
-                                    "id": "$sensorType-historical-value-chart-total",
-                                    "title": "$sensorType-historical-value-chart-total",
+                                    "id": "${toId('$sensorType')}-historical-value-chart-total",
+                                    "title": "${toId('$sensorType')}-historical-value-chart-total",
                                     "type": "gadget",
-                                    "thumbnail": "gadget/$sensorType-historical-value-chart-total/index.png",
+                                    "thumbnail": "gadget/${toId('$sensorType')}-historical-value-chart-total/index.png",
                                     "data": {
-                                        "url": "gadget/$sensorType-historical-value-chart-total/index.xml"
+                                        "url": "gadget/${toId('$sensorType')}-historical-value-chart-total/index.xml"
                                     },
                                     "listen": {
                                       "subscriber": {
@@ -775,7 +793,7 @@
                                     var refreshIntervalId;
 
                                     $(function () {
-                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorType-historical-value-chart-total';
+                                    var gadgetLocation = '/portal/store/carbon.super/fs/gadget/${toId('$sensorType')}-historical-value-chart-total';
                                         var schema;
                                         var pref = new gadgets.Prefs();
 
@@ -867,12 +885,12 @@
                 <template type="dashboard">
                     <config>
                         <properties>
-                            <property name="dashboardId">$sensorType-historical-analytics-dashboard</property>
+                            <property name="dashboardId">${toId('$sensorType')}-historical-analytics-dashboard</property>
                         </properties>
                         <content>
                             <![CDATA[
                                    {
-                                      "id": "$sensorType-historical-analytics-dashboard",
+                                      "id": "${toId('$sensorType')}-historical-analytics-dashboard",
                                       "title": "Historical Analytics: $sensorType",
                                       "description": "",
                                       "permissions": {
@@ -933,14 +951,14 @@
                                             "default": {
                                               "a": [
                                                 {
-                                                  "id": "$sensorType-historical-value-chart-min",
+                                                  "id": "${toId('$sensorType')}-historical-value-chart-min",
                                                   "content": {
-                                                    "id": "$sensorType-historical-value-chart-min",
-                                                    "title": "$sensorType-historical-value-chart-min",
+                                                    "id": "${toId('$sensorType')}-historical-value-chart-min",
+                                                    "title": "${toId('$sensorType')}-historical-value-chart-min",
                                                     "type": "gadget",
-                                                    "thumbnail": "fs://gadget/$sensorType-historical-value-chart-min/index.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-historical-value-chart-min/index.png",
                                                     "data": {
-                                                      "url": "fs://gadget/$sensorType-historical-value-chart-min/index.xml"
+                                                      "url": "fs://gadget/${toId('$sensorType')}-historical-value-chart-min/index.xml"
                                                     },
                                                     "listen": {
                                                       "subscriber": {
@@ -958,7 +976,7 @@
                                                       "no_heading": false,
                                                       "hide_gadget": false,
                                                       "titlePosition": "left",
-                                                      "title": "$sensorType-historical-value-chart-min"
+                                                      "title": "${toId('$sensorType')}-historical-value-chart-min"
                                                     },
                                                     "options": {
                                                       "refreshInterval": {
@@ -970,7 +988,7 @@
                                                       }
                                                     },
                                                     "locale_titles": {
-                                                      "en-US": "$sensorType-historical-value-chart-min"
+                                                      "en-US": "${toId('$sensorType')}-historical-value-chart-min"
                                                     },
                                                     "settings": {
                                                       "priority": "0"
@@ -980,14 +998,14 @@
                                               ],
                                               "b": [
                                                 {
-                                                  "id": "$sensorType-historical-value-chart-max",
+                                                  "id": "${toId('$sensorType')}-historical-value-chart-max",
                                                   "content": {
-                                                    "id": "$sensorType-historical-value-chart-max",
-                                                    "title": "$sensorType-historical-value-chart-max",
+                                                    "id": "${toId('$sensorType')}-historical-value-chart-max",
+                                                    "title": "${toId('$sensorType')}-historical-value-chart-max",
                                                     "type": "gadget",
-                                                    "thumbnail": "fs://gadget/$sensorType-historical-value-chart-max/index.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-historical-value-chart-max/index.png",
                                                     "data": {
-                                                      "url": "fs://gadget/$sensorType-historical-value-chart-max/index.xml"
+                                                      "url": "fs://gadget/${toId('$sensorType')}-historical-value-chart-max/index.xml"
                                                     },
                                                     "listen": {
                                                       "subscriber": {
@@ -1005,7 +1023,7 @@
                                                       "no_heading": false,
                                                       "hide_gadget": false,
                                                       "titlePosition": "left",
-                                                      "title": "$sensorType-historical-value-chart-max"
+                                                      "title": "${toId('$sensorType')}-historical-value-chart-max"
                                                     },
                                                     "options": {
                                                       "refreshInterval": {
@@ -1017,7 +1035,7 @@
                                                       }
                                                     },
                                                     "locale_titles": {
-                                                      "en-US": "$sensorType-historical-value-chart-max"
+                                                      "en-US": "${toId('$sensorType')}-historical-value-chart-max"
                                                     },
                                                     "settings": {
                                                       "priority": "5"
@@ -1027,14 +1045,14 @@
                                               ],
                                               "c": [
                                                 {
-                                                  "id": "$sensorType-historical-value-chart-total",
+                                                  "id": "${toId('$sensorType')}-historical-value-chart-total",
                                                   "content": {
-                                                    "id": "$sensorType-historical-value-chart-total",
-                                                    "title": "$sensorType-historical-value-chart-total",
+                                                    "id": "${toId('$sensorType')}-historical-value-chart-total",
+                                                    "title": "${toId('$sensorType')}-historical-value-chart-total",
                                                     "type": "gadget",
-                                                    "thumbnail": "fs://gadget/$sensorType-historical-value-chart-total/index.png",
+                                                    "thumbnail": "fs://gadget/${toId('$sensorType')}-historical-value-chart-total/index.png",
                                                     "data": {
-                                                      "url": "fs://gadget/$sensorType-historical-value-chart-total/index.xml"
+                                                      "url": "fs://gadget/${toId('$sensorType')}-historical-value-chart-total/index.xml"
                                                     },
                                                     "listen": {
                                                       "subscriber": {
@@ -1052,7 +1070,7 @@
                                                       "no_heading": false,
                                                       "hide_gadget": false,
                                                       "titlePosition": "left",
-                                                      "title": "$sensorType-historical-value-chart-total"
+                                                      "title": "${toId('$sensorType')}-historical-value-chart-total"
                                                     },
                                                     "options": {
                                                       "refreshInterval": {
@@ -1064,7 +1082,7 @@
                                                       }
                                                     },
                                                     "locale_titles": {
-                                                      "en-US": "$sensorType-historical-value-chart-total"
+                                                      "en-US": "${toId('$sensorType')}-historical-value-chart-total"
                                                     },
                                                     "settings": {
                                                       "priority": "5"
@@ -1143,7 +1161,7 @@
                 </template>
             </templates>
             <streamMappings>
-                <streamMapping to="org.wso2.iot.devices.sensors.$sensorType:1.0.0"/>
+                <streamMapping to="org.wso2.iot.devices.sensors.${toId('$sensorType')}:1.0.0"/>
             </streamMappings>
             <parameters>
                 <parameter name="sensorType" type="string">
@@ -1154,4 +1172,8 @@
             </parameters>
         </scenario>
     </scenarios>
+
+    <scripts>
+        <script src="wso2-commons.js"/>
+    </scripts>
 </domain>
