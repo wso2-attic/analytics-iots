@@ -20,10 +20,10 @@ div#header-div {
 div#header-div div.left-logo {
     background-image: url( ../images/analytics-iots-logo.png);
     margin-left: 30px;
-    margin-top: 25px;
+    margin-top: 10px;
 
-    width:246px;
-    height:50px;
+    width:260px;
+    height:60px;
 }
 
 div#header-div div.right-logo {
