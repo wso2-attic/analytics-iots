@@ -489,11 +489,11 @@
         <carbon.dashboard.version>2.0.0</carbon.dashboard.version>
 
         <jaggery.version>0.12.6</jaggery.version>
-        <jaggery.modules.carbon.version>1.5.4-SNAPSHOT</jaggery.modules.carbon.version>
-        <jaggery.modules.process.version>1.5.4-SNAPSHOT</jaggery.modules.process.version>
-        <jaggery.modules.i18n.version>1.5.4-SNAPSHOT</jaggery.modules.i18n.version>
-        <jaggery.modules.ws.version>1.5.4-SNAPSHOT</jaggery.modules.ws.version>
-        <jaggery.modules.sso.version>1.5.4-SNAPSHOT</jaggery.modules.sso.version>
+        <jaggery.modules.carbon.version>1.5.4</jaggery.modules.carbon.version>
+        <jaggery.modules.process.version>1.5.4</jaggery.modules.process.version>
+        <jaggery.modules.i18n.version>1.5.4</jaggery.modules.i18n.version>
+        <jaggery.modules.ws.version>1.5.4</jaggery.modules.ws.version>
+        <jaggery.modules.sso.version>1.5.4</jaggery.modules.sso.version>
 
         <orbit.version.commons.pool>1.5.6.wso2v1</orbit.version.commons.pool>
         <orbit.version.axiom>1.2.11.wso2v5</orbit.version.axiom>
