@@ -471,8 +471,8 @@
         <iots.analytics.version>1.0.0-SNAPSHOT</iots.analytics.version>
         <cdmf.analytics.version>1.0.0</cdmf.analytics.version>
 
-        <carbon.kernel.version>4.4.7</carbon.kernel.version>
-        <carbon.analytics.version>1.1.0</carbon.analytics.version>
+        <carbon.kernel.version>4.4.8</carbon.kernel.version>
+        <carbon.analytics.version>1.2.4-SNAPSHOT</carbon.analytics.version>
         <carbon.analytics.common.version>5.1.2-SNAPSHOT</carbon.analytics.common.version>
         <carbon.automationutils.version>4.4.1</carbon.automationutils.version>
         <carbon.automation.version>4.4.2</carbon.automation.version>
