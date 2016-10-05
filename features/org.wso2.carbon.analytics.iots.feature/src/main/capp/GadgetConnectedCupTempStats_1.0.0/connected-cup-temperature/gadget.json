@@ -1,0 +1,15 @@
+{
+    "id": "connected-cup-temperature",
+    "title": "Temperature levels of Connected cup app",
+    "type": "gadget",
+    "thumbnail": "store://gadget/connected-cup-temperature/index_temp.png",
+    "data": {
+        "url": "store://gadget/connected-cup-temperature/index.xml"
+    },
+    "listen": {
+        "range-selected": {
+            "type": "date-range",
+            "description": "This notifies date coming from date range picker"
+        }
+    }
+}

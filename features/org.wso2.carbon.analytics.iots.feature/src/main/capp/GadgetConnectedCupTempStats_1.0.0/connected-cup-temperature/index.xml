@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Subscriber" height="250" description="Subscriber">
+        <Require feature="pubsub-2">
+            <Param name="topics">
+                <![CDATA[
+                <Topic title="geodata"
+                    name="org.wso2.ues.samples.ch"
+                    description="sample channel to demonstrate intergadget communication"
+                    type="object"
+                    subscribe="true"/>
+               ]]>
+            </Param>
+        </Require>
+        <Require feature="dynamic-height"/>
+        <Require feature="wso2-gadgets-controls"/>
+        <Require feature="wso2-gadgets-remoteClient"/>
+    </ModulePrefs>
+
+
+    <Content type="html">
+        <![CDATA[
+          <html>
+             <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <title>Line Chart</title>
+                <link href="css/graph.css" rel="stylesheet" type="text/css">
+                <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+                 <link href="css/nanoscroller.css" rel="stylesheet" type="text/css">
+             </head>
+             <body>
+                <div class="nano">
+                   <div class="nano-content">
+                         <span id="connectedcup-details" data-devices="" data-devicename="--deviceName--" data-deviceid="--deviceId--"></span>
+                            <div id="connectedcup-div-chart" data-backend-api-url ="--apiurl--">
+                                <div class="chartWrapper" id="chartWrapper-temperature">
+                                    <div id="y_axis-temperature" class="custom_y_axis"></div>
+                                    <div class="legend_container">
+                                        <div id="smoother-temperature" title="Smoothing"></div>
+                                        <div id="legend-temperature"></div>
+                                    </div>
+                                    <div id="chart-temperature" class="custom_rickshaw_graph" ></div>
+                                    <div id="x_axis-temperature" class="custom_x_axis"></div>
+                                    <div id="slider-temperature" class="custom_slider"></div>
+                                </div>
+                            </div>
+                            <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js" type="text/javascript"></script>
+                            <script src="js/d3.min.js" type="text/javascript"></script>
+                            <script src="/portal/libs/bootstrap_3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+                            <script src="js/rickshaw.min.js" type="text/javascript"></script>
+                            <script src="js/moment.min.js" type="text/javascript"></script>
+                            <script src="js/jquery.nanoscroller.js" type="text/javascript"></script>
+                            <script src="js/graph_util.js" type="text/javascript"></script>
+                            <script src="js/gadgetConfig.js" type="text/javascript"></script>
+                            <script src="js/connectedcup.js" type="text/javascript"></script>
+                   </div>
+                </div>
+             </body>
+          </html>
+        ]]>
+    </Content>
+</Module>

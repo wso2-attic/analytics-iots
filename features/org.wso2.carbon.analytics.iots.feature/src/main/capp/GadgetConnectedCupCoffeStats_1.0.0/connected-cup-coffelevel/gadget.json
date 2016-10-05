@@ -1,0 +1,15 @@
+{
+    "id": "connected-cup-coffeelevel",
+    "title": "Coffee levels of Connected cup app",
+    "type": "gadget",
+    "thumbnail": "store://gadget/connected-cup-coffelevel/index_coffee.png",
+    "data": {
+        "url": "store://gadget/connected-cup-coffelevel/index.xml"
+    },
+    "listen": {
+        "range-selected": {
+            "type": "date-range",
+            "description": "This notifies message generated in publisher"
+        }
+    }
+}

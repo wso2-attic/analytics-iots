@@ -1,0 +1,20 @@
+{
+  "id": "timepickeriot",
+  "title": "Date and Time Picker",
+  "type": "gadget",
+  "category": "Widgets",
+  "thumbnail": "store://gadget/date-time-picker/index.png",
+  "data": {
+    "url": "store://gadget/date-time-picker/index.xml"
+  },
+  "styles": {
+    "borders": false,
+    "title": false
+  },
+  "notify": {
+    "range-selected": {
+      "type": "date-range",
+      "description": "This notifies selected state"
+    }
+  }
+}

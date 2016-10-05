@@ -1,0 +1,20 @@
+{
+  "id": "TemperatureStats",
+  "title": "Temperature Stats",
+  "type": "gadget",
+  "category": "Widgets",
+  "thumbnail": "gadget/TemperatureStats/index.png",
+  "data": {
+    "url": "gadget/TemperatureStats/index.xml"
+  },
+  "styles": {
+    "borders": false,
+    "title": false
+  },
+  "listen": {
+    "subscriber": {
+      "type": "date-range",
+      "description": "Used to listen to get time range"
+    }
+  }
+}
