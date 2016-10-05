@@ -20,7 +20,12 @@
     <artifact name="org.wso2.carbon.analytics.iots" version="1.0.0" type="carbon/application">
       <!-- Gadgets -->
       <dependency artifact="GadgetOverview" version="1.0.0" include="true" serverRole="IoTServer"/>
-      <!-- Dashboard Definition -->
+      <dependency artifact="GadgetDevicesTable" version="1.0.0" include="true" serverRole="IoTServer"/>
+      <dependency artifact="GadgetConnectedCupCoffeStats" version="1.0.0" include="true" serverRole="IoTServer"/>
+      <dependency artifact="GadgetConnectedCupTempStats" version="1.0.0" include="true" serverRole="IoTServer"/>
+      <dependency artifact="GadgetDateTimePicker" version="1.0.0" include="true" serverRole="IoTServer"/>
+      <!-- Dashboard Definitions -->
       <dependency artifact="Dashboard" version="1.0.0" include="true" serverRole="IoTServer"/>
+      <dependency artifact="DashboardConnectedCupAnalytics" version="1.0.0" include="true" serverRole="IoTServer"/>
     </artifact>
 </artifacts>
