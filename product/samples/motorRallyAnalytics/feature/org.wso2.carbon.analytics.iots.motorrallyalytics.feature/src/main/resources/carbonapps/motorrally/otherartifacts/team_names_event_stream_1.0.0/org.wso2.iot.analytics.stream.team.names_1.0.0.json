@@ -1,0 +1,12 @@
+{
+  "name": "org.wso2.iot.analytics.stream.team.names",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "team_name",
+      "type": "STRING"
+    }
+  ]
+}

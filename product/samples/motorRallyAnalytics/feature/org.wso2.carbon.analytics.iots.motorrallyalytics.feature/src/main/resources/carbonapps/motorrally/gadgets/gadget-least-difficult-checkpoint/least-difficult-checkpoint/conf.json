@@ -1,0 +1,15 @@
+{
+  "provider-conf": {
+    "tableName": "LEAST_DIFFICULT_CHECKPOINT",
+    "query": "",
+    "limit": "",
+    "provider-name": "batch"
+  },
+  "chart-conf": {
+    "x": "check_point",
+    "title": "LEAST DIFFICULT CHECKPOINT",
+    "maxLength": "30",
+    "gadget-name": "leastDifficultCheckpoint",
+    "chart-name": "number-chart"
+  }
+}

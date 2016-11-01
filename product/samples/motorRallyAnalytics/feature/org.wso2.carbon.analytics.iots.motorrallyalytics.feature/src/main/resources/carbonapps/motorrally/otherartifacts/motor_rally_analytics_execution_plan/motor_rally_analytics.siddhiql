@@ -1,0 +1,236 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('motor_rally_analytics')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.iot.analytics.stream.motorrallystream:1.0.0')
+define stream dataIn (meta_teamName string, meta_teamId string, timestamp long, latitude double, longitude double);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.checkpointscompletedbyteamtable:1.0.0')
+define stream checkPointsCompletedByTeamStream (team_name string, completed_count int);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.geo.locationstream:1.0.0')
+define stream RealTimeOutputStream (id string, timeStamp long, latitude double, longitude double, type string, speed double, avgSpeedPerTeam double, checkpointsReached int, distanceTravelled double, durationTravelled double, heading double);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.leaderboard:1.0.0')
+define stream leaderBoardStream (team_name string, rank int);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.avgspeedofallteams:1.0.0')
+define stream avgSpeedOfAllTeams (key_primary int, avg_speed double);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.maxspeedofallteams:1.0.0')
+define stream maxSpeedOfAllTeams (key_primary int, max_speed double);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.maxspeedperteam:1.0.0')
+define stream maxSpeedPerTeamStream (team_name string, max_speed double);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.avgspeedperteam:1.0.0')
+define stream avgSpeedPerTeamStream (team_name string, avg_speed double);
+
+@From(eventtable='analytics.table', table.name='ORG_WSO2_IOT_ANALYTICS_STREAM_MOTORRALLY_CHECKPOINTSCOMPLETEDBYTEAMTABLEINIT', primary.keys = 'team_name', indices = 'team_name', wait.for.indexing = 'true', merge.schema = 'false')
+define table checkPointsCompletedByTeamTable (team_name string, completed_count int, remaining_count int, started_time long, end_time long);
+
+@From(eventtable='analytics.table', table.name='avg_time_per_checkpoint', primary.keys = 'check_point', indices = 'check_point', wait.for.indexing = 'true', merge.schema = 'false')
+define table checkPointAvgTimeTable (check_point string, time_taken double);
+
+@From(eventtable='analytics.table', table.name='checkpoint_time_individual_vs_overall', primary.keys = 'check_point, team_name, category', indices = 'check_point, team_name, category', wait.for.indexing = 'true', merge.schema = 'false')
+define table checkpointTimeIndividualVsOverallTable (check_point string, team_name string, time_taken long, category string);
+
+partition with ( meta_teamName of dataIn )
+begin
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.86055254936218,6.933200538748225],[79.85834240913391,6.931613629143288],[79.86179709434509,6.92801377412488],[79.86407160758972,6.929877607817776],[79.86055254936218,6.933200538748225]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.86055254936218,6.933200538748225],[79.85834240913391,6.931613629143288],[79.86179709434509,6.92801377412488],[79.86407160758972,6.929877607817776],[79.86055254936218,6.933200538748225]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.86055254936218,6.933200538748225],[79.85834240913391,6.931613629143288],[79.86179709434509,6.92801377412488],[79.86407160758972,6.929877607817776],[79.86055254936218,6.933200538748225]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "Trace" as checkPoint
+insert into taskCompletionStream;
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.9126625061035,6.884344709250837],[79.91179347038269,6.88182030117227],[79.9177587032318,6.879636730614277],[79.918874502182,6.882427438518629],[79.9126625061035,6.884344709250837]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.9126625061035,6.884344709250837],[79.91179347038269,6.88182030117227],[79.9177587032318,6.879636730614277],[79.918874502182,6.882427438518629],[79.9126625061035,6.884344709250837]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.9126625061035,6.884344709250837],[79.91179347038269,6.88182030117227],[79.9177587032318,6.879636730614277],[79.918874502182,6.882427438518629],[79.9126625061035,6.884344709250837]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "R.D.S.Motors" as checkPoint
+insert into taskCompletionStream;
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.8518568277359,6.909923554367135],[79.85308527946472,6.910408170404006],[79.85337495803833,6.909604027038114],[79.85207140445708,6.909143374758739],[79.8518568277359,6.909923554367135]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.8518568277359,6.909923554367135],[79.85308527946472,6.910408170404006],[79.85337495803833,6.909604027038114],[79.85207140445708,6.909143374758739],[79.8518568277359,6.909923554367135]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.8518568277359,6.909923554367135],[79.85308527946472,6.910408170404006],[79.85337495803833,6.909604027038114],[79.85207140445708,6.909143374758739],[79.8518568277359,6.909923554367135]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "PG" as checkPoint
+insert into taskCompletionStream;
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.90317821502686,6.910621188285011],[79.90038871765137,6.905082692191173],[79.9099588394165,6.899714549486142],[79.9128770828247,6.90546612862569],[79.90317821502686,6.910621188285011]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.90317821502686,6.910621188285011],[79.90038871765137,6.905082692191173],[79.9099588394165,6.899714549486142],[79.9128770828247,6.90546612862569],[79.90317821502686,6.910621188285011]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.90317821502686,6.910621188285011],[79.90038871765137,6.905082692191173],[79.9099588394165,6.899714549486142],[79.9128770828247,6.90546612862569],[79.90317821502686,6.910621188285011]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "PedalBoatpark" as checkPoint
+insert into taskCompletionStream;
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.89373683929443,6.855425054190883],[79.89154815673828,6.853017666662291],[79.8947024345398,6.849268083115171],[79.89712715148926,6.85159027185563],[79.89373683929443,6.855425054190883]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.89373683929443,6.855425054190883],[79.89154815673828,6.853017666662291],[79.8947024345398,6.849268083115171],[79.89712715148926,6.85159027185563],[79.89373683929443,6.855425054190883]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.89373683929443,6.855425054190883],[79.89154815673828,6.853017666662291],[79.8947024345398,6.849268083115171],[79.89712715148926,6.85159027185563],[79.89373683929443,6.855425054190883]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "Leaf" as checkPoint
+insert into taskCompletionStream;
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.8657774925232,6.909193966649489],[79.86457586288452,6.908107571173537],[79.8626446723938,6.9052318063970715],[79.86217260360718,6.903186807476175],[79.8651123046875,6.899608038102275],[79.86867427825928,6.9013761239721045],[79.87079858779907,6.902909879859543],[79.86745119094849,6.907255494544067],[79.86590623855591,6.9093643813996435],[79.8657774925232,6.909193966649489]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.8657774925232,6.909193966649489],[79.86457586288452,6.908107571173537],[79.8626446723938,6.9052318063970715],[79.86217260360718,6.903186807476175],[79.8651123046875,6.899608038102275],[79.86867427825928,6.9013761239721045],[79.87079858779907,6.902909879859543],[79.86745119094849,6.907255494544067],[79.86590623855591,6.9093643813996435],[79.8657774925232,6.909193966649489]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.8657774925232,6.909193966649489],[79.86457586288452,6.908107571173537],[79.8626446723938,6.9052318063970715],[79.86217260360718,6.903186807476175],[79.8651123046875,6.899608038102275],[79.86867427825928,6.9013761239721045],[79.87079858779907,6.902909879859543],[79.86745119094849,6.907255494544067],[79.86590623855591,6.9093643813996435],[79.8657774925232,6.909193966649489]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "IndependenceSquarePark" as checkPoint
+insert into taskCompletionStream;
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.85347151756287,6.920217544214211],[79.8492443561554,6.918311069487858],[79.85056400299072,6.916681506776704],[79.85600352287292,6.915211700293114],[79.85611081123352,6.915520573049643],[79.85596060752869,6.916234174852809],[79.85366463661194,6.920345352300391],[79.85347151756287,6.920217544214211]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.85347151756287,6.920217544214211],[79.8492443561554,6.918311069487858],[79.85056400299072,6.916681506776704],[79.85600352287292,6.915211700293114],[79.85611081123352,6.915520573049643],[79.85596060752869,6.916234174852809],[79.85366463661194,6.920345352300391],[79.85347151756287,6.920217544214211]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.85347151756287,6.920217544214211],[79.8492443561554,6.918311069487858],[79.85056400299072,6.916681506776704],[79.85600352287292,6.915211700293114],[79.85611081123352,6.915520573049643],[79.85596060752869,6.916234174852809],[79.85366463661194,6.920345352300391],[79.85347151756287,6.920217544214211]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "GangaramayaPark" as checkPoint
+insert into taskCompletionStream;
+
+from every e1=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.91197586059569,6.7752077888565685],[79.91978645324707,6.775079941885627],[79.91952896118164,6.7666845833063025],[79.91184711456299,6.766982898042246],[79.91197586059569,6.7752077888565685]]]}")!=true], e2=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.91197586059569,6.7752077888565685],[79.91978645324707,6.775079941885627],[79.91952896118164,6.7666845833063025],[79.91184711456299,6.766982898042246],[79.91197586059569,6.7752077888565685]]]}")==true]+, e3=dataIn[geo:within(longitude,latitude,"{'type':'Polygon','coordinates':[[[79.91197586059569,6.7752077888565685],[79.91978645324707,6.775079941885627],[79.91952896118164,6.7666845833063025],[79.91184711456299,6.766982898042246],[79.91197586059569,6.7752077888565685]]]}")!=true]
+select e1.meta_teamName , (e3.timestamp - e1.timestamp) as timeTaken, "DampeVillage" as checkPoint
+insert into taskCompletionStream;
+
+end;
+
+from taskCompletionStream[timeTaken > 300]
+select *
+insert into taskCompletionAlert;
+
+--Start: Populating the table for individual vs overall checkpoint time comparison
+from taskCompletionAlert
+select checkPoint as check_point, meta_teamName as team_name, timeTaken as time_taken, 'INDIVIDUAL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+--End
+
+from taskCompletionAlert
+select avg(timeTaken) as time_taken, checkPoint as check_point
+group by checkPoint
+insert into avgCheckPointTimeStream;
+
+--Start: Populating the table for individual vs overall checkpoint time comparison
+from avgCheckPointTimeStream
+select check_point, 'THE_RUNNERS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'guns123' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'CLOUD_RACERS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'LEAGUE_OF_PRIMES' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'IM_NOT_SURE' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'ADALA_NANE' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'WHITE_WALKERS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'NOT_FAST_JUST_FURIOUS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'SILENT_ASSASSINS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'ROAD_RASCALS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'STORM_TROOPERS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'KISS_MY_ASSPHALT' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'ROAD_RUNNERS' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'POTATOES' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, 'DRY_ZONE' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+
+from avgCheckPointTimeStream
+select check_point, '99_PROB' as team_name, cast(math:round(time_taken), 'long') as time_taken, 'OVERALL' as category
+insert into checkpointTimeIndividualVsOverallTable;
+-- End
+
+from avgCheckPointTimeStream
+select check_point, time_taken
+insert into checkPointAvgTimeTable;
+
+from  dataIn join checkPointsCompletedByTeamTable
+on dataIn.meta_teamName == checkPointsCompletedByTeamTable.team_name
+select meta_teamName as team_name, checkPointsCompletedByTeamTable.completed_count as completed_count, checkPointsCompletedByTeamTable.remaining_count as remaining_count, checkPointsCompletedByTeamTable.started_time as started_time, timestamp as end_time
+insert overwrite checkPointsCompletedByTeamTable
+on team_name == checkPointsCompletedByTeamTable.team_name;
+
+
+from taskCompletionAlert#window.length(1) as X
+   join checkPointsCompletedByTeamTable as Y
+   on Y.team_name == X.meta_teamName
+select X.meta_teamName as team_name, ifThenElse(Y.completed_count IS NULL, 1, Y.completed_count + 1) as completed_count
+insert into checkPointsCompletedByTeamStream;
+
+
+/* TODO: this query is a placeholder which needs to be replaced with a team-ranking calcualtion query */
+from checkPointsCompletedByTeamStream
+select team_name, completed_count as team_score
+insert into teamRankingStream;
+
+from teamRankingStream#leaderboard:rank(team_name, team_score * 1.0, 'dec')
+select team_name, rank
+insert into leaderBoardStream;
+
+from checkPointsCompletedByTeamStream
+select team_name as team_name, completed_count as completed_count, (7 - completed_count) as remaining_count, 367L as started_time, 789L as end_time
+insert overwrite checkPointsCompletedByTeamTable
+on team_name == checkPointsCompletedByTeamTable.team_name;
+
+
+
+/* Realtime calculations START */
+partition with ( meta_teamName of dataIn )
+begin
+	from every e1=dataIn, e2=dataIn[timestamp > e1.timestamp]
+	select e2.meta_teamId, e2.meta_teamName, e2.timestamp as currentTime, e2.latitude, e2.longitude, geo:distance(e1.latitude, e1.longitude, e2.latitude, e2.longitude) as distance, (e2.timestamp - e1.timestamp) as duration
+	insert into #tempStream1;
+
+	from #tempStream1
+	select meta_teamId, meta_teamName, currentTime, latitude, longitude, distance, duration, (distance * 3.6 / duration) as speed, 0.00 as heading
+	insert into #tempStream2;
+
+    from #tempStream2[speed >= 0.0 and speed < 100.0]
+    select meta_teamId, meta_teamName, currentTime, latitude, longitude, speed, sum(distance) as totalDistanceTraveled, sum(duration) as totalDurationTraveled, max(speed) as maxSpeedPerTeam, heading
+    insert into tempStream3;
+end;
+
+from tempStream3
+select meta_teamId, meta_teamName, currentTime, latitude, longitude, speed, (totalDistanceTraveled * 3.6 / totalDurationTraveled) as avgSpeedPerTeam, totalDistanceTraveled, totalDurationTraveled, maxSpeedPerTeam, max(speed) as maxSpeedOfAllTeams, avg(speed) as avgSpeedOfAllTeams, heading
+insert into tempStream4;
+
+from tempStream4
+select meta_teamName as team_name, avgSpeedPerTeam as avg_speed
+insert into avgSpeedPerTeamStream;
+
+from tempStream4
+select meta_teamName as team_name, maxSpeedPerTeam as max_speed
+insert into maxSpeedPerTeamStream;
+
+from tempStream4
+select 1 as key_primary, maxSpeedOfAllTeams as max_speed
+insert into maxSpeedOfAllTeams;
+
+from tempStream4
+select 1 as key_primary, avgSpeedOfAllTeams as avg_speed
+insert into avgSpeedOfAllTeams;
+
+from tempStream4 as X
+join checkPointsCompletedByTeamTable as Y
+on X.meta_teamName == Y.team_name
+select meta_teamName as id, currentTime as timeStamp, latitude, longitude, meta_teamName as type, speed, avgSpeedPerTeam, ifThenElse(completed_count IS NULL, 0, completed_count) as checkpointsReached, (totalDistanceTraveled / 1000.0) as distanceTravelled, (totalDurationTraveled / 60.0) as durationTravelled, heading
+insert into RealTimeOutputStream;
+
+/* Realtime calculations END */

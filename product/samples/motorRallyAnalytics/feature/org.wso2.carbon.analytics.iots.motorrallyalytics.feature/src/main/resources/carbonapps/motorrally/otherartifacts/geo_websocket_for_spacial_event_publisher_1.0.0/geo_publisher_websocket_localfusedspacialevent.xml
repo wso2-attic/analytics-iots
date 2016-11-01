@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher
+  name="geo_publisher_websocket_localfusedspacialevent"
+  statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from
+    streamName="org.wso2.iot.analytics.stream.motorrally.geo.fusedspatialevent" version="1.0.0"/>
+  <mapping customMapping="enable" type="json">
+    <inline>{
+  "messageType" : "Point",
+  "type": "Feature",
+  "id": {{id}},
+  "properties": {
+        "speed": {{speed}},
+        "avgSpeed": {{avgSpeed}},
+        "checkpointsReached": {{checkpointsReached}},
+        "distanceTravelled": {{distanceTravelled}},
+        "durationTravelled": {{durationTravelled}},
+        "heading": {{heading}},
+        "state": {{state}},
+        "information": {{information}},
+        "notify": {{notify}},
+        "type": {{type}}
+      },
+  "geometry": {
+        "type": "Point",
+        "coordinates": [{{longitude}},{{latitude}}]
+      }
+}</inline>
+  </mapping>
+  <to eventAdapterType="websocket-local"/>
+</eventPublisher>

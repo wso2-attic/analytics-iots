@@ -1,0 +1,15 @@
+{
+  "provider-conf": {
+    "tableName": "ORG_WSO2_IOT_ANALYTICS_STREAM_AVGSPEEDPERTEAM",
+    "query": "",
+    "limit": "",
+    "provider-name": "batch"
+  },
+  "chart-conf": {
+    "x": "avg_speed",
+    "title": "AVERAGE SPEED",
+    "maxLength": "30",
+    "gadget-name": "AVERAGESPEEDPERTEAM",
+    "chart-name": "number-chart"
+  }
+}

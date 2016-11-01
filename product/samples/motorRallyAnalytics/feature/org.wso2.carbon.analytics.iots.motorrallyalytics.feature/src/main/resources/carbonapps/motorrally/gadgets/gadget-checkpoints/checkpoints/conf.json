@@ -1,0 +1,15 @@
+{
+  "provider-conf": {
+    "tableName": "CHECKPOINTS_COMPLETED_OVERALL",
+    "query": "",
+    "limit": "",
+    "provider-name": "batch"
+  },
+  "chart-conf": {
+    "completedCount": "completed_count",
+    "remainingCount": "remaining_count",
+    "maxLength": "30",
+    "gadget-name": "CheckPoints",
+    "chart-name": "donut-chart"
+  }
+}

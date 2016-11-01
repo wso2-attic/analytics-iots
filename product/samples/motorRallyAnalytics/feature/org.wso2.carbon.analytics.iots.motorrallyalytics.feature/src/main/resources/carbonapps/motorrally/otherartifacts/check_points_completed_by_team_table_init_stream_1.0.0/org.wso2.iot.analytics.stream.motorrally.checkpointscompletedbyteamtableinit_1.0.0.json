@@ -1,0 +1,28 @@
+{
+  "name": "org.wso2.iot.analytics.stream.motorrally.checkpointscompletedbyteamtableinit",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "team_name",
+      "type": "STRING"
+    },
+    {
+      "name": "completed_count",
+      "type": "INT"
+    },
+    {
+      "name": "remaining_count",
+      "type": "INT"
+    },
+    {
+      "name": "started_time",
+      "type": "LONG"
+    },
+    {
+      "name": "end_time",
+      "type": "LONG"
+    }
+  ]
+}

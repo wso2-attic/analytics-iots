@@ -1,0 +1,16 @@
+{
+  "provider-confs":[
+  {
+    "tableName": "ORG_WSO2_IOT_ANALYTICS_STREAM_MOTORRALLY_CHECKPOINTSCOMPLETEDBYTEAMTABLEINIT",
+    "dataRange": "Retrieve all data",
+    "dataOrder": "None",
+    "provider-name": "batch"
+  },
+    {
+      "tableName": "ORG_WSO2_IOT_ANALYTICS_STREAM_MOTORRALLY_GEO_FUSEDSPATIALEVENT",
+      "dataRange": "Retrieve all data",
+      "dataOrder": "None",
+      "provider-name": "batch"
+    }
+]
+}

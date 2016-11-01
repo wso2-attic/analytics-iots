@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="gadget-most-difficult-checkpoint-perteam" version="1.0.0" type="dashboards/gadget" serverRole="DataAnalyticsServer">
+    <file>most-difficult-checkpoint-perteam</file>
+</artifact>

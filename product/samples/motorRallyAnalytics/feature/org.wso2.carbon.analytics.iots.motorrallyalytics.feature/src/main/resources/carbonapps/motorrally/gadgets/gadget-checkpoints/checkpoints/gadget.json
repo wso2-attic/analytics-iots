@@ -1,0 +1,9 @@
+{
+    "id": "checkpoints",
+    "title": "CheckPoints",
+    "type": "gadget",
+    "thumbnail": "gadget/checkpoints/thumbnail.png",
+    "data": {
+        "url": "gadget/checkpoints/gadget.xml"
+    }
+}

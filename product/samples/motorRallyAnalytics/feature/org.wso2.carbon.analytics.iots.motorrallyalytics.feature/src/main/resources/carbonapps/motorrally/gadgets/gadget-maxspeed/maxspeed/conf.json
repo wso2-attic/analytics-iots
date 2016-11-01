@@ -1,0 +1,13 @@
+{
+  "provider-conf": {
+    "streamName": "org.wso2.iot.analytics.stream.motorrally.maxspeedofallteams:1.0.0",
+    "provider-name": "realtime"
+  },
+  "chart-conf": {
+    "x": "max_speed",
+    "title": "Max Speed",
+    "maxLength": "30",
+    "gadget-name": "Max Speed",
+    "chart-name": "number-chart"
+  }
+}

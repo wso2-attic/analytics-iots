@@ -1,0 +1,52 @@
+{
+  "name": "org.wso2.iot.analytics.stream.motorrally.geo.locationstream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "id",
+      "type": "STRING"
+    },
+    {
+      "name": "timeStamp",
+      "type": "LONG"
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "type",
+      "type": "STRING"
+    },
+    {
+      "name": "speed",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "avgSpeedPerTeam",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "checkpointsReached",
+      "type": "INT"
+    },
+    {
+      "name": "distanceTravelled",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "durationTravelled",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "heading",
+      "type": "DOUBLE"
+    }
+  ]
+}

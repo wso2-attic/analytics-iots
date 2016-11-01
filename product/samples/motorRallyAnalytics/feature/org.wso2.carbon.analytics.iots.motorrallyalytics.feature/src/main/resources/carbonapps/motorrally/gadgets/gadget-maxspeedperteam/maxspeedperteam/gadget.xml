@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="MAXSPEEDPERTEAM" description="This is a template gadget">
+        <Require feature="dynamic-height"/>
+        <Require feature="setprefs"/>
+    </ModulePrefs>
+    
+    <UserPref name="windowSize"
+              display_name="Window Size"
+              default_value="10"/>
+    
+    <Content type="html">
+        <![CDATA[
+        <head>
+            <!-- shared css -->
+            
+             <link href="/portal/libs/analytics-wso2-2.0.0/common.css" rel="stylesheet">
+            
+            <!-- chart vendor css -->
+            
+            <!-- chart specific css -->
+            
+            <link href="/portal/store/carbon.super/fs/gadget/MAXSPEEDPERTEAM/css/number-chart.css" rel="stylesheet" >
+            
+
+            <!-- jQuery -->
+            <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+            <!-- provider libs -->
+            
+            <script src="js/provider-libs/das-client.js"></script>
+            
+            <script src="js/provider-libs/carbon-analytics.js"></script>
+            
+            <script src="js/provider-libs/motorRallyAnalyticsDataRanges.js"></script>
+            
+            <!-- shared libs -->
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/d3.min.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/vega.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/VizGrammar.min.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/wso2gadgets.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/chart-utils.js"></script>
+            
+            <!-- chart specific vendor libs -->
+            
+            <!-- chart specific js -->
+            
+            <!--scripts copied by framework -->
+            
+            <script src="js/core/provider-client.js"></script>
+            
+            <script src="js/core/number-chart-api.js"></script>
+            <script src="js/core/gadget-core.js"></script>
+
+        </head>
+        <body>
+            <div id="canvas"></div>
+        </body>
+        ]]>
+    </Content>
+</Module>

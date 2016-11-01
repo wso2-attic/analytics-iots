@@ -1,0 +1,9 @@
+{
+    "id": "maxspeedperteam",
+    "title": "Max Speed Per Team",
+    "type": "gadget",
+    "thumbnail": "gadget/maxspeedperteam/thumbnail.png",
+    "data": {
+        "url": "gadget/maxspeedperteam/gadget.xml"
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "provider-conf": {
+    "tableName": "ORG_WSO2_IOT_ANALYTICS_STREAM_MOTORRALLY_CHECKPOINTSCOMPLETEDBYTEAMTABLEINIT",
+    "query": "",
+    "limit": "",
+    "provider-name": "batch"
+  },
+  "chart-conf": {
+    "completedCount": "completed_count",
+    "remainingCount": "remaining_count",
+    "maxLength": "30",
+    "gadget-name": "CheckPoints",
+    "chart-name": "donut-chart"
+  }
+}

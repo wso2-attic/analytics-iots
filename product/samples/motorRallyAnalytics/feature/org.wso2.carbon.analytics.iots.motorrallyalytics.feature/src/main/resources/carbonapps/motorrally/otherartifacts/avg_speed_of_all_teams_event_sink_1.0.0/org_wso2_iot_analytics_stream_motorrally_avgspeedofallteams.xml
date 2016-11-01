@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EventStoreConfiguration>
+    <Source>
+        <StreamId>org.wso2.iot.analytics.stream.motorrally.avgspeedofallteams:1.0.0</StreamId>
+    </Source>
+    <RecordStoreName>EVENT_STORE</RecordStoreName>
+    <TableSchema>
+        <ColumnDefinition>
+            <Name>key_primary</Name>
+            <IsFacet>false</IsFacet>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>avg_speed</Name>
+            <IsFacet>false</IsFacet>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>DOUBLE</Type>
+        </ColumnDefinition>
+    </TableSchema>
+</EventStoreConfiguration>

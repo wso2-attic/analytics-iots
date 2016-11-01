@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Analytics>
+    <CronExpression>0/30 * * * * ?</CronExpression>
+    <Editable>true</Editable>
+    <Name>MOST_AND_LEAST_DIFFICULT_CHECKPOINT</Name>
+    <Script>CREATE TEMPORARY TABLE avg_time_per_checkpoint USING CarbonAnalytics 
+OPTIONS (tableName "avg_time_per_checkpoint", 
+         schema "check_point STRING, time_taken DOUBLE",
+         primaryKeys "check_point"
+        );
+
+CREATE TEMPORARY TABLE min_time_for_a_checkpoint 
+USING CarbonAnalytics 
+OPTIONS (tableName "min_time_for_a_checkpoint", 
+         schema "key_primary INT, time_taken DOUBLE",
+         primaryKeys "key_primary");
+        
+CREATE TEMPORARY TABLE least_difficult_checkpoint USING CarbonAnalytics 
+OPTIONS (tableName "least_difficult_checkpoint", 
+         schema "key_primary INT, check_point STRING",
+         primaryKeys "key_primary"
+        );
+
+INSERT OVERWRITE TABLE min_time_for_a_checkpoint SELECT * FROM (select 1 AS key_primary, min(time_taken) as time_taken from avg_time_per_checkpoint) temp; 
+
+INSERT OVERWRITE TABLE least_difficult_checkpoint 
+SELECT 1 AS key_primary, check_point FROM avg_time_per_checkpoint INNER JOIN min_time_for_a_checkpoint ON avg_time_per_checkpoint.time_taken=min_time_for_a_checkpoint.time_taken;
+
+
+CREATE TEMPORARY TABLE checkpoint_time_individual_vs_overall USING CarbonAnalytics 
+OPTIONS (tableName "checkpoint_time_individual_vs_overall", 
+         schema "check_point STRING, team_name STRING, time_taken LONG, category STRING",
+         primaryKeys "check_point,team_name,category"
+        );
+         
+CREATE TEMPORARY TABLE min_time_for_a_checkpoint_per_team USING CarbonAnalytics 
+OPTIONS (tableName "min_time_for_a_checkpoint_per_team", 
+         schema "team_name STRING, time_taken DOUBLE",
+         primaryKeys "team_name");
+        
+CREATE TEMPORARY TABLE least_difficult_checkpoint_per_team USING CarbonAnalytics 
+OPTIONS (tableName "least_difficult_checkpoint_per_team", 
+         schema "team_name STRING -i, check_point STRING -i",
+         primaryKeys "team_name"
+        );
+
+INSERT OVERWRITE TABLE min_time_for_a_checkpoint_per_team SELECT * FROM (select team_name, min(time_taken) as time_taken from checkpoint_time_individual_vs_overall WHERE category='INDIVIDUAL' GROUP BY team_name) temp;
+
+INSERT OVERWRITE TABLE least_difficult_checkpoint_per_team SELECT t1.team_name, check_point FROM checkpoint_time_individual_vs_overall as t1 INNER JOIN min_time_for_a_checkpoint_per_team as t2 ON t1.time_taken=t2.time_taken AND t1.team_name=t2.team_name;
+
+
+CREATE TEMPORARY TABLE max_time_for_a_checkpoint USING CarbonAnalytics 
+OPTIONS (tableName "max_time_for_a_checkpoint", 
+         schema "key_primary INT, time_taken DOUBLE",
+         primaryKeys "key_primary");
+        
+CREATE TEMPORARY TABLE most_difficult_checkpoint USING CarbonAnalytics 
+OPTIONS (tableName "most_difficult_checkpoint", 
+         schema "key_primary INT, check_point STRING",
+         primaryKeys "key_primary"
+        );
+
+INSERT OVERWRITE TABLE max_time_for_a_checkpoint SELECT * FROM (select 1 AS key_primary, max(time_taken) as time_taken from avg_time_per_checkpoint) temp; 
+
+INSERT OVERWRITE TABLE most_difficult_checkpoint 
+SELECT 1 AS key_primary, check_point FROM avg_time_per_checkpoint INNER JOIN max_time_for_a_checkpoint ON avg_time_per_checkpoint.time_taken=max_time_for_a_checkpoint.time_taken;                           
+                            
+
+CREATE TEMPORARY TABLE max_time_for_a_checkpoint_per_team USING CarbonAnalytics 
+OPTIONS (tableName "max_time_for_a_checkpoint_per_team", 
+         schema "team_name STRING, time_taken DOUBLE",
+         primaryKeys "team_name");
+        
+CREATE TEMPORARY TABLE most_difficult_checkpoint_per_team USING CarbonAnalytics 
+OPTIONS (tableName "most_difficult_checkpoint_per_team", 
+         schema "team_name STRING -i, check_point STRING -i",
+         primaryKeys "team_name"
+        );
+
+INSERT OVERWRITE TABLE max_time_for_a_checkpoint_per_team SELECT * FROM (select team_name, max(time_taken) as time_taken from checkpoint_time_individual_vs_overall WHERE category='INDIVIDUAL' GROUP BY team_name) temp;
+
+INSERT OVERWRITE TABLE most_difficult_checkpoint_per_team 
+SELECT t1.team_name, check_point FROM checkpoint_time_individual_vs_overall as t1 INNER JOIN min_time_for_a_checkpoint_per_team as t2 ON t1.time_taken=t2.time_taken AND t1.team_name=t2.team_name;             
+    </Script>
+</Analytics>
+
