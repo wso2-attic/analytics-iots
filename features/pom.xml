@@ -31,5 +31,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>org.wso2.carbon.analytics.iots.feature</module>
+        <module>org.wso2.carbon.analytics.iots.dashboard.feature</module>
     </modules>
 </project>
