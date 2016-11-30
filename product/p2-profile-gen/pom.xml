@@ -116,6 +116,9 @@
                                     org.wso2.carbon.analytics.iots:org.wso2.carbon.analytics.iots.feature:${iots.analytics.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.wso2.carbon.analytics.iots:org.wso2.carbon.analytics.iots.dashboard.feature:${iots.analytics.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.analytics.cdmf:org.wso2.carbon.analytics.cdmf.feature:${cdmf.analytics.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -781,6 +784,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.analytics.iots.feature.group</id>
+                                    <version>${iots.analytics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.analytics.iots.dashboard.feature.group</id>
                                     <version>${iots.analytics.version}</version>
                                 </feature>
                                 <feature>
