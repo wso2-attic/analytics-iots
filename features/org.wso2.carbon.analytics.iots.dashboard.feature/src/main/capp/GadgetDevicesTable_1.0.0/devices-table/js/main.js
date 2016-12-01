@@ -89,6 +89,7 @@ dt.initialize = function () {
 };
 
 dt.loadFiltersFromURL = function () {
+    dt.deviceManageUrl = gadgetConfig.deviceManageUrl;
     var urlParams = getURLParams();
     for (var filter in urlParams) {
         if (urlParams.hasOwnProperty(filter)
