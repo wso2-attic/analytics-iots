@@ -27,7 +27,7 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection",
+                    "name": "org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -57,7 +57,7 @@
 
         /* define streams/tables and write queries here ... */
 
-        @Import('org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        @Import('org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0')
         define stream InputStream (sensorID string, sensorValue double, timeStamp long);
 
         @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
@@ -82,7 +82,7 @@
 
             </templates>
             <streamMappings>
-                <streamMapping to="org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+                <streamMapping to="org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0"/>
             </streamMappings>
             <parameters>
                 <parameter name="sensorType" type="string">
@@ -121,7 +121,7 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection",
+                    "name": "org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -151,7 +151,7 @@
 
         /* define streams/tables and write queries here ... */
 
-        @Import('org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        @Import('org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0')
         define stream InputStream (sensorID string, sensorValue double, timeStamp long);
 
         @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
@@ -176,7 +176,7 @@
 
             </templates>
             <streamMappings>
-                <streamMapping to="org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+                <streamMapping to="org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0"/>
             </streamMappings>
             <parameters>
                 <parameter name="sensorType" type="string">
@@ -220,7 +220,7 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection",
+                    "name": "org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -250,7 +250,7 @@
 
         /* define streams/tables and write queries here ... */
 
-        @Import('org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        @Import('org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0')
         define stream InputStream (sensorID string, sensorValue double, timeStamp long);
 
         @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
@@ -275,7 +275,7 @@
 
             </templates>
             <streamMappings>
-                <streamMapping to="org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+                <streamMapping to="org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0"/>
             </streamMappings>
             <parameters>
                 <parameter name="sensorType" type="string">
@@ -309,7 +309,7 @@
                 <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
-                    "name": "org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection",
+                    "name": "org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection",
                     "version": "1.0.0",
                     "nickName": "",
                     "description": "",
@@ -339,7 +339,7 @@
 
         /* define streams/tables and write queries here ... */
 
-        @Import('org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        @Import('org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0')
         define stream InputStream (sensorID string, sensorValue double, timeStamp long);
 
         @Export('org.wso2.iot.analytics.stream.AlertStream:1.0.0')
@@ -364,7 +364,7 @@
 
             </templates>
             <streamMappings>
-                <streamMapping to="org.wso2.iot.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+                <streamMapping to="org.wso2.iot.analytics.stream.${toId('$sensorType')}AnomalyDetection:1.0.0"/>
             </streamMappings>
             <parameters>
                 <parameter name="sensorType" type="string">
@@ -391,4 +391,8 @@
 
         </scenario>
     </scenarios>
+
+    <scripts>
+        <script src="wso2-commons.js"/>
+    </scripts>
 </domain>

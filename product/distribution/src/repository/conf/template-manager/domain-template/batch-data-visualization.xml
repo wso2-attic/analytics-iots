@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
                 <template type="gadget">
                     <config>
                     <properties>
-                        <property name="directoryName">$sensorName-line-chart</property>
+                        <property name="directoryName">${toId('${toId('$sensorName')}')}-line-chart</property>
                         <property name="templateGadget">Line-chart</property>
                         <property name="templateDirectory">linechart</property>
                     </properties>
@@ -32,12 +32,12 @@
                     <artifact file="gadget.json">
                         <![CDATA[
                         {
-                            "id": "$sensorName-line-chart",
+                            "id": "${toId('$sensorName')}-line-chart",
                             "title": "$sensorName Line Chart",
                             "type": "gadget",
-                            "thumbnail": "gadget/$sensorName-line-chart/index.png",
+                            "thumbnail": "gadget/${toId('$sensorName')}-line-chart/index.png",
                             "data": {
-                                "url": "gadget/$sensorName-line-chart/index.xml"
+                                "url": "gadget/${toId('$sensorName')}-line-chart/index.xml"
                             }
                         }
                         ]]>
@@ -111,7 +111,7 @@
                     <artifact file="js/gadget-core.js">
                         <![CDATA[
                         $(function () {
-                        var gadgetLocation = '/portal/store/carbon.super/fs/gadget/$sensorName-line-chart';
+                        var gadgetLocation = '/portal/store/carbon.super/fs/gadget/${toId('$sensorName')}-line-chart';
                             var conf;
                             var schema;
                             
@@ -205,4 +205,8 @@
             </parameters>
         </scenario>
     </scenarios>
+
+    <scripts>
+        <script src="wso2-commons.js"/>
+    </scripts>
 </domain>
