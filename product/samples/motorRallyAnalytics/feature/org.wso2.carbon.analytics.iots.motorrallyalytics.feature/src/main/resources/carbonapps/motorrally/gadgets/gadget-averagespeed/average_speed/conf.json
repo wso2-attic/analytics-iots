@@ -1,0 +1,16 @@
+{
+  "provider-conf": {
+    "streamName": "org.wso2.iot.analytics.stream.motorrally.avgspeedofallteams:1.0.0",
+    "provider-name": "realtime"
+  },
+  "chart-conf": {
+    "x": "TIMESTAMP",
+    "xType": "time",
+    "y": "avg_speed",
+    "yType": "default",
+    "color": "None",
+    "maxLength": "30",
+    "gadget-name": "Average Speed",
+    "chart-name": "line-chart"
+  }
+}

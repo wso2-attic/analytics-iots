@@ -1,0 +1,9 @@
+{
+    "id": "MostDifficultCheckpont",
+    "title": "Most Difficult Checkpont",
+    "type": "gadget",
+    "thumbnail": "gadget/most-difficult-checkpoint/thumbnail.png",
+    "data": {
+        "url": "gadget/most-difficult-checkpoint/gadget.xml"
+    }
+}

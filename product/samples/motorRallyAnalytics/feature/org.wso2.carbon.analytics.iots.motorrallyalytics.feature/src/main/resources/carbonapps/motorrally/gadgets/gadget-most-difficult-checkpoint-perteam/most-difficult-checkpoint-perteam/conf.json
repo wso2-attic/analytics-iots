@@ -1,0 +1,15 @@
+{
+  "provider-conf": {
+    "tableName": "MOST_DIFFICULT_CHECKPOINT_PER_TEAM",
+    "dataRange": "Retrieve all data",
+    "dataOrder": "None",
+    "provider-name": "motorRally"
+  },
+  "chart-conf": {
+    "x": "check_point",
+    "title": "MOST DIFFICULT CHECKPOINT",
+    "maxLength": "30",
+    "gadget-name": "MostDifficultCheckpointPerTeam",
+    "chart-name": "number-chart"
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "id": "maxspeed",
+    "title": "Max Speed",
+    "type": "gadget",
+    "thumbnail": "gadget/maxspeed/thumbnail.png",
+    "data": {
+        "url": "gadget/maxspeed/gadget.xml"
+    }
+}

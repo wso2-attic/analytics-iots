@@ -1,0 +1,16 @@
+{
+  "name": "org.wso2.iot.analytics.stream.motorrally.leaderboard",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "team_name",
+      "type": "STRING"
+    },
+    {
+      "name": "rank",
+      "type": "INT"
+    }
+  ]
+}

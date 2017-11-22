@@ -1,0 +1,13 @@
+{
+  "provider-conf": {
+    "streamName": "org.wso2.iot.analytics.stream.motorrally.leaderboard:1.0.0",
+    "provider-name": "realtime"
+  },
+  "chart-conf": {
+    "x": "TIMESTAMP",
+    "y": "rank",
+    "color": "team_name",
+    "gadget-name": "ranksovertime",
+    "chart-name": "line-chart"
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "id": "averagespeed-perteam",
+    "title": "Average Speed Per-Team",
+    "type": "gadget",
+    "thumbnail": "gadget/averagespeed-perteam/thumbnail.png",
+    "data": {
+        "url": "gadget/averagespeed-perteam/gadget.xml"
+    }
+}

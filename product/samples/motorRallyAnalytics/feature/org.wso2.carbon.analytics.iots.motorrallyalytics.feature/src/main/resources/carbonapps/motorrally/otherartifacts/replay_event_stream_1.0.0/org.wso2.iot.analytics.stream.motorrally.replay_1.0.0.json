@@ -1,0 +1,24 @@
+{
+  "name": "org.wso2.iot.analytics.stream.motorrally.replay",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "time_from",
+      "type": "LONG"
+    },
+    {
+      "name": "time_to",
+      "type": "LONG"
+    },
+    {
+      "name": "time_from",
+      "type": "LONG"
+    },
+    {
+      "name": "time_to",
+      "type": "LONG"
+    }
+  ]
+}

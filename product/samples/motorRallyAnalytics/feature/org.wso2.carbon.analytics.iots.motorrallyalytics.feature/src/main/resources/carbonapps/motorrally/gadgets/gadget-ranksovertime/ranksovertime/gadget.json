@@ -1,0 +1,9 @@
+{
+    "id": "ranksovertime",
+    "title": "Team rank over time",
+    "type": "gadget",
+    "thumbnail": "gadget/ranksovertime/thumbnail.png",
+    "data": {
+        "url": "gadget/ranksovertime/gadget.xml"
+    }
+}

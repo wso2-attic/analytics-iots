@@ -1,0 +1,16 @@
+{
+  "name": "org.wso2.iot.analytics.stream.motorrally.avgspeedofallteams",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "key_primary",
+      "type": "INT"
+    },
+    {
+      "name": "avg_speed",
+      "type": "DOUBLE"
+    }
+  ]
+}

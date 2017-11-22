@@ -1,0 +1,435 @@
+{"id": "motor-rally-individual-summary",
+  "title": "Motor Rally Individual Summary",
+  "description": "",
+  "permissions": {
+    "viewers": [
+      "Internal/motor-rally-individual-summary-viewer"
+    ],
+    "editors": [
+      "Internal/motor-rally-individual-summary-editor"
+    ],
+    "owners": [
+      "Internal/motor-rally-individual-summary-owner"
+    ]
+  },
+  "pages": [
+    {
+      "id": "landing",
+      "title": "Home",
+      "layout": {
+        "content": {
+          "loggedIn": {
+            "blocks": [
+              {
+                "id": "7045a75a78563a3debd05fbf5a7884a4",
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 6,
+                "banner": false
+              },
+              {
+                "id": "68f1fd1e2bc457016f237814f6ab12e0",
+                "x": 10,
+                "y": 6,
+                "width": 2,
+                "height": 2,
+                "banner": false
+              },
+              {
+                "id": "c862162785787f7b76dd671244f03f75",
+                "x": 8,
+                "y": 0,
+                "width": 2,
+                "height": 4,
+                "banner": false
+              },
+              {
+                "id": "f7f2646906100352b6e6cea44bbb70a4",
+                "x": 8,
+                "y": 6,
+                "width": 2,
+                "height": 2,
+                "banner": false
+              },
+              {
+                "id": "63102dad95a3b06e725fe0bff8d1c9d9",
+                "x": 8,
+                "y": 8,
+                "width": 2,
+                "height": 2,
+                "banner": false
+              },
+              {
+                "id": "354625d59dc00a22e5676c2bebf3b5c5",
+                "x": 0,
+                "y": 6,
+                "width": 8,
+                "height": 4,
+                "banner": false
+              },
+              {
+                "id": "0792bfae12f759c5ac5d3056747c9c3b",
+                "x": 10,
+                "y": 8,
+                "width": 2,
+                "height": 2,
+                "banner": false
+              },
+              {
+                "id": "09f989506e8ce4968ef0dec1c1b11c6f",
+                "x": 10,
+                "y": 0,
+                "width": 2,
+                "height": 6,
+                "banner": false
+              },
+              {
+                "id": "e19db6e17f5361419a524b63f04bcdd0",
+                "x": 8,
+                "y": 4,
+                "width": 2,
+                "height": 2,
+                "banner": false
+              }
+            ]
+          }
+        },
+        "fluidLayout": false
+      },
+      "isanon": false,
+      "content": {
+        "default": {
+          "c862162785787f7b76dd671244f03f75": [
+            {
+              "id": "CheckPointsPerTeam-0",
+              "content": {
+                "id": "CheckPointsPerTeam",
+                "title": "CheckPointsPerTeam",
+                "type": "gadget",
+                "thumbnail": "fs://gadget/CheckPointsPerTeam/thumbnail.png",
+                "data": {
+                  "url": "fs://gadget/CheckPointsPerTeam/gadget.xml"
+                },
+                "styles": {
+                  "title": "CheckPointsPerTeam",
+                  "borders": true
+                },
+                "options": {
+                  "refreshInterval": {
+                    "type": "STRING",
+                    "title": "Refresh Interval",
+                    "value": "1",
+                    "options": [],
+                    "required": false
+                  }
+                },
+                "locale_titles": {}
+              }
+            }
+          ],
+          "a2b641ced059cbbaf76682c8ccf7e4fa": [
+            {
+              "id": "AVERAGESPEEDPERTEAM-1",
+              "content": {
+                "id": "AVERAGESPEEDPERTEAM",
+                "title": "AVERAGESPEEDPERTEAM",
+                "type": "gadget",
+                "thumbnail": "fs://gadget/AVERAGESPEEDPERTEAM/thumbnail.png",
+                "data": {
+                  "url": "fs://gadget/AVERAGESPEEDPERTEAM/gadget.xml"
+                },
+                "styles": {
+                  "title": "AVERAGESPEEDPERTEAM",
+                  "borders": true
+                },
+                "options": {
+                  "windowSize": {
+                    "type": "STRING",
+                    "title": "Window Size",
+                    "value": "10",
+                    "options": [],
+                    "required": false
+                  }
+                },
+                "locale_titles": {}
+              }
+            }
+          ],
+          "68f1fd1e2bc457016f237814f6ab12e0": [
+            {
+              "id": "AVERAGESPEEDPERTEAM-0",
+              "content": {
+                "id": "AVERAGESPEEDPERTEAM",
+                "title": "AVERAGESPEEDPERTEAM",
+                "type": "gadget",
+                "thumbnail": "fs://gadget/AVERAGESPEEDPERTEAM/thumbnail.png",
+                "data": {
+                  "url": "fs://gadget/AVERAGESPEEDPERTEAM/gadget.xml"
+                },
+                "styles": {
+                  "no_heading": true,
+                  "hide_gadget": false,
+                  "titlePosition": "left",
+                  "title": "AVERAGESPEEDPERTEAM"
+                },
+                "options": {
+                  "windowSize": {
+                    "type": "STRING",
+                    "title": "Window Size",
+                    "value": "10",
+                    "options": [],
+                    "required": false
+                  },
+                  "refreshInterval": {
+                    "type": "STRING",
+                    "title": "Refresh Interval",
+                    "value": "1000000",
+                    "options": [],
+                    "required": false
+                  }
+                },
+                "locale_titles": {
+                  "en-US": "AVERAGESPEEDPERTEAM"
+                },
+                "settings": {
+                  "priority": "5",
+                  "timeoutInterval": "60000"
+                }
+              }
+            }
+          ],
+          "f7f2646906100352b6e6cea44bbb70a4": [
+            {
+              "id": "MostDifficultCheckpointPerTeam-0",
+              "content": {
+                "id": "MostDifficultCheckpointPerTeam",
+                "title": "MostDifficultCheckpointPerTeam",
+                "type": "gadget",
+                "thumbnail": "fs://gadget/MostDifficultCheckpointPerTeam/thumbnail.png",
+                "data": {
+                  "url": "fs://gadget/MostDifficultCheckpointPerTeam/gadget.xml"
+                },
+                "styles": {
+                  "no_heading": true,
+                  "hide_gadget": false,
+                  "titlePosition": "left",
+                  "title": "MostDifficultCheckpointPerTeam"
+                },
+                "options": {
+                  "windowSize": {
+                    "type": "STRING",
+                    "title": "Window Size",
+                    "value": "10",
+                    "options": [],
+                    "required": false
+                  }
+                },
+                "locale_titles": {
+                  "en-US": "MostDifficultCheckpointPerTeam"
+                },
+                "settings": {
+                  "priority": "5",
+                  "timeoutInterval": "60000"
+                }
+              }
+            }
+          ],
+          "63102dad95a3b06e725fe0bff8d1c9d9": [
+            {
+              "id": "LeastDifficultCheckpointPerTeam-0",
+              "content": {
+                "id": "LeastDifficultCheckpointPerTeam",
+                "title": "LeastDifficultCheckpointPerTeam",
+                "type": "gadget",
+                "thumbnail": "fs://gadget/LeastDifficultCheckpointPerTeam/thumbnail.png",
+                "data": {
+                  "url": "fs://gadget/LeastDifficultCheckpointPerTeam/gadget.xml"
+                },
+                "styles": {
+                  "no_heading": true,
+                  "hide_gadget": false,
+                  "titlePosition": "left",
+                  "title": "LeastDifficultCheckpointPerTeam"
+                },
+                "options": {
+                  "windowSize": {
+                    "type": "STRING",
+                    "title": "Window Size",
+                    "value": "10",
+                    "options": [],
+                    "required": false
+                  }
+                },
+                "locale_titles": {
+                  "en-US": "LeastDifficultCheckpointPerTeam"
+                },
+                "settings": {
+                  "priority": "5",
+                  "timeoutInterval": "60000"
+                }
+              }
+            }
+          ],
+          "01fd2113114d840fc252810a68341eab": [],
+          "e55de0678ad05982869d199a5368946c": [
+            {
+              "id": "motorRally-0",
+              "content": {
+                "id": "motorRally",
+                "title": "Motor Rally",
+                "type": "widget",
+                "thumbnail": "fs://gadget/motorRally/img/thumbnail.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "fs://gadget/motorRally/index.xml"
+                },
+                "styles": {
+                  "borders": false,
+                  "title": "Motor Rally"
+                },
+                "notify": {
+                  "select": {
+                    "type": "address",
+                    "description": "This notifies selected state"
+                  },
+                  "cancel": {
+                    "type": "boolean",
+                    "description": "This notifies cancellation of state selection"
+                  }
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "354625d59dc00a22e5676c2bebf3b5c5": [
+            {
+              "id": "Check_Points_Difficulty-0",
+              "content": {
+                "id": "Check_Points_Difficulty",
+                "title": "Check Points Difficulty",
+                "type": "gadget",
+                "thumbnail": "fs://gadget/Check_Points_Difficulty/thumbnail.png",
+                "data": {
+                  "url": "fs://gadget/Check_Points_Difficulty/gadget.xml"
+                },
+                "styles": {
+                  "title": "Check Points Difficulty",
+                  "borders": true
+                },
+                "options": {
+                  "windowSize": {
+                    "type": "STRING",
+                    "title": "Window Size",
+                    "value": "10",
+                    "options": [],
+                    "required": false
+                  }
+                },
+                "locale_titles": {}
+              }
+            }
+          ],
+          "7045a75a78563a3debd05fbf5a7884a4": [
+            {
+              "id": "motorRally-0",
+              "content": {
+                "id": "motorRally",
+                "title": "Motor Rally",
+                "type": "widget",
+                "thumbnail": "fs://gadget/motorRally/img/thumbnail.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "fs://gadget/motorRally/index.xml"
+                },
+                "styles": {
+                  "borders": false,
+                  "title": "Motor Rally"
+                },
+                "notify": {
+                  "select": {
+                    "type": "address",
+                    "description": "This notifies selected state"
+                  },
+                  "cancel": {
+                    "type": "boolean",
+                    "description": "This notifies cancellation of state selection"
+                  }
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "0792bfae12f759c5ac5d3056747c9c3b": [
+            {
+              "id": "MAXSPEEDPERTEAM-1",
+              "content": {
+                "id": "MAXSPEEDPERTEAM",
+                "title": "MAXSPEEDPERTEAM",
+                "type": "gadget",
+                "thumbnail": "fs://gadget/MAXSPEEDPERTEAM/thumbnail.png",
+                "data": {
+                  "url": "fs://gadget/MAXSPEEDPERTEAM/gadget.xml"
+                },
+                "styles": {
+                  "no_heading": true,
+                  "hide_gadget": false,
+                  "titlePosition": "left",
+                  "title": "MAXSPEEDPERTEAM"
+                },
+                "options": {
+                  "windowSize": {
+                    "type": "STRING",
+                    "title": "Window Size",
+                    "value": "10",
+                    "options": [],
+                    "required": false
+                  }
+                },
+                "locale_titles": {
+                  "en-US": "MAXSPEEDPERTEAM"
+                },
+                "settings": {
+                  "priority": "5",
+                  "timeoutInterval": "60000"
+                }
+              }
+            }
+          ]
+        },
+        "anon": {}
+      }
+    }
+  ],
+  "menu": [
+    {
+      "id": "landing",
+      "isanon": false,
+      "ishidden": false,
+      "title": "Home",
+      "subordinates": []
+    }
+  ],
+  "hideAllMenuItems": false,
+  "identityServerUrl": "",
+  "accessTokenUrl": "",
+  "apiKey": "",
+  "apiSecret": "",
+  "theme": "Default Theme",
+  "shareDashboard": false,
+  "isUserCustom": false,
+  "isEditorEnable": true,
+  "banner": {
+    "globalBannerExists": false,
+    "customBannerExists": false
+  },
+  "landing": "landing",
+  "isanon": false,
+  "defaultPriority": "5"
+}

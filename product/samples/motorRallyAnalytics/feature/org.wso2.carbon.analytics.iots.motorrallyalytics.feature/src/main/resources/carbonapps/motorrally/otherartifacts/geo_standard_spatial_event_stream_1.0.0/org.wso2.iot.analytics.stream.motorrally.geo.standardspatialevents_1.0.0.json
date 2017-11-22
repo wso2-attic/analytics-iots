@@ -1,0 +1,56 @@
+{
+  "name": "org.wso2.iot.analytics.stream.motorrally.geo.standardspatialevents",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "id",
+      "type": "STRING"
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "timeStamp",
+      "type": "LONG"
+    },
+    {
+      "name": "type",
+      "type": "STRING"
+    },
+    {
+      "name": "speed",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "avgSpeed",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "checkpointsReached",
+      "type": "INT"
+    },
+    {
+      "name": "distanceTravelled",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "durationTravelled",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "heading",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "eventId",
+      "type": "STRING"
+    }
+  ]
+}

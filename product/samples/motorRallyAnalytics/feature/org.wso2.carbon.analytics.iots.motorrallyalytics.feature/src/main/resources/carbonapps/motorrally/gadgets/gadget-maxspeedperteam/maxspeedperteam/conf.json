@@ -1,0 +1,15 @@
+{
+  "provider-conf": {
+    "tableName": "ORG_WSO2_IOT_ANALYTICS_STREAM_MAXSPEEDPERTEAM",
+    "dataRange": "Retrieve all data",
+    "dataOrder": "None",
+    "provider-name": "motorRally"
+  },
+  "chart-conf": {
+    "x": "max_speed",
+    "title": "Max Speed",
+    "maxLength": "30",
+    "gadget-name": "MAXSPEEDPERTEAM",
+    "chart-name": "number-chart"
+  }
+}

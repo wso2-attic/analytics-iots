@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="CheckPoints" description="This is a template gadget">
+        <Require feature="dynamic-height"/>
+        <Require feature="setprefs"/>
+    </ModulePrefs>
+    
+    <UserPref name="refreshInterval"
+              display_name="Refresh Interval"
+              default_value="1"/>
+     
+    <Content type="html">
+        <![CDATA[
+        <head>
+            <!-- shared css -->
+            
+             <link href="/portal/libs/analytics-wso2-2.0.0/common.css" rel="stylesheet">
+              <link rel="stylesheet" type="text/css" href="css/custom.css" />
+            
+            <!-- chart vendor css -->
+            
+            <!-- chart specific css -->
+            
+
+            <!-- jQuery -->
+            <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+            <!-- provider libs -->
+            
+            <!-- shared libs -->
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/d3.min.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/vega.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/VizGrammar.min.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/wso2gadgets.js"></script>
+            
+            <script src="/portal/libs/analytics-wso2-2.0.0/chart-utils.js"></script>
+            
+            <!-- chart specific vendor libs -->
+            
+            <!-- chart specific js -->
+            
+            <!--scripts copied by framework -->
+            
+            <script src="js/core/donut-chart-api.js"></script>
+            <script src="js/core/gadget-core.js"></script>
+
+        </head>
+        <body>
+            <div class="pull-right arc-chart">
+                <div id="canvas"></div>
+                <div class="chart-label-count"><span id="completedCount"></span> COMPLETED</div>
+                <div class="chart-label"><span id="totalCount"></span> TOTAL CHECKPOINTS</div>
+            </div>
+        </body>
+        ]]>
+    </Content>
+</Module>

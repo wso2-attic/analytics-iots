@@ -1,0 +1,30 @@
+{
+  "name": "org.wso2.iot.analytics.stream.motorrallystream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "teamName",
+      "type": "STRING"
+    },
+    {
+      "name": "teamId",
+      "type": "STRING"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    }
+  ]
+}

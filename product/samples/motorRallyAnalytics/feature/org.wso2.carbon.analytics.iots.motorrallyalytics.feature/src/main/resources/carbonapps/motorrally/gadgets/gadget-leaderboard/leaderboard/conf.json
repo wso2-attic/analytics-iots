@@ -1,0 +1,16 @@
+{
+  "provider-conf": {
+    "tableName": "ORG_WSO2_IOT_ANALYTICS_STREAM_MOTORRALLY_LEADERBOARD",
+    "query": "",
+    "limit": "",
+    "provider-name": "batch"
+  },
+  "chart-conf": {
+    "key": "team_name",
+    "color": "None",
+    "grid": "on",
+    "maxLength": "30",
+    "gadget-name": "LEADERBOARD",
+    "chart-name": "table-chart"
+  }
+}

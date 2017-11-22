@@ -1,0 +1,17 @@
+{
+  "provider-conf": {
+    "tableName": "CHECKPOINT_TIME_INDIVIDUAL_VS_OVERALL",
+    "dataRange": "Retrieve all data",
+    "dataOrder": "None",
+    "provider-name": "motorRally"
+  },
+  "chart-conf": {
+    "x": "time_taken",
+    "y": "check_point",
+    "color": "category",
+    "mode": "group",
+    "maxLength": "30",
+    "gadget-name": "Check Points Difficulty",
+    "chart-name": "bar-chart"
+  }
+}

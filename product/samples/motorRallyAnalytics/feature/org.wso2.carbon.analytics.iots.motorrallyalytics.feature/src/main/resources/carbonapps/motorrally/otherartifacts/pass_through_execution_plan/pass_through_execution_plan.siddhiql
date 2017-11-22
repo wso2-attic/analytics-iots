@@ -1,0 +1,20 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('pass_through_execution_plan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+
+@Import('org.wso2.iot.analytics.stream.motorrally.geo.standardspatialevents:1.0.0')
+define stream dataIn (id string, latitude double, longitude double, timeStamp long, type string, speed double, avgSpeed double, checkpointsReached int, distanceTravelled double, durationTravelled double, heading double, eventId string);
+
+@Export('org.wso2.iot.analytics.stream.motorrally.geo.processedspatialevents:1.0.0')
+define stream dataOut (id string, latitude double, longitude double, timeStamp long, type string, speed double, avgSpeed double, checkpointsReached int, distanceTravelled double, durationTravelled double, heading double, eventId string, state string, information string);
+
+from dataIn#geodashboard:subscribe()
+select id, latitude, longitude, timeStamp, type ,speed, avgSpeed, checkpointsReached, distanceTravelled, durationTravelled, heading, eventId, "NORMAL" as state, "Normal driving pattern"  as information
+insert into dataOut;
+
+                    

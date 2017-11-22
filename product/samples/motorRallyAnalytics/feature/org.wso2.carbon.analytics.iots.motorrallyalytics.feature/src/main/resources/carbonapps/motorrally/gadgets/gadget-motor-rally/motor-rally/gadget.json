@@ -1,0 +1,26 @@
+{
+  "id": "motor-rally",
+  "title": "Motor Rally",
+  "type": "widget",
+  "thumbnail": "gadget/motor-rally/img/thumbnail.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/motor-rally/index.xml"
+  },
+  "styles": {
+    "borders": false,
+    "title": false
+  },
+  "notify": {
+    "select": {
+      "type": "address",
+      "description": "This notifies selected state"
+    },
+    "cancel": {
+      "type": "boolean",
+      "description": "This notifies cancellation of state selection"
+    }
+  }
+}

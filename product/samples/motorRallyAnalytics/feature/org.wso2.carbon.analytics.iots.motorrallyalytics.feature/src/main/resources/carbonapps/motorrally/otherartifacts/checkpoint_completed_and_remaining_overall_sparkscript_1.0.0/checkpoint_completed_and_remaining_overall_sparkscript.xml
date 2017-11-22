@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Analytics>
+    <CronExpression>0/15 * * * * ?</CronExpression>
+    <Editable>true</Editable>
+    <Name>CHECKPOINTS_COMPLETED_AND_REMAINING_OVERALL</Name>
+    <Script>CREATE TEMPORARY TABLE checkpoints_completed_overall USING CarbonAnalytics 
+OPTIONS (tableName "checkpoints_completed_overall", 
+         schema "key_primary INT, completed_count INT, remaining_count INT",
+         primaryKeys "key_primary"
+        );
+CREATE TEMPORARY TABLE check_points_completed_by_team USING CarbonAnalytics 
+OPTIONS (tableName "ORG_WSO2_IOT_ANALYTICS_STREAM_MOTORRALLY_CHECKPOINTSCOMPLETEDBYTEAMTABLEINIT");
+
+INSERT OVERWRITE TABLE checkpoints_completed_overall 
+SELECT 1 AS key_primary, sum(completed_count) AS completed_count, 112 - sum(completed_count) as remaining_count  
+FROM check_points_completed_by_team;
+
+    </Script>
+</Analytics>

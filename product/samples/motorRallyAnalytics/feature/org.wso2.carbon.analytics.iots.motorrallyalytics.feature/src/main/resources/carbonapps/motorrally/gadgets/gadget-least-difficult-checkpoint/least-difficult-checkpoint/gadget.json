@@ -1,0 +1,9 @@
+{
+    "id": "least-difficult-checkpoint",
+    "title": "Least Difficult Checkpoint",
+    "type": "gadget",
+    "thumbnail": "gadget/least-difficult-checkpoint/thumbnail.png",
+    "data": {
+        "url": "gadget/least-difficult-checkpoint/gadget.xml"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "id": "most-difficult-checkpoint-perteam",
+    "title": "Most Difficult Checkpoint Per Team",
+    "type": "gadget",
+    "thumbnail": "gadget/most-difficult-checkpoint-perteam/thumbnail.png",
+    "data": {
+        "url": "gadget/most-difficult-checkpoint-perteam/gadget.xml"
+    }
+}

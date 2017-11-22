@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.motor-rally (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<artifacts>
+    <artifact name="motorrallyAnaytics" version="1.0.0" type="carbon/application">
+
+        <dependency artifact="avg_speed_of_all_teams_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="avg_speed_per_team_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="check_points_completed_by_team_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="check_points_completed_by_team_table_init_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="geo_fused_spatial_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="geo_location_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="geo_processed_spatial_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="geo_standard_spatial_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="leader_board_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="max_speed_of_all_teams_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="max_speed_per_team_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="motor_rally_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="team_names_event_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+
+        <dependency artifact="avg_speed_of_all_teams_publisher" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="geo_websocket_for_spacial_event_publisher" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="leaderboard_publisher" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="max_speed_of_all_the_teams_publisher" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+
+        <dependency artifact="avg_speed_per_team_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="avg_speed_of_all_teams_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="max_speed_of_all_teams_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="check_points_completed_by_team_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="max_speed_per_team_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="leader_board_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="motor_rally_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="geo_fused_spatial_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="team_names_event_sink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+
+        <dependency artifact="checkpoint_completed_and_remaining_overall_sparkscript" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="most_and_least_difficult_checkpoint_sparkscript" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+
+        <dependency artifact="event_fusion_generate_notifications_execution_plan" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="input_standardizer_execution_plan" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="motor_rally_analytics_execution_plan" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="pass_through_execution_plan" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+
+       </artifact>
+</artifacts>
